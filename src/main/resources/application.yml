@@ -1,0 +1,28 @@
+#1.配置服务器连接数据库接口
+
+server:
+  port: 8080
+  servlet:
+      context-path: "/"
+
+#2. 对于数据源的配置
+
+
+spring:
+  datasource:
+    name: mywork
+    url: jdbc:mysql://localhost:3306/evaluate
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    mvc:
+      static-path-pattern: /static/**
+      thymeleaf:
+        cache: false
+        prefix: classpath:/templates/
+        suffix: .html
+        encoding: UTF-8
+
+#3.mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

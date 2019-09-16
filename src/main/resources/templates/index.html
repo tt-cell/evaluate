@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
   <head>
     <meta charset="utf-8">
@@ -21,6 +22,8 @@
     <link rel="stylesheet" href="css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.ico">
+    <!--LayUi-->
+    <link rel="stylesheet" href="layui/css/layui.css">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -53,22 +56,22 @@
                 <!-- Notifications-->
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
                         <div class="notification">
                           <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
                           <div class="notification-time"><small>4 minutes ago</small></div>
                         </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
                         <div class="notification">
                           <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
                           <div class="notification-time"><small>4 minutes ago</small></div>
                         </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
                         <div class="notification">
                           <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
                           <div class="notification-time"><small>4 minutes ago</small></div>
                         </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                    <li><a rel="nofollow" href="#" class="dropdown-item">
                         <div class="notification">
                           <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
                           <div class="notification-time"><small>10 minutes ago</small></div>
@@ -79,17 +82,17 @@
                 <!-- Messages                        -->
                 <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
                         <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                         <div class="msg-body">
                           <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
                         </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
                         <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
                         <div class="msg-body">
                           <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
                         </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
                         <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
                         <div class="msg-body">
                           <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
@@ -111,7 +114,7 @@
           </div>
         </nav>
       </header>
-      <div class="page-content d-flex align-items-stretch"> 
+      <div class="page-content d-flex align-items-stretch">
         <!-- Side Navbar -->
         <nav class="side-navbar">
           <!-- Sidebar Header-->
@@ -123,19 +126,23 @@
             </div>
           </div>
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+          <div id="div_tree"></div>
           <ul class="list-unstyled">
-                    <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
-                    <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-                    <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-                    <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
-                      <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
+                    <!--<li class="active"><a href="index.html" th:text="${func.fname}"> <i class="icon-home"></i>Home </a></li>-->
+                    <!--<li id="sonMenu" th:each="func:${func}">-->
+                      <!--<a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse" th:text="${func.fname}"> <i class="icon-interface-windows"></i>-->
+                      <!--</a>-->
+                    <!--</li>-->
+                    <!--<li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>-->
+                    <!--<li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>-->
+                    <!--<li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>-->
+                      <!--<ul id="exampledropdownDropdown" class="collapse list-unstyled ">-->
+                        <!--<li><a href="#">Page</a></li>-->
+                        <!--<li><a href="#">Page</a></li>-->
+                        <!--<li><a href="#">Page</a></li>-->
+                      <!--</ul>-->
+                    <!--</li>-->
+                    <!--<li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>-->
           </ul><span class="heading">Extras</span>
           <ul class="list-unstyled">
             <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
@@ -468,7 +475,7 @@
                         <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
                       </div>
                     </div>
-                    <div class="card-header d-flex align-items-center">           
+                    <div class="card-header d-flex align-items-center">
                       <h2 class="h3">To Do List </h2>
                     </div>
                     <div class="card-body no-padding">
@@ -579,7 +586,7 @@
                 </div>
                 <!-- Daily Feeds -->
                 <div class="col-lg-4">
-                  <div class="daily-feeds card"> 
+                  <div class="daily-feeds card">
                     <div class="card-close">
                       <div class="dropdown">
                         <button type="button" id="closeCard7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
@@ -603,7 +610,7 @@
                         </div>
                       </div>
                       <!-- Item-->
-                      <div class="item"> 
+                      <div class="item">
                         <div class="feed d-flex justify-content-between">
                           <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile"><img src="img/avatar-2.jpg" alt="person" class="img-fluid rounded-circle"></a>
                             <div class="content">
@@ -705,6 +712,7 @@
       </div>
     </div>
     <!-- JavaScript files-->
+    <script src="layui/layui.js"></script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper.js/umd/popper.min.js"> </script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -712,7 +720,29 @@
     <script src="vendor/chart.js/Chart.min.js"></script>
     <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="js/charts-home.js"></script>
+
     <!-- Main File-->
     <script src="js/front.js"></script>
+    <script>
+      // $(function () {
+      // console.log(${uname})
+        layui.use('tree', function(){
+          var tree = layui.tree;
+          $.ajax({
+            url: '/menu',
+            type: 'GET',
+            dataType: 'json',
+            success: function (rep) {
+              console.log(rep);
+              //渲染
+              var inst1 = tree.render({
+                elem: '#div_tree'  //绑定元素
+                ,data: rep.data
+              });
+            }
+          });
+        });
+      // })
+    </script>
   </body>
 </html>

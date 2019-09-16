@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>在线综合评教系统登录界面</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
@@ -35,7 +35,7 @@
               <div class="info d-flex align-items-center">
                 <div class="content">
                   <div class="logo">
-                    <h1>Dashboard</h1>
+                    <h1>Online Teaching Evaluate Login View</h1>
                   </div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 </div>
@@ -45,15 +45,15 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <form method="post" class="form-validate">
+                  <form method="post" class="form-validate" action="/login">
                     <div class="form-group">
-                      <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
+                      <input id="login-username" type="text" name="uname" required data-msg="Please enter your username" class="input-material">
                       <label for="login-username" class="label-material">User Name</label>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">
+                      <input id="login-password" type="password" name="password" required data-msg="Please enter your password" class="input-material">
                       <label for="login-password" class="label-material">Password</label>
-                    </div><a id="login" href="index.html" class="btn btn-primary">Login</a>
+                    </div><button type="submit" id="login"  class="btn btn-primary">Login</button>
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
                   </form><a href="#" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="register.html" class="signup">Signup</a>
                 </div>
@@ -77,5 +77,37 @@
     <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
     <!-- Main File-->
     <script src="js/front.js"></script>
+  <script>
+    $(function () {
+      $('#login').click(function (ev) {
+        console.log($('#login-username').val())
+        console.log($('#login-password').val())
+        $.ajax({
+          url:'/isLoginRight',
+          dataType:'json',
+          data:{uname:$('#login-username').val(),password:$('#login-password').val()},
+          success:function (res) {
+            console.log(res)
+            console.log(res.state)
+            if(res.state === 2){
+              alert("对不起，你所输入的密码或者用户名输入不对，请重新输入！！！")
+              return false
+              ev.preventDefault()
+            }else if(res.state === 1) {
+              alert("对不起，你所输入的密码或者用户名不能为空！！！")
+              return false
+              ev.preventDefault()
+            }else {
+              alert("恭喜您，小兄弟，登陆成功！！！")
+              return true
+            }
+          },
+          error:function () {
+            console.log(error.message)
+          }
+        })
+      })
+    })
+  </script>
   </body>
 </html>

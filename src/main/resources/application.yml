@@ -10,7 +10,7 @@ server:
 
 spring:
   datasource:
-    name: mywork
+    name: evaluate
     url: jdbc:mysql://localhost:3306/evaluate
     username: root
     password: root
@@ -22,6 +22,10 @@ spring:
         prefix: classpath:/templates/
         suffix: .html
         encoding: UTF-8
+      jackson:
+      date-format: 'yyyy-MM-dd HH:mm:ss'
+      joda-date-time-format: 'yyyy-MM-dd HH:mm:ss'
+      time-zone: GMT+8
 
 #3.mybatis配置
 mybatis:

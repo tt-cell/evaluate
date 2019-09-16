@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.UserDao">
+  <resultMap id="UserMap" type="com.evaluate.demo.entity.User">
+    <id property="uid" column="uid"></id>
+    <result property="uname" column="uname"></result>
+    <result property="password" column="password"></result>
+    <result property="sex" column="sex"></result>
+    <result property="colleges_id" column="colleges_id"></result>
+    <result property="list" column="list"></result>
+  </resultMap>
+
+  <select id="selectUserName" parameterType="String" resultMap="UserMap">
+    select * from users where uname = #{uname};
+  </select>
+
+</mapper>

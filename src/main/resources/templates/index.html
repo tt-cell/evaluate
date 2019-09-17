@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
   <head>
     <meta charset="utf-8">
@@ -126,7 +125,21 @@
             </div>
           </div>
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
-          <div id="div_tree"></div>
+          <!--<div id="div_tree"></div>-->
+            <ul id="MenuList" class="list-unstyled">
+                <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
+                <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
+                <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
+                <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+                <!--<li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>-->
+                    <!--<ul id="exampledropdownDropdown" class="collapse list-unstyled ">-->
+                        <!--<li><a href="#">Page</a></li>-->
+                        <!--<li><a href="#">Page</a></li>-->
+                        <!--<li><a href="#">Page</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
+            </ul>
           <ul class="list-unstyled">
                     <!--<li class="active"><a href="index.html" th:text="${func.fname}"> <i class="icon-home"></i>Home </a></li>-->
                     <!--<li id="sonMenu" th:each="func:${func}">-->
@@ -724,25 +737,66 @@
     <!-- Main File-->
     <script src="js/front.js"></script>
     <script>
-      // $(function () {
-      // console.log(${uname})
-        layui.use('tree', function(){
-          var tree = layui.tree;
-          $.ajax({
-            url: '/menu',
-            type: 'GET',
-            dataType: 'json',
-            success: function (rep) {
-              console.log(rep);
-              //渲染
-              var inst1 = tree.render({
-                elem: '#div_tree'  //绑定元素
-                ,data: rep.data
-              });
-            }
-          });
-        });
-      // })
+        $(function () {
+            $.ajax({
+                url:'/menu',
+                type:'GET',
+                dataType:'json',
+                success:function (res) {
+                    console.log(res)
+                    res.data.forEach(function (data) {
+                        if(data.children){
+                            var SonUlhtml = `<ul id="exampledropdownDropdown" class="collapse list-unstyled "></ul>`
+                            var LihtmlOne = `<li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>${data.title}</a>`
+                            var $SonUlhtml = $(SonUlhtml)
+                            var $LihtmlOne=$(LihtmlOne)
+                            console.log(data.children)
+                            data.children.forEach(function (children) {
+                                console.log(children)
+                                var SonTitleHtml = `<li><a href="#">${children.title}</a></li>`
+                                var $SonTitleHtml=$(SonTitleHtml)
+                                $SonTitleHtml.appendTo($SonUlhtml)
+                            })
+                            $SonUlhtml.appendTo($LihtmlOne)
+                            $LihtmlOne.appendTo("#MenuList");
+                            // $("#exampledropdownDropdown").click(function () {
+                            //     this.children().slideToggle(1000)
+                            //     this.next().children.slideUp(1000)
+                            // })
+                        }else{
+                            var LihtmlTwo = `<li><a href="charts.html"><i class="fa fa-bar-chart"></i>${data.title}</a></li>`
+                            var $LihtmlTwo=$(LihtmlTwo)
+                            $LihtmlTwo.appendTo("#MenuList");
+                        }
+                    })
+                },
+                error:function (err) {
+                    document.write(err.message)
+                }
+            })
+
+        })
+      // // $(function () {
+      // // console.log(${uname})
+      //   layui.use(['tree','layer'], function(){
+      //     var tree = layui.tree;
+      //     $.ajax({
+      //       url: '/menu',
+      //       type: 'GET',
+      //       dataType: 'json',
+      //       success: function (rep) {
+      //         console.log(rep);
+      //         //渲染
+      //         var inst1 = tree.render({
+      //             elem: '#div_tree',
+      //             checkbox:true,
+      //             showCheckbox: true,
+      //             data: rep.data
+      //         });
+      //       }
+      //     });
+      //   });
+      // // })
     </script>
   </body>
 </html>

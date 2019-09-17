@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.FunctionDao">
+    <!--映射用户的实体类-->
+    <resultMap id="UserMap" type="com.evaluate.demo.entity.User">
+        <id property="uid" column="uid"></id>
+        <result property="uname" column="uname"></result>
+        <result property="password" column="password"></result>
+        <result property="sex" column="sex"></result>
+        <result property="college_id" column="college_id"></result>
+        <result property="list" column="list"></result>
+    </resultMap>
+
+    <select id="selectUserName" parameterType="String" resultMap="UserMap">
+    select * from users where uname = #{uname};
+  </select>
+
+    <!--映射功能权限的实体类-->
+    <resultMap id="BaseResultMap" type="com.evaluate.demo.entity.Function">
+        <id column="fid"  property="fid" />
+        <result column="fname"  property="fname" />
+        <result column="father_id"  property="father_id" />
+        <result column="url"  property="url" />
+        <result column="sort"  property="sort" />
+        <result column="status"  property="status" />
+    </resultMap>
+    <!--通过fid sort进行排序-->
+    <select id="getTreeLists" parameterType="String" resultMap="BaseResultMap">
+       SELECT * FROM FUNCTION fun INNER JOIN roles_functions rf
+       ON fun.fid = rf.fid WHERE rf.rid = #{rid} ORDER BY fun.fid,fun.sort
+   </select>
+    <!--映射功能子菜单的实体类-->
+    <resultMap id="selectSonFunctions" type="com.evaluate.demo.entity.SonFunction">
+        <id property="sid" column="sid"></id>
+        <result property="fname" column="fname"></result>
+        <result property="fid" column="fid"></result>
+    </resultMap>
+
+
+    <!--每个用户对应的功能-->
+    <select id="selectAllFunction" resultMap="BaseResultMap">
+    SELECT fun.fid,fun.fname,fun.father_id FROM FUNCTION fun
+    INNER JOIN roles_functions rf ON fun.fid = rf.fid
+    INNER JOIN users_roles ur ON rf.rid = ur.rid
+    WHERE ur.uid = #{uid};
+    </select>
+    <select id="selectRnameToUid" resultType="String">
+        SELECT roles.rid FROM roles,users_roles WHERE roles.rid=users_roles.rid AND uid=#{uid}
+    </select>
+
+    <!--每个一级菜单下面的二级菜单功能-->
+    <select id="selectSonFunction" resultMap="selectSonFunctions">
+        SELECT fun.fid,sf.sname,sf.sid FROM son_function sf INNER JOIN FUNCTION fun ON sf.fid = fun.fid
+INNER JOIN roles_functions rf ON rf.fid = fun.fid
+INNER JOIN roles ro ON ro.rid = rf.rid
+INNER JOIN users_roles ur ON ro.rid =  ur.rid
+WHERE uid = #{uid}
+    </select>
+</mapper>

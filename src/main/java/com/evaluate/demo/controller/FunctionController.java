@@ -20,6 +20,11 @@ public class FunctionController {
     @Autowired
     private FunctionService functionService;
 
+    @RequestMapping(value = "/index")
+    public ModelAndView goHome(){
+        return new ModelAndView("index");
+    }
+
     @RequestMapping(value = "/login")
     //登录方法
     public ModelAndView getLogin(String uname, String password, ModelAndView modelAndView, HttpSession session) {

@@ -52,14 +52,14 @@ public class FunctionController {
     //获取树形菜单的后台接口
     public Msg getMenuTree(Msg msg, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        List<User> userList = functionService.selectUserName(user.getName());
+        List<User> userList = functionService.selectUserName(user.getUname());
         if(userList == null || userList.isEmpty() || userList.equals("")){
             msg.setStatus(0);
             msg.setMsg("获取数据失败！");
             msg.setData("");
             return msg;
         }
-        String rid = functionService.selectRnameToUid(userList.get(0).getId());
+        String rid = functionService.selectRnameToUid(userList.get(0).getUid());
         List<Map<String, Object>> data = functionService.getTreeList(0,rid);
         //获取数据，并获取树形菜单的数据
         msg.setStatus(1);
@@ -75,9 +75,9 @@ public class FunctionController {
         Map<String,Integer> rs = new HashMap<String,Integer>();
         List<User> users = functionService.selectUserName(uname);
         User user = users.get(0);
-        if(!user.getName().equals(uname)||!user.getPassword().equals(password)){
+        if(!user.getUname().equals(uname)||!user.getPassword().equals(password)){
             rs.put("state",2);
-        }else if(user.getName().equals("")||user.getPassword().isEmpty()||
+        }else if(user.getUname().equals("")||user.getPassword().isEmpty()||
                 user.getPassword().equals("")||user.getPassword().isEmpty()){
             rs.put("state",1);
         }else {

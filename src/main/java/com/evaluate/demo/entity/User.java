@@ -1,50 +1,28 @@
 package com.evaluate.demo.entity;
 
+import java.util.ArrayList;
+
 public class User {
     private String uid;
     private String uname;
     private String password;
-    private String sex;
-    private String colleges_id;
-    private String list;
+    private int sex;
+    private int colleges_id;
+    private ArrayList<User> list;
 
-    public String getId() {
+    public String getUid() {
         return uid;
     }
 
-    public void setId(String uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getColleges_id() {
-        return colleges_id;
-    }
-
-    public void setColleges_id(String colleges_id) {
-        this.colleges_id = colleges_id;
-    }
-
-    public String getList() {
-        return list;
-    }
-
-    public void setList(String list) {
-        this.list = list;
-    }
-
-    public String getName() {
+    public String getUname() {
         return uname;
     }
 
-    public void setName(String uname) {
+    public void setUname(String uname) {
         this.uname = uname;
     }
 
@@ -54,5 +32,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+
+    public ArrayList<User> getList() {
+        return list;
+    }
+
+    public int getColleges_id() {
+        return colleges_id;
+    }
+
+    public void setColleges_id(int colleges_id) {
+        this.colleges_id = colleges_id;
+    }
+
+    public void setList(ArrayList<User> list) {
+        this.list = list;
     }
 }

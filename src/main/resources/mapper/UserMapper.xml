@@ -9,11 +9,66 @@
     <result property="password" column="password"></result>
     <result property="sex" column="sex"></result>
     <result property="colleges_id" column="colleges_id"></result>
-    <result property="list" column="list"></result>
   </resultMap>
 
   <select id="selectUserName" parameterType="String" resultMap="UserMap">
     select * from users where uname = #{uname};
   </select>
 
+  <!--注册一个用户-->
+  <!--<insert id="insertOneUser" parameterType="String">-->
+        <!--insert into users(uname,password) values (#{uname},#{password})-->
+    <!--</insert>-->
+  <!--&lt;!&ndash;检测用户名&ndash;&gt;-->
+  <!--<select id="selectCheckUsername" resultType="entity.User" parameterType="String">-->
+  <!--select * from users where account=#{account}-->
+  <!--</select>-->
+  <!--&lt;!&ndash;验证用户并且返回用户类型&ndash;&gt;-->
+  <!--<select id="selectCheckUser" resultType="entity.User" parameterType="String">-->
+  <!--select * from users where account=#{account} and password=#{password}-->
+  <!--</select>-->
+  <!--获得所有用户-->
+  <select id="selectAllUser" resultType="com.evaluate.demo.entity.User">
+        select * from users;
+    </select>
+  <!--更改一个用户-->
+  <update id="updateOneUser" >
+    update users
+    <set>
+      <if test="uname!=null">
+        uname= #{uname},
+      </if>
+    </set>
+    where uid = #{uid}
+  </update>
+  <!--删除一个用户-->
+  <delete id="deleteOneUser" parameterType="int">
+        delete from users where uid=#{uid}
+    </delete>
+
+  <!--<select id="selectOnePR" resultType="int">-->
+  <!--select userid from users where account = ${}-->
+  <!--</select>-->
+
+  <select id="findAllPage" resultType="com.evaluate.demo.entity.User">
+         select * from users LIMIT #{before},#{after} ;
+    </select>
+
+  <select id="count" resultType="int">
+        select count(*) from users
+    </select>
+
+  <insert id="insertOneUser">
+    insert into users(uname,password,sex,colleges_id) values (#{uname},#{password},#{sex},#{colleges_id})
+  </insert>
+  <!--<insert id="insertOneUserInCLass" parameterType="int">-->
+    <!--insert into users_calsss(classs_id,uid) values (#{classs_id},#{uid})-->
+  <!--</insert>-->
+  <select id="selectAllColleges" resultType="com.evaluate.demo.entity.Colleges">
+    select * from colleges
+  </select>
+
+  <select id="selectOneColleges_id" resultType="int" parameterType="String">
+    select Colleges_id from colleges where colleges_name=#{collegces_name}
+  </select>
 </mapper>

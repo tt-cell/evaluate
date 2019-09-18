@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{layui/layui.js}"></script>
+    <script th:src="@{jquery/jquery-3.4.1.min.js}"></script>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+</head>
+<body>
+<select name="xm" id="xm" lay-verify="required" lay-filter="xmFilter" th:width="150px">
+    <option value=""></option>
+</select>
+
+
+
+<script>
+
+    layui.use(['form', 'upload', 'layer'], function () {
+
+        var form = layui.form;
+
+
+
+//检查项目添加到下拉框中
+        $.ajax({
+            url: '/getAllColleges',
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+
+                $.each(data.Colleges, function (index, item) {
+                    $('#xm').append(new Option(item.colleges_name));// 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+
+//重新渲染 固定写法
+            }
+        })
+
+    });
+
+
+</script>
+</body>
+</html>

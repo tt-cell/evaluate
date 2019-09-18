@@ -10,7 +10,7 @@
         <result property="password" column="password"></result>
         <result property="sex" column="sex"></result>
         <result property="college_id" column="college_id"></result>
-        <result property="list" column="list"></result>
+
     </resultMap>
 
     <select id="selectUserName" parameterType="String" resultMap="UserMap">

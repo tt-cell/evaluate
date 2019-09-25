@@ -6,6 +6,7 @@ import com.evaluate.demo.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public interface UserService {
@@ -16,13 +17,14 @@ public interface UserService {
     List<User> selectAllUser();
     int deleteOneUser(int uid);
     List<User> selectOneUser(int uid);
-
-
-    public List<User> findAllPage(int before,int after);
-
+    public List<Map<String,Object>> findAllPage(int before, int after);
     public int count();
 
-    int insertOneUser(String uname,String password,int sex,int colleges_id);
+    int insertOneUser(User user);
     List<Colleges> selectAllColleges();
     int selectOneColleges_id(String Colleges_name);
+
+
+
+    List<Colleges> selectCollegeId(String colleges_name);
 }

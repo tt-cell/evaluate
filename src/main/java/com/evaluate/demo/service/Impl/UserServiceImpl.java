@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findAllPage(int before, int after) {
+    public List<Map<String,Object>> findAllPage(int before, int after) {
         return userDao.findAllPage(before,after);
     }
 
@@ -66,8 +67,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int insertOneUser(String uname,String password,int sex,int colleges_id){
-        return userDao.insertOneUser(uname,password,sex,colleges_id);
+    public int insertOneUser(User user){
+        return userDao.insertOneUser(user);
     }
 
     @Override
@@ -78,5 +79,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public int selectOneColleges_id(String Colleges_name) {
         return userDao.selectOneColleges_id(Colleges_name);
+    }
+
+    @Override
+    public List<Colleges> selectCollegeId(String colleges_name) {
+        return userDao.selectCollegeId(colleges_name);
     }
 }

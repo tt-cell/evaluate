@@ -1,22 +1,22 @@
 package com.evaluate.demo.entity;
 
 public class UserRole {
-    private String uid;
-    private String rid;
+    private int uid;
+    private int rid;
 
-    public String getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
-    public String getRid() {
+    public int getRid() {
         return rid;
     }
 
-    public void setRid(String rid) {
+    public void setRid(int rid) {
         this.rid = rid;
     }
 }

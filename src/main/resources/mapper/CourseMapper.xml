@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.CourseDao">
+    <resultMap id="CourseResultMap" type="com.evaluate.demo.dao.CourseDao">
+        <id column="courses_id"  property="courses_id" />
+        <result column="courses_name"  property="courses_name" />
+        <result column="school_year"  property="school_year" />
+        <result column="classs_id"  property="classs_id" />
+    </resultMap>
+
+    <!--查询所有课程的信息-->
+    <select id="selectAllCourse" resultType="java.util.LinkedHashMap">
+     SELECT cou.courses_id,cou.courses_name,cls.classs_code,cls.classs_name,cou.school_year FROM courses cou
+     INNER JOIN classs_courses cc ON cou.courses_id = cc.courses_id
+     INNER JOIN classs cls ON cc.classs_id = cls.classs_id ORDER BY cc.classs_id Limit #{before},#{after}
+    </select>
+    <!--查询所有课程的条数-->
+    <select id="count" resultType="int">
+     SELECT count(*) FROM courses cou
+     INNER JOIN classs_courses cc ON cou.courses_id = cc.courses_id
+     INNER JOIN classs cls ON cc.classs_id = cls.classs_id
+    </select>
+
+
+    <!--删除一门课程-->
+    <delete id="deleteOneCourse" parameterType="com.evaluate.demo.entity.Course">
+      DELETE FROM courses WHERE courses_id = #{courses_id}
+    </delete>
+
+
+    <!--修改一门课程-->
+    <update id="updateOneCourse" parameterType="com.evaluate.demo.entity.Course">
+        update courses set courses_name = #{courses_name} where courses_id = #{courses_id}
+    </update>
+
+    <!--模糊查询一门课程的名称-->
+    <select id="searchCourseName" resultType="java.util.LinkedHashMap">
+        SELECT cou.courses_id,cou.courses_name,cls.classs_code,cls.classs_name,cou.school_year FROM courses cou
+        INNER JOIN classs_courses cc ON cou.courses_id = cc.courses_id
+        INNER JOIN classs cls ON cc.classs_id = cls.classs_id
+        <where>
+            <if test="courses_name!=null and courses_name!=''">
+            and courses_name like concat ('%',#{courses_name},'%')
+            </if>
+        </where>
+       order by courses_id
+    </select>
+
+
+    <!--增加一门课程、班级、班级课程-->
+    <insert id="insertCourse" parameterType="com.evaluate.demo.entity.Course">
+        INSERT INTO courses(courses_name,school_year) VALUES(#{courses_name},#{school_year})
+    </insert>
+    <insert id="insertCourseClasss" parameterType="com.evaluate.demo.entity.ClasssCourses">
+         INSERT INTO classs_courses(courses_id,classs_id) VALUES(#{courses_id},#{classs_id})
+    </insert>
+    <insert id="insertClasss" parameterType="com.evaluate.demo.entity.ClasssCourses">
+        INSERT INTO classs(classs_name,classs_code) VALUES(#{classs_name},#{classs_code})
+    </insert>
+
+    <!--搜索班级，以及每个班级下面对应的课程-->
+    <select id="selectAllClasss" resultType="com.evaluate.demo.entity.Classs">
+        select * from classs
+    </select>
+    <select id="selectClasssCourse" parameterType="int" resultType="com.evaluate.demo.entity.Course">
+        SELECT * FROM courses WHERE courses_id IN (
+        SELECT courses_id FROM classs_courses WHERE classs_id IN
+       (SELECT classs_id FROM classs WHERE classs_id = #{classs_id}))
+    </select>
+
+</mapper>

@@ -1,0 +1,108 @@
+<html>
+<head>
+    <title>添加授课信息</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/jquery/jquery-3.4.1.min.js"></script>
+    <script src="/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form" action="" style="position: absolute;margin: 20px 0 0 40px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">教师ID</label>
+        <div class="layui-input-inline">
+            <input type="text" name="uid" required lay-verify="required" placeholder="请输入教师ID" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="width:200px">
+        <label class="layui-form-label">所属班级</label>
+        <div class="layui-input-inline" style="left: 110px;top: -20px">
+            <select name="classs_id" id="classs_id" lay-verify="required" lay-filter="calsssIdFilter" >
+                <option value="0" selected="" disabled>请选择班级</option>
+            </select>
+        </div>
+        <label class="layui-form-label">所授课程</label>
+        <div class="layui-input-inline" style="left: 110px;top: -20px">
+            <select name="courses_id" id="courses_id" lay-verify="required" lay-filter="coursesIdFilter" >
+                <option value="0" selected="" disabled>请选择课程</option>
+            </select>
+        </div>
+        <!--<label class="layui-form-label">学年度</label>-->
+        <!--<div class="layui-input-inline" style="left: 110px;top: -20px">-->
+            <!--<select name="school_year" id="school_year" lay-verify="required" lay-filter="schoolYearFilter" >-->
+                <!--<option value="0" selected="">请选择学年度</option>-->
+                <!--<option value="1">大一上</option>-->
+                <!--<option value="2">大一下</option>-->
+                <!--<option value="3">大二上</option>-->
+                <!--<option value="4">大二下</option>-->
+                <!--<option value="5">大三上</option>-->
+                <!--<option value="3">大三下</option>-->
+                <!--<option value="4">大四上</option>-->
+                <!--<option value="5">大四下</option>-->
+            <!--</select>-->
+        <!--</div>-->
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    console.log()
+    layui.use('form', function () {
+        var form = layui.form,layer = layui.layer,$ = layui.$
+        $.ajax({
+            url: '/selectAllCourses',
+            dataType: 'json',
+            type: 'get',
+            success: function (rs) {
+                $.each(rs.data, function (index,item) {
+                    $('#courses_id').append('<option value="'+item.courses_id+'">'+item.courses_name+'</option>');// 下拉菜单里添加元素
+                });
+                form.render();
+            }
+        })
+        $.ajax({
+            url: '/selectAllClasss',
+            dataType: 'json',
+            type: 'get',
+            success: function (rs) {
+                $.each(rs.data, function (index,item) {
+                    $('#classs_id').append('<option value="'+item.classs_id+'">'+item.classs_name+'</option>');// 下拉菜单里添加元素
+                });
+                form.render();
+            }
+        })
+
+        //获取下拉菜单value的值
+        var courses_id
+        var classs_id
+        form.on('select(coursesIdFilter)', function(data){
+            console.log(data.value)
+            courses_id = data.value
+        })
+        form.on('select(calsssIdFilter)', function(data){
+            console.log(data.value)
+            classs_id = data.value
+        })
+            //监听提交
+        form.on('submit(formDemo)', function (data) {
+            var rs = $.ajax({
+                url:'/insertUserTeachCourse',
+                type:'get',
+                sync:false,
+                data:{courses_id:courses_id,uid:data.field.uid,classs_id:classs_id},
+            })
+            if(rs.responseText>0){
+                layer.msg('成功', {icon: 6, time: 2000})
+                parent.layer.close(layer.index);
+            }else {
+                layer.msg('失败',{icon: 2, time: 2000})
+                parent.layer.close(layer.index);
+            }
+        })
+    })
+</script>
+</body>
+</html>

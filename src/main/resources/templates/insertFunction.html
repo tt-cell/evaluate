@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>添加功能</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="jquery/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<form class="layui-form" action="" style="margin: 20px 0 0 100px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">功能名：</label>
+        <div class="layui-inline">
+            <input type="text" name="fname" autocomplete="off" placeholder="请输入功能名" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级功能：</label>
+        <div class="layui-inline">
+            <input type="text" name="father_id" autocomplete="off" placeholder="请输入父级功能id" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">跳转链接：</label>
+        <div class="layui-inline">
+            <input type="text" name="url" autocomplete="off" placeholder="请输入跳转链接" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序：</label>
+        <div class="layui-inline">
+            <input type="text" name="sort" autocomplete="off" placeholder="请输入序号" value="0" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态：</label>
+        <div class="layui-inline">
+            <input type="text" name="status" autocomplete="off" placeholder="请输入状态" value="0" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="layui/layui.js"></script>
+<script>
+
+    layui.use('form', function () {
+        var form = layui.form
+            , layer = layui.layer
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            var res = $.ajax({url: `/insertColleges`, data: $('form').serialize(), async: false})
+            if (res.responseText > 0) {
+                layer.msg('成功', {icon: 6, time: 2000})
+                parent.layer.close(layer.index);
+            } else {
+                layer.alert('失败',{icon: 2, time: 2000})
+                parent.layer.close(layer.index);
+            }
+        })
+    })
+</script>
+</body>
+</html>

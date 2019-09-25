@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.RoleDao">
+  <resultMap id="RoleMap" type="com.evaluate.demo.entity.Role">
+    <id property="rid" column="rid"></id>
+    <result property="rname" column="rname"></result>
+  </resultMap>
+
+  <select id="selectAllRole" parameterType="String" resultType="HashMap">
+    SELECT u.uid,u.uname,r.rname FROM roles r
+        INNER JOIN users_roles ur ON r.rid=ur.rid
+        INNER JOIN users u ON ur.uid=u.uid
+  </select>
+
+    <update id="updateRole" parameterType="String">
+        UPDATE users_roles SET rid = #{rid} WHERE uid=#{uid}
+    </update>
+
+
+</mapper>

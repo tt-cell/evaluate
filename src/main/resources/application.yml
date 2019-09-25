@@ -16,7 +16,7 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     mvc:
-      static-path-pattern: /static/**
+      static-path-pattern: classpath:/static/**
       thymeleaf:
         cache: false
         prefix: classpath:/templates/
@@ -26,6 +26,8 @@ spring:
       date-format: 'yyyy-MM-dd HH:mm:ss'
       joda-date-time-format: 'yyyy-MM-dd HH:mm:ss'
       time-zone: GMT+8
+  resources:
+    static-locations: classpath:/static/
 
 #3.mybatis配置
 mybatis:

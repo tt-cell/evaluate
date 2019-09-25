@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>学院管理</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/jquery/jquery-3.4.1.min.js"></script>
+    <script src="/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form" action="" style="position: absolute;margin: 20px 0 0 40px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">学院名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="colleges_name" required lay-verify="required" placeholder="请输入学院名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+
+    function closeParent(){
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    }
+    layui.use('form', function(){
+        var form = layui.form;
+        var $ = layui.$
+        form.on('submit(formDemo)', function(data){
+            var collegeRs = $.ajax({url: `/insertColleges`, data: $('form').serialize(), async: false})
+            if (collegeRs.responseText > 0) {
+                layer.msg('成功', {icon: 6, time: 2000})
+                parent.layer.close(layer.index);
+            } else {
+                layer.alert('失败',{icon: 2, time: 2000})
+                parent.layer.close(layer.index);
+            }
+            closeParent()
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

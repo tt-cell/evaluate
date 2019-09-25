@@ -3,15 +3,12 @@ import com.evaluate.demo.entity.*;
 import com.evaluate.demo.service.FunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -85,4 +82,107 @@ public class FunctionController {
         }
         return rs;
     }
+
+
+    @RequestMapping("/functionMangerment")
+    public String getMenu() {
+        return "functionMangerment";
+    }
+
+    @RequestMapping("/insert")
+    public String insert() {
+        return "insertFunction";
+    }
+
+    @RequestMapping("/getMenu")
+    @ResponseBody
+    public Msg getMenu(Msg msg, int page,int limit) {
+
+        int before = limit * (page - 1);
+        int count = functionService.count();
+        List<Function> func = functionService.findPage(before, limit);
+
+        List list = new ArrayList();
+        if (func.size() <= 0) {
+            msg.setStatus(1);
+            msg.setMsg("获取数据失败！");
+            msg.setData("");
+            return msg;
+        }
+        for (int i = 0; i < func.size(); i++) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", func.get(i).getFid());
+            data.put("fname", func.get(i).getFname());
+            data.put("sort", func.get(i).getSort());
+            list.add(data);
+        }
+        msg.setCode(0);
+        msg.setStatus(0);
+        msg.setMsg("获取数据成功！");
+        msg.setCount(count);
+        msg.setData(list);
+        return msg;
+    }
+
+    @RequestMapping("/updateFun")
+    @ResponseBody
+    public int updateFun(Integer fid, String fname) {
+        int result = functionService.updateFun(fid, fname);
+        return result;
+    }
+
+    @RequestMapping("/deleteFun")
+    @ResponseBody
+    public int deleteFun(Integer fid) {
+        int result = functionService.deleteFun(fid);
+        return result;
+    }
+
+    @RequestMapping("/insertFun")
+    @ResponseBody
+    public int insertFun(Function function) {
+        int result = functionService.insertFun(function);
+        return result;
+    }
+
+    @RequestMapping("/giveFunctionToRole")
+    public ModelAndView giveFunctionToRole(){
+        return new ModelAndView("insertRolesFunction");
+    }
+
+
+    @RequestMapping("/insertRolesFunction")
+    @ResponseBody
+    public int insertRolesFunction(RoleFunction roleFunction) {
+        int result = functionService.insertRolesFunction(roleFunction);
+        if(result>0)
+        return result;
+        else
+            return 0;
+    }
+
+    @RequestMapping("/selectAllTheFunction")
+    @ResponseBody
+    public Msg selectAllTheFunction(Msg msg){
+        List<Function> functionList = functionService.selectAllTheFunction();
+        List listData = new ArrayList();
+        if(functionList.size()<0){
+            msg.setMsg("获取数据失败");
+            msg.setData("");
+            msg.setCode(1);
+            return msg;
+        }
+        for(int i = 0;i<functionList.size();i++){
+            Map<String,Object> map = new LinkedHashMap<>();
+            map.put("fid",functionList.get(i).getFid());
+            map.put("fname",functionList.get(i).getFname());
+            listData.add(map);
+        }
+        msg.setCode(0);
+        msg.setStatus(0);
+        msg.setMsg("获取数据成功！");
+        msg.setData(listData);
+        return msg;
+    }
+
 }

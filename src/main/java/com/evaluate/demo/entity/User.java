@@ -6,9 +6,9 @@ public class User {
     private String uid;
     private String uname;
     private String password;
-    private int sex;
+    private String sex;
     private int colleges_id;
-    private ArrayList<User> list;
+    private int list;
 
     public String getUid() {
         return uid;
@@ -34,16 +34,15 @@ public class User {
         this.password = password;
     }
 
-    public int getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-
-    public ArrayList<User> getList() {
+    public int getList() {
         return list;
     }
 
@@ -55,7 +54,7 @@ public class User {
         this.colleges_id = colleges_id;
     }
 
-    public void setList(ArrayList<User> list) {
+    public void setList(int list) {
         this.list = list;
     }
 }

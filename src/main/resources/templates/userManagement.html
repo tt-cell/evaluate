@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>课程管理界面</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--layui-->
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <div class="page">
+        <!-- Main Navbar-->
+        <header class="header">
+            <nav class="navbar">
+                <!-- Search Box-->
+                <div class="search-box">
+                    <button class="dismiss"><i class="icon-close"></i></button>
+                    <form id="searchForm" action="#" role="search">
+                        <input type="search" placeholder="What are you looking for..." class="form-control">
+                    </form>
+                </div>
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <!-- Navbar Header-->
+                        <div class="navbar-header">
+                            <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                            <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                            <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                            <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                        </div>
+                        <!-- Navbar Menu -->
+                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                            <!-- Search-->
+                            <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                            <!-- Notifications-->
+                            <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
+                                <ul aria-labelledby="notifications" class="dropdown-menu">
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+                                            <div class="notification-time"><small>4 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                            <div class="notification-time"><small>4 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
+                                            <div class="notification-time"><small>4 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                            <div class="notification-time"><small>10 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                                </ul>
+                            </li>
+                            <!-- Messages                        -->
+                            <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
+                                <ul aria-labelledby="notifications" class="dropdown-menu">
+                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-body">
+                                            <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                        <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-body">
+                                            <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                        <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-body">
+                                            <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Read all messages   </strong></a></li>
+                                </ul>
+                            </li>
+                            <!-- Languages dropdown    -->
+                            <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                                <ul aria-labelledby="languages" class="dropdown-menu">
+                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2">German</a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2">French                                         </a></li>
+                                </ul>
+                            </li>
+                            <!-- Logout    -->
+                            <li class="nav-item"><a href="/login" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="page-content d-flex align-items-stretch">
+            <!-- Side Navbar -->
+            <nav class="side-navbar">
+                <!-- Sidebar Header-->
+                <div class="sidebar-header d-flex align-items-center">
+                    <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="title">
+                        <h1 class="h4">Mark Stephen</h1>
+                        <p>Web Designer</p>
+                    </div>
+                </div>
+                <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+                <!--<div id="div_tree"></div>-->
+                <ul id="MenuList" class="list-unstyled">
+                    <li class="active"><a href="/index"> <i class="icon-home"></i>Home </a></li>
+                    <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
+                    <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
+                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+                    <li><a href="/login"> <i class="icon-interface-windows"></i>Login page </a></li>
+                </ul>
+                <ul class="list-unstyled">
+
+                </ul><span class="heading">Extras</span>
+                <ul class="list-unstyled">
+                    <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
+                    <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
+                    <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
+                    <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+                </ul>
+            </nav>
+            <div class="content-inner">
+                <!--layui界面-->
+                <button style="margin: 10px 0 0 10px" class="layui-btn layui-btn-normal" id="addUser">添加用户</button>
+
+                <div style="margin: 10px 0 0 10px" class="layui-btn-group demoTable">
+                    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+                    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+                    <button class="layui-btn" data-type="isAll">验证是否全选</button>
+                </div>
+
+                <table class="layui-table" lay-data="{ url:'/getAllUsers', page:true, id:'idTest'}" lay-filter="test" >
+                    <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+                        <th lay-data="{field:'uid', width:100, sort: true, fixed: true}">用户ID</th>
+                        <th lay-data="{field:'uname', width:200 }">用户名</th>
+                        <th lay-data="{field:'password', width:150}">密码</th>
+                        <th lay-data="{field:'sex', width:150}">性别</th>
+                        <th lay-data="{field:'colleges_name', width:250}">学院名称</th>
+                        <th lay-data="{fixed: 'right', width:230, align:'center', toolbar: '#barDemo'}"></th>
+                    </tr>
+                    </thead>
+                </table>
+
+                <script type="text/html" id="barDemo">
+                    <a style="color: white" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="show"><i class="layui-icon"></i>查看</a>
+                    <a style="color: white" class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon"></i>编辑</a>
+                    <a style="color: white" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon"></i>删除</a>
+                </script>
+                <!-- Page Footer-->
+                <footer class="main-footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Copyright &copy; 2019.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <p></p>
+                                <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</head>
+<body>
+<!-- JavaScript files-->
+<script src="layui/layui.js"></script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/charts-home.js"></script>
+<script src="js/front.js"></script>
+
+<!-- Main File-->
+<script type="text/javascript" th:inline="none">
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            console.log(data)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    $.ajax({
+                        url: "/deleteOneUser?userId="+data.uid,
+                        type:"post",
+                        dataType:"json",
+                        success: function (res) {
+                            alert("删除成功")
+                        }
+                    })
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                console.log("修改"+data)
+                layer.prompt({
+                    formType: 2
+                    ,value: data.uname
+                }, function(value, index){
+                    console.log(value)
+                    $.ajax({
+                        url: "/changeOneUser?userId="+data.uid+"&uname="+value,
+                        type:"post",
+                        dataType:"json",
+                        success: function (res) {
+                            if(res.flag==="success"){
+                                alert("修改成功")
+                            }
+                        }
+                    })
+                    obj.update({
+                        uname: value
+                    });
+                    layer.close(index);
+                });
+            }
+            else  if(obj.event === 'add'){
+                layer.open({
+                    title: '提交用户',
+                    type: 2,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['400px', '300px'], //宽高
+                    content: '/getAddClasssAndLeadPage?colleges_id='+1, //弹出的页面
+                    shadeClose: true, //点击遮罩关闭
+                    end: function () {
+                        window.location.reload();
+                    },
+                    btn:function () {
+                    }
+                });
+            }
+        });
+        //监听行工具事件
+        var $ = layui.$, active = {
+            getCheckData: function(){ //获取选中数据
+                var checkStatus = table.checkStatus('idTest')
+                    ,data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+            ,getCheckLength: function(){ //获取选中数目
+                var checkStatus = table.checkStatus('idTest')
+                    ,data = checkStatus.data;
+                layer.msg('选中了：'+ data.length + ' 个');
+            }
+            ,isAll: function(){ //验证是否全选
+                var checkStatus = table.checkStatus('idTest');
+                layer.msg(checkStatus.isAll ? '全选': '未全选')
+            },
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+        //添加一个用户
+    $('#addUser').on('click', function(){
+        layer.open({
+            title: '提交用户',
+            type: 2,
+            skin: 'layui-layer-rim', //加上边框
+            area: ['500px', '500px'], //宽高
+            content: '/getAddUserPage', //弹出的页面
+            shadeClose: true, //点击遮罩关闭
+            end: function () {
+                window.location.reload();
+            },
+            btn:function () {
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

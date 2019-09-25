@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<title>添加课程和班级</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="layui/css/layui.css">
+<script src="jquery/jquery-3.4.1.min.js"></script>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item" style="margin: 20px 0 0 10px">
+        <label class="layui-form-label">添加班级</label>
+        <div class="layui-input-inline">
+            <select name="classs_id" id="classs_id" lay-filter="calsssIdFilter">
+                <option value="0" selected="" disabled>请选择班级</option>
+            </select>
+        </div>
+
+        <label class="layui-form-label">添加课程</label>
+        <div class="layui-input-inline">
+            <select name="courses_id" id="courses_id" lay-filter="coursesIdFilter">
+                <option value="0" selected="" disabled>请选择课程</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div style="margin:100px 0 0 250px" class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="layui/layui.js"></script>
+<script>
+    layui.use('form', function () {
+        var form = layui.form,layer = layui.layer,$ = layui.$
+        $.ajax({
+            url: '/selectAllTheClasss',
+            dataType: 'json',
+            type: 'get',
+            success: function (rs) {
+                $.each(rs.data, function (index,item) {
+                    $('#classs_id').append('<option value="'+item.classs_id+'">'+item.classs_name+'</option>');// 下拉菜单里添加元素
+                });
+                form.render();
+            }
+        })
+
+
+        //获取下拉菜单value的值
+        var classs_id
+        form.on('select(calsssIdFilter)', function(data){
+            console.log(data.value)
+            classs_id = data.value
+            $.ajax({
+                url: `/selectClasssCourse`,
+                dataType: 'json',
+                type: 'get',
+                data:{classs_id:classs_id},
+                success: function (rs) {
+                    $.each(rs.data, function (index,item) {
+                        $('#courses_id').append('<option value="'+item.courses_id+'">'+item.courses_name+'</option>');// 下拉菜单里添加元素
+                    });
+                    form.render();
+                }
+            })
+        })
+        var courses_id
+        form.on('select(coursesIdFilter)', function(data){
+            console.log(data.value)
+            courses_id = data.value
+        })
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            var classsCourses = $.ajax({
+                url:'/insertCoursesClasss',
+                type:'post',
+                sync:false,
+                data:{courses_id:courses_id,classs_id:classs_id}
+            })
+            if(classsCourses.responseText>0){
+                layer.msg('成功', {icon: 6, time: 2000})
+                parent.layer.close(layer.index);
+            }else{
+                layer.msg('失败',{icon: 2, time: 2000})
+                parent.layer.close(layer.index);
+            }
+
+        })
+    })
+</script>
+</body>
+</html>

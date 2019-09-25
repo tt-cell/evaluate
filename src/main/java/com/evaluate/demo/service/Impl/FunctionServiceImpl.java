@@ -2,6 +2,7 @@ package com.evaluate.demo.service.Impl;
 
 import com.evaluate.demo.dao.FunctionDao;
 import com.evaluate.demo.entity.Function;
+import com.evaluate.demo.entity.RoleFunction;
 import com.evaluate.demo.entity.SonFunction;
 import com.evaluate.demo.entity.User;
 import com.evaluate.demo.service.FunctionService;
@@ -28,6 +29,41 @@ public class FunctionServiceImpl implements FunctionService {
     public List<Map<String, Object>> getTreeList(Integer fid,String rid) {
         List<Function> list = functionDao.getTreeLists(rid);
         return buildTree(fid, list);
+    }
+
+    @Override
+    public int updateFun(int fid, String fname) {
+        return functionDao.updateFun(fid, fname);
+    }
+
+    @Override
+    public int deleteFun(int fid) {
+        return functionDao.deleteFun(fid);
+    }
+
+    @Override
+    public int insertFun(Function function) {
+        return functionDao.insertFun(function);
+    }
+
+    @Override
+    public List<Function> findPage(int before, int after) {
+        return functionDao.findPage(before,after);
+    }
+
+    @Override
+    public int count() {
+        return functionDao.count();
+    }
+
+    @Override
+    public int insertRolesFunction(RoleFunction roleFunction) {
+        return functionDao.insertRolesFunction(roleFunction);
+    }
+
+    @Override
+    public List<Function> selectAllTheFunction() {
+        return functionDao.selectAllTheFunction();
     }
 
     public List<Map<String, Object>> buildTree(Integer pid, List<Function> list){

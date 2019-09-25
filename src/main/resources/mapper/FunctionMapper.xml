@@ -58,4 +58,38 @@ INNER JOIN roles ro ON ro.rid = rf.rid
 INNER JOIN users_roles ur ON ro.rid =  ur.rid
 WHERE uid = #{uid}
     </select>
+
+    <!--分页-->
+    <select id="findPage" resultType="com.evaluate.demo.entity.Function">
+    select * from function limit #{before},#{after}
+    </select>
+
+    <select id="count" resultType="int">
+    select count(*) from function
+    </select>
+
+    <!--改-->
+    <update id="updateFun" parameterType="com.evaluate.demo.entity.Function">
+        update function set fname=#{fname} where fid=#{fid}
+    </update>
+
+    <!--删-->
+    <delete id="deleteFun" parameterType="com.evaluate.demo.entity.Function">
+        delete from function where fid=#{fid}
+    </delete>
+
+    <!--增-->
+    <insert id="insertFun" parameterType="com.evaluate.demo.entity.Function">
+        INSERT INTO FUNCTION(fname,father_id,url,sort,STATUS) VALUES(#{fname},#{father_id},#{url},#{sort},#{status})
+    </insert>
+    
+    <!--分配权限-->
+    <insert id="insertRolesFunction" parameterType="com.evaluate.demo.entity.RoleFunction">
+        insert into roles_functions(rid,fid) values (#{rid},#{fid})
+    </insert>
+
+    <!--查询所有权限-->
+    <select id="selectAllTheFunction" resultType="com.evaluate.demo.entity.Function">
+        select * from function
+    </select>
 </mapper>

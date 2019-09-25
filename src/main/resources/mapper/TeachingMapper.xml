@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.TeachingDao">
+   <!--分页查询所有授课信息-->
+    <select id="selectAllTeaching" resultType="java.util.LinkedHashMap">
+    SELECT u.uid,u.uname,u.sex,cou.courses_name,cou.school_year,cls.classs_name,cls.classs_code
+    FROM users u INNER JOIN users_teach_courses utc ON u.uid = utc.uid
+    INNER JOIN courses cou ON utc.courses_id = cou.courses_id
+    INNER JOIN classs cls ON utc.classs_id = cls.classs_id
+    ORDER BY u.uid  Limit #{before},#{after}
+    </select>
+    <select id="count" resultType="int">
+     SELECT COUNT(*)
+    FROM users u INNER JOIN users_teach_courses utc ON u.uid = utc.uid
+    INNER JOIN courses cou ON utc.courses_id = cou.courses_id
+    INNER JOIN classs cls ON utc.classs_id = cls.classs_id
+    ORDER BY u.uid
+    </select>
+    <!--插入授课信息id-->
+    <insert id="insertUserTeachCourse" parameterType="com.evaluate.demo.entity.UsersTeachCourse">
+        INSERT INTO users_teach_courses(courses_id,uid,classs_id) VALUES(#{courses_id},#{uid},#{classs_id})
+    </insert>
+
+
+    <!--插入课程和班级-->
+ <select id="selectCourse" resultType="com.evaluate.demo.entity.Course">
+  select courses_id,courses_name from courses
+ </select>
+ <select id="selectClasss" resultType="com.evaluate.demo.entity.Classs">
+  select classs_id,classs_name from classs
+ </select>
+
+
+</mapper>

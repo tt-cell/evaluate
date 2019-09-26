@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理</title>
+    <script src="jquery/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet"  href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.js"></script>
+
+</head>
+<body>
+
+<div style="margin: 10px 0 0 10px" class="layui-btn-group demoTable">
+    <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+    <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+    <button class="layui-btn" data-type="isAll">验证是否全选</button>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="barDemo">
+    <a style="color: white" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="show"><i class="layui-icon"></i>查看</a>
+    <a style="color: white" class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon"></i>编辑</a>
+</script>
+<script th:inline="javascript">
+    var a = [[${select_classs}]];
+</script>
+<script type="text/javascript" th:inline="none">
+
+
+    layui.use('table', function(){
+
+        var table = layui.table;
+
+            table.render({
+                elem: '#test'
+                ,url:'/selectClassLike?select_classs='+a
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,title: '查询班级表'
+                ,cols: [[
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field:'classs_id', width:100, sort: true, fixed: true,title:"班级ID"}
+                    ,{field:'classs_name', width:200,title:"班级名称"}
+                    ,{field:'classs_code', width:150,title:"班级编码"}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                ]]
+                ,page: true
+            });
+
+
+
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(data)
+            if(obj.event === 'show'){
+                layer.confirm(JSON.stringify(data), function(index){
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                //console.log("修改"+data.classs_id)
+                layer.prompt({
+                    formType: 2
+                    ,value: data.classs_name
+                }, function(value,index){
+                    console.log(value)
+                    $.ajax({
+                        url: "/updateOneClasss?classs_id="+data.classs_id+"&classs_name="+value,
+                        type:"post",
+                        dataType:"json",
+                        success: function (res) {
+                            if(res.flag==="success"){
+                                layer.msg('修改班级名称完毕',{time:1000});
+                            }
+                        }
+                    })
+                    obj.update({
+                        classs_name: value
+                    });
+                    layer.close(index);
+                });
+            }
+
+        });
+
+
+
+
+    });
+
+
+
+
+</script>
+</body>
+</html>

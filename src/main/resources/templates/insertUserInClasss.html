@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理</title>
+    <script src="jquery/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet"  href="layui/css/layui.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.js"></script>
+
+</head>
+<body>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">添进班级</button>
+    </div>
+</script>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="barDemo">
+    <a style="color: white" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="show"><i class="layui-icon"></i>查看</a>
+</script>
+<script th:inline="javascript">
+    var classs_id = [[${classs_id}]];
+</script>
+<script type="text/javascript" th:inline="none">
+
+    var list=[]
+    layui.use('table', function(){
+
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'/getAllUsers'
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '用户表'
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'uid', width:100, sort: true, fixed: true,title:'用户ID'}
+                ,{field:'uname', width:200 ,title:'用户名'}
+                ,{field:'password', width:150,title:'密码'}
+                ,{field:'sex', width:150,title:'性别'}
+                ,{field:'colleges_name', width:250,title:'学院名称'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]]
+            ,page: true
+        });
+
+
+
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(data)
+            if(obj.event === 'show'){
+                layer.confirm(JSON.stringify(data), function(index){
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                //console.log("修改"+data.classs_id)
+                layer.prompt({
+                    formType: 2
+                    ,value: data.classs_name
+                }, function(value,index){
+                    console.log(value)
+                    $.ajax({
+                        url: "/updateOneClasss?classs_id="+data.classs_id+"&classs_name="+value,
+                        type:"post",
+                        dataType:"json",
+                        success: function (res) {
+                            if(res.flag==="success"){
+                                layer.msg('修改班级名称完毕',{time:1000});
+                            }
+                        }
+                    })
+                    obj.update({
+                        classs_name: value
+                    });
+                    layer.close(index);
+                });
+            }
+
+        });
+
+        //监听行工具事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+                case 'add':
+
+                    for(let i in checkStatus.data){
+                        list.push(checkStatus.data[i].uid)
+                        console.log(checkStatus.data[i].uid);
+                    }
+                    $.ajax({
+                            url: "/addOneClasssUser?classs_id="+classs_id,
+                            type:"post",
+                            data:{list:JSON.stringify(list)},
+                            dataType:"json",
+                            success: function (res) {
+                                if(res.flag==="success"){
+                                    layer.msg('添加用户完毕',{time:1000});
+                                    list=[]
+                                }
+                            }
+                        })
+                    console.log("添加用户到班级")
+                    for(let i in list){
+                        console.log(list[i])
+                    }
+                    break;
+
+            };
+        });
+
+        // case 'add':
+        //ajax完成批量插入传list
+        // $.ajax({
+        //     url: "/updateOneClasss?classs_id="+data.classs_id+"&classs_name="+value,
+        //     type:"post",
+        //     dataType:"json",
+        //     success: function (res) {
+        //         if(res.flag==="success"){
+        //             layer.msg('修改班级名称完毕',{time:1000});
+        //         }
+        //     }
+        // })
+    });
+
+
+
+
+</script>
+</body>
+</html>

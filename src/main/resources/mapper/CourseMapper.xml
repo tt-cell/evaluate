@@ -70,4 +70,15 @@
        (SELECT classs_id FROM classs WHERE classs_id = #{classs_id}))
     </select>
 
+    <!--搜索学院，以及学院下面对应的班级-->
+    <select id="selectAllTheColleges" resultType="com.evaluate.demo.entity.Colleges">
+        select * from colleges
+    </select>
+    <select id="selectCollegesClasss" parameterType="int" resultType="com.evaluate.demo.entity.Classs">
+       SELECT * FROM classs WHERE classs_id IN (
+       SELECT classs_id FROM users_classs WHERE uid IN(
+       SELECT uid FROM users WHERE colleges_id IN(
+       SELECT colleges_id FROM colleges WHERE colleges_id = #{colleges_id})))
+    </select>
+
 </mapper>

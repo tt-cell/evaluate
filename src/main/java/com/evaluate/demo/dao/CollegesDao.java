@@ -15,4 +15,6 @@ public interface CollegesDao {
 
     //添加一个学院
     int insertColleges(Colleges colleges);
+
+
 }

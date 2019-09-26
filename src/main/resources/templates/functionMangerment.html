@@ -273,12 +273,12 @@
                     title: "添加功能",
                     area: ['550px', '450px'],
                     fix: false,
-                    maxmin: true,
+                    //maxmin: true,
                     shadeClose: true,
                     shade: 0.4,
                     anim: 5,
                     skin: 'layui-layer-rim',
-                    content: ['/insert', "no"],
+                    content: ['/insert', "yes"],
                     end: function () {//关闭后调用的事件
                         location = window.location;//刷新
                     }
@@ -289,7 +289,7 @@
                     type:2,
                     title:"角色分配权限",
                     area: ['500px', '300px'],
-                    content:['/giveFunctionToRole','no'],
+                    content:['/giveFunctionToRole','yes'],
                     skin:'layui-layer-molv',
                     offset: 'auto',
                     shade: 0.4,

@@ -2,6 +2,7 @@ package com.evaluate.demo.dao;
 
 import com.evaluate.demo.entity.Classs;
 import com.evaluate.demo.entity.ClasssCourses;
+import com.evaluate.demo.entity.Colleges;
 import com.evaluate.demo.entity.Course;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -31,4 +32,8 @@ public interface CourseDao {
     //搜索班级，以及每个班级下面对应的课程
     List<Classs> selectAllClasss();
     List<Course> selectClasssCourse(int classs_id);
+
+    //搜索学院，以及学院下面对应的班级
+    List<Colleges> selectAllTheColleges();
+    List<Classs> selectCollegesClasss(int colleges_id);
 }

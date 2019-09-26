@@ -2,6 +2,7 @@ package com.evaluate.demo.controller;
 
 import com.evaluate.demo.entity.Classs;
 import com.evaluate.demo.entity.ClasssCourses;
+import com.evaluate.demo.entity.Colleges;
 import com.evaluate.demo.entity.Course;
 import com.evaluate.demo.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,4 +141,27 @@ public class CourseController {
         return map;
     }
 
+    //搜索学院，以及学院下面对应的班级
+
+    @RequestMapping("/selectAllTheColleges")
+    @ResponseBody
+    public Map selectAllTheColleges(){
+        List<Colleges> collegesList = courseService.selectAllTheColleges();
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("msg","获取数据成功");
+        map.put("data",collegesList);
+        return map;
+    }
+
+    @RequestMapping("/selectCollegesClasss")
+    @ResponseBody
+    public Map selectCollegesClasss(int colleges_id){
+        List<Classs> classsList = courseService.selectCollegesClasss(colleges_id);
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("msg","获取数据成功");
+        map.put("data",classsList);
+        return map;
+    }
 }

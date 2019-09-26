@@ -107,5 +107,10 @@ public class UserController {
         return map;
     }
 
+    @RequestMapping(value = "/insertTheUserRole")
+    public ModelAndView insertUserRole(){
+        return new ModelAndView("insertUserRole");
+    }
+
 
 }

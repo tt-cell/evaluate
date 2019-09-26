@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.ClasssDao">
+
+   <select id="selectAllClasss" resultType="com.evaluate.demo.entity.Classs">
+       select * from classs  LIMIT #{before},#{after}
+   </select>
+    <select id="selectAllClasssCount" resultType="int">
+       select count(*) from classs
+   </select>
+
+    <select id="selectClassLike" resultType="com.evaluate.demo.entity.Classs">
+        select * from classs where concat(classs_name,classs_code) like '%${select_classs}%'LIMIT #{before},#{after}
+    </select>
+
+    <select id="selectAllClasssCountLike" resultType="int">
+       select count(*) from classs where concat(classs_name,classs_code) like  '%${select_classs}%'
+   </select>
+
+    <select id="selectUsersByClasss" resultType="com.evaluate.demo.entity.User" parameterType="int">
+        select * from users inner join users_classs uc on users.uid = uc.uid and uc.classs_id=#{classs_id} group by users.uid
+    </select>
+    
+
+    <insert id="insertOneClass" parameterType="String">
+        insert into classs(classs_name,classs_code) values (#{classs_name},#{classs_code})
+    </insert>
+
+    <insert id="insertUserByClasss" parameterType="java.util.List">
+        insert into users_classs(classs_id, uid) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{classs_id},#{item})
+        </foreach>
+    </insert>
+
+    <update id="updateOneClasss" >
+        update classs
+        <set>
+        <if test="classs_name!=null">
+            classs_name=#{classs_name},
+        </if>
+    </set>
+      where classs_id=#{classs_id}
+    </update>
+</mapper>

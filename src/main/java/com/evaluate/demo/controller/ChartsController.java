@@ -2,7 +2,7 @@ package com.evaluate.demo.controller;
 
 import com.evaluate.demo.entity.Msg;
 import com.evaluate.demo.entity.Statistics;
-import com.evaluate.demo.service.StatisticsService;
+import com.evaluate.demo.service.StatisticsChartsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import java.util.*;
 @Controller
 public class ChartsController {
     @Autowired
-    private StatisticsService statisticsService;
+    private StatisticsChartsService statisticsService;
     //跳转到图表数据图
     @RequestMapping("/getevaluateCharts")
     public ModelAndView getevaluateCharts(){
@@ -36,7 +36,7 @@ public class ChartsController {
         for(int i = 0;i<statisticsList.size();i++){
             Map<String,Object> map = new LinkedHashMap<>();
             map.put("name",statisticsList.get(i).getUname());
-            map.put("value",statisticsList.get(i).getScore());
+            map.put("value",Integer.parseInt(statisticsList.get(i).getScore())*10);
             WordCloudData.add(map);
         }
         msg.setMsg("获取数据成功");

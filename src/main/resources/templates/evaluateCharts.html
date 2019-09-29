@@ -263,7 +263,7 @@
                 }
             },
             legend: {
-                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+                data:['邮件营销','联盟广告','搜索引擎']
             },
             toolbox: {
                 feature: {
@@ -302,20 +302,6 @@
                     stack: '总量',
                     areaStyle: {},
                     data:[220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'视频广告',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {},
-                    data:[150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name:'直接访问',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data:[320, 332, 301, 334, 390, 330, 320]
                 },
                 {
                     name:'搜索引擎',
@@ -361,112 +347,7 @@
                         enable: true,
                         minSize: 16
                     },
-                    data: [
-                        {
-                            name: "Sam S Club",
-                            value: 10000,
-                            textStyle: {
-                                normal: {
-                                    color: 'black'
-                                }
-                            }
-                        },
-                        // {
-                        //     name: "Macys",
-                        //     value: 6181,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Amy Schumer",
-                        //     value: 4386,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Jurassic World",
-                        //     value: 4055,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Charter Communications",
-                        //     value: 2467,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Chick Fil A",
-                        //     value: 2244,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Planet Fitness",
-                        //     value: 1898,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Pitch Perfect",
-                        //     value: 1484,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Express",
-                        //     value: 1112,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Home",
-                        //     value: 965,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Johnny Depp",
-                        //     value: 847,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Lena Dunham",
-                        //     value: 582,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Lewis Hamilton",
-                        //     value: 555,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "KXAN",
-                        //     value: 550,
-                        //     itemStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Mary Ellen Mark",
-                        //     value: 462,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Farrah Abraham",
-                        //     value: 366,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Rita Ora",
-                        //     value: 360,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Serena Williams",
-                        //     value: 282,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "NCAA baseball tournament",
-                        //     value: 273,
-                        //     textStyle: createRandomItemStyle()
-                        // },
-                        // {
-                        //     name: "Point Break",
-                        //     value: 265,
-                        //     textStyle: createRandomItemStyle()
-                        // }
-                    ]
+                    data: []
                 }]
             };
         setTimeout(function () {
@@ -476,21 +357,19 @@
                 data:'json',
                 success:function (res) {
                     console.log(res)
-                    console.log(myEchartsThreeOption.series.data)
-                    //myEchartsThreeOption.series.data = res.data
                     res.data.forEach(function (data) {
-                        console.log(data)
-                        console.log( myEchartsThreeOption.series.data)
-                        myEchartsThreeOption.series.data = data + ','
+                        myEchartsThreeOption.series[0].data.push(data);
+                        //myEchartsThreeOption.series[0].data.push({textStyle:createRandomItemStyle()});
+                        // .push({textStyle:createRandomItemStyle()})
                     })
                     myChartsThree.setOption(myEchartsThreeOption);
                 },
                 error:function (err) {
+                    alert("小兄弟，没有获取带后台数据呀！")
                     console.log(err.message)
                 }
             })
         },1000)
-        // 为echarts对象加载数据
 
         //第四个图为水滴图
 

@@ -1,17 +1,17 @@
 package com.evaluate.demo.service.Impl;
 
-import com.evaluate.demo.dao.StatisticsDao;
+import com.evaluate.demo.dao.StatisticsChartsDao;
 import com.evaluate.demo.entity.Statistics;
-import com.evaluate.demo.service.StatisticsService;
+import com.evaluate.demo.service.StatisticsChartsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StatisticsServiceImpl implements StatisticsService {
+public class StatisticsChartsServiceImpl implements StatisticsChartsService {
     @Autowired
-    private StatisticsDao statisticsDao;
+    private StatisticsChartsDao statisticsDao;
 
     @Override
     public List<Statistics> selectWordCloudData() {

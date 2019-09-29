@@ -122,6 +122,10 @@
                                     layer.msg('添加用户完毕',{time:1000});
                                     list=[]
                                 }
+                            },
+                            error:function () {
+                                layer.msg('添加用户失败',{time:1000});
+                                list=[]
                             }
                         })
                     console.log("添加用户到班级")

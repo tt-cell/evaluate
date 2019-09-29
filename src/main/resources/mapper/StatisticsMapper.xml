@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evaluate.demo.dao.StatisticsDao">
+<<<<<<< HEAD
 
     <select id="selectAllStatistics" resultType="hashMap">
         select uname,courses_name,evaluates_name,score,note from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id LIMIT #{before},#{after}
@@ -15,5 +16,12 @@
     </select>
     <select id="selectStatisticsCountLike" resultType="int">
        select count(*) from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id and concat(uname,courses_name) like '%${select_val}%'
+=======
+    
+    <select id="selectWordCloudData" resultType="com.evaluate.demo.entity.Statistics">
+        SELECT * FROM users u INNER JOIN statistics s ON u.uid = s.uid
+        INNER JOIN evaluates e ON s.evaluates_id = e.evaluates_id
+        ORDER BY s.score
+>>>>>>> origin/master
     </select>
 </mapper>

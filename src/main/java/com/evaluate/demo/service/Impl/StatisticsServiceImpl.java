@@ -1,6 +1,10 @@
 package com.evaluate.demo.service.Impl;
 
 import com.evaluate.demo.dao.StatisticsDao;
+<<<<<<< HEAD
+=======
+import com.evaluate.demo.entity.Statistics;
+>>>>>>> origin/master
 import com.evaluate.demo.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +15,7 @@ import java.util.List;
 public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsDao statisticsDao;
+<<<<<<< HEAD
     @Override
     public List selectAllStatistics(int before, int after) {
         return statisticsDao.selectAllStatistics(before, after);
@@ -32,4 +37,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
 
+=======
+
+    @Override
+    public List<Statistics> selectWordCloudData() {
+        return statisticsDao.selectWordCloudData();
+    }
+>>>>>>> origin/master
 }

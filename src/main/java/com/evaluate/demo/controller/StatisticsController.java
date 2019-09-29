@@ -17,7 +17,7 @@ public class StatisticsController {
     private StatisticsService statisticsService;
 
     /*返回统计管理页面*/
-    @RequestMapping("/getStatisticsManagememt")
+    @RequestMapping("/getStatisticsManagement")
     @ResponseBody
     public ModelAndView getStatisticesManagememt(){
         ModelAndView modelAndView = new ModelAndView("statisticsManagement");

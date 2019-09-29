@@ -1,6 +1,4 @@
 package com.evaluate.demo.controller;
-
-
 import com.evaluate.demo.entity.Classs;
 import com.evaluate.demo.entity.User;
 import com.evaluate.demo.service.ClasssService;
@@ -107,6 +105,7 @@ public class ClasssController {
     public Map addOneClasssUser(@RequestParam("list")String list,@RequestParam("classs_id")int classs_id){
         List<User> users = classsService.selectUsersByClasss(classs_id);
         JSONArray ary = JSONArray.fromObject(list);
+
         List<Integer> list1 = JSONArray.toList(ary,new ArrayList<>(), new JsonConfig());
         Set<Integer> set = new HashSet<>(list1);
         users.stream().forEach(item->{
@@ -115,22 +114,12 @@ public class ClasssController {
             }
         });
 
-//        List<String> list = new ArrayList();
-//        list.add("1");
-//        list.add("2");
-//        list.add("3");
-//        for (int i = 0;i<list.size();i++){
-//            list1.add(Integer.parseInt(list.get(i).getUid()));
-//        }
-//        param.getList().stream().forEach(item->{
-//            list1.add(Integer.parseInt(item.getUid()));
-//        });
+        List<Integer> uidList = new ArrayList<>(set);
         Map<String,Object> map = new HashMap<>();
         if(set.size()<=0){
             map.put("flag", "success");
             return map;
         }
-        List<Integer> uidList = new ArrayList<>(set);
         int result = classsService.insertUserByClasss(classs_id,uidList);
         if (result>0){
             map.put("flag","success");

@@ -1,9 +1,9 @@
 package com.evaluate.demo.controller;
 
+
 import com.evaluate.demo.entity.Classs;
 import com.evaluate.demo.entity.User;
 import com.evaluate.demo.service.ClasssService;
-import javafx.beans.binding.ObjectExpression;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.swing.text.html.parser.Parser;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class ClasssController {
@@ -110,17 +107,14 @@ public class ClasssController {
     public Map addOneClasssUser(@RequestParam("list")String list,@RequestParam("classs_id")int classs_id){
         List<User> users = classsService.selectUsersByClasss(classs_id);
         JSONArray ary = JSONArray.fromObject(list);
-        List<Integer> uidList = new ArrayList<>();
         List<Integer> list1 = JSONArray.toList(ary,new ArrayList<>(), new JsonConfig());
-           for (int i = 0;i<list1.size();i++){
-              for(int j = 0;j<users.size();i++){
-                  if(list1.get(i)!=Integer.valueOf(users.get(j).getUid())){
-                      uidList.add(list1.get(i));
-                      break;
+        Set<Integer> set = new HashSet<>(list1);
+        users.stream().forEach(item->{
+            if(set.contains(Integer.parseInt(item.getUid()))){
+                set.remove(Integer.parseInt(item.getUid()));
+            }
+        });
 
-                  }
-              }
-           }
 //        List<String> list = new ArrayList();
 //        list.add("1");
 //        list.add("2");
@@ -132,7 +126,11 @@ public class ClasssController {
 //            list1.add(Integer.parseInt(item.getUid()));
 //        });
         Map<String,Object> map = new HashMap<>();
-
+        if(set.size()<=0){
+            map.put("flag", "success");
+            return map;
+        }
+        List<Integer> uidList = new ArrayList<>(set);
         int result = classsService.insertUserByClasss(classs_id,uidList);
         if (result>0){
             map.put("flag","success");

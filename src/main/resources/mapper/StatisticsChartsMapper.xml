@@ -12,6 +12,4 @@
         INNER JOIN evaluates e ON s.evaluates_id = e.evaluates_id
         ORDER BY s.score
     </select>
-
-
 </mapper>

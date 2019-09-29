@@ -1,5 +1,6 @@
 package com.evaluate.demo.service.Impl;
 
+
 import com.evaluate.demo.dao.StatisticsChartsDao;
 import com.evaluate.demo.entity.Statistics;
 import com.evaluate.demo.service.StatisticsChartsService;
@@ -11,10 +12,11 @@ import java.util.List;
 @Service
 public class StatisticsChartsServiceImpl implements StatisticsChartsService {
     @Autowired
-    private StatisticsChartsDao statisticsDao;
+    private StatisticsChartsDao statisticsChartsDao;
+
 
     @Override
     public List<Statistics> selectWordCloudData() {
-        return statisticsDao.selectWordCloudData();
+        return statisticsChartsDao.selectWordCloudData();
     }
 }

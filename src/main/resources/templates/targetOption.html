@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body style="line-height: 60px">
+
+<div>
+    <form class="layui-form" action="">
+        <div class="demoTarget">
+            指标名称：
+            <div class="layui-inline">
+                <input class="layui-input" name="target_name" id="target_name" autocomplete="off">
+            </div>
+            指标权重：
+            <div class="layui-inline">
+                <input class="layui-input" name="target_weight" id="target_weight" autocomplete="off">
+            </div>
+            <br>
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+        </div>
+    </form>
+
+    <form class="layui-form" action="">
+        <div class="layui-btn-group demoTable">
+            <button class="layui-btn" data-type="addFatherTarget">增加父级指标</button>
+            <button class="layui-btn" data-type="addNextTarget">增加下级指标</button>
+            <button class="layui-btn" data-type="addTitleTarget">增加题目指标</button>
+            <button class="layui-btn" data-type="deleteTarget" onclick="deleteTarget()">删除指标</button>
+        </div>
+    </form>
+
+    <form id="oform" class="layui-form" action="">
+        <div class="demoOption">
+            选项A：
+            <div class="layui-inline">
+                <input class="layui-input" name="optionA" id="optionA" autocomplete="off">
+            </div>
+            </br>
+            选项B：
+            <div class="layui-inline">
+                <input class="layui-input" name="optionB" id="optionB" autocomplete="off">
+            </div>
+            </br>
+            选项C：
+            <div class="layui-inline">
+                <input class="layui-input" name="optionC" id="optionC" autocomplete="off">
+            </div>
+            </br>
+            选项D：
+            <div class="layui-inline">
+                <input class="layui-input" name="optionD" id="optionD" autocomplete="off">
+            </div>
+            </br>
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo2">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+
+
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="jquery/jquery-3.4.1.min.js" charset="UTF-8"></script>
+
+<script>
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (false);
+    }
+
+    //取tid的值
+    var tid = getQueryVariable("tid")
+    var title = $.ajax({url: `/selectTitle?tid=${tid}`, async: false}).responseText
+    var options = $.ajax({url: `/getOption?tid=${tid}`, async: false}).responseText
+    //转json格式
+    var target = JSON.parse($.trim(title))
+    var option = JSON.parse($.trim(options))
+    //赋值
+    $("#target_name").val(target.data[0].targets_name)
+    $("#target_weight").val(target.data[0].targets_weight)
+    $("#optionA").val(option.data[0].options_name)
+    $("#optionB").val(option.data[1].options_name)
+    $("#optionC").val(option.data[2].options_name)
+    $("#optionD").val(option.data[3].options_name)
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        form.on('submit(demo1)', function () {
+            //取值
+            var tname = $("#target_name").val()
+            var tweight = $("#target_weight").val()
+            //修改
+            var result = $.ajax({
+                url: `/updateTarget?tid=${tid}&tname=${tname}&tweight=${tweight}`,
+                async: false
+            }).responseText
+            if (result > 0) {
+                alert("成功")
+            } else {
+                alert("失败")
+            }
+        })
+
+        form.on('submit(demo2)', function () {
+            var data = ['满意','一般','不满意','非常不满意']
+            for (var i = 0;i<4;i++) {
+                $.ajax({url:`/updateOption?oid=${i}&oname=${data[i]}`,async:false})
+            }
+        })
+    })
+
+    function deleteTarget(){
+        var res = $.ajax({
+            url:`/deleteTarget?tid=${tid}`,
+            async:false
+        }).responseText
+        if (res>0){
+            alert("删除成功")
+        } else {
+            alert("删除失败")
+        }
+    }
+
+</script>
+
+</body>
+</html>

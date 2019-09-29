@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.TargetDao">
+    <select id="selectTarget" resultType="com.evaluate.demo.entity.Target">
+        SELECT * FROM targets
+    </select>
+
+    <!--<select id="getTreeLists" resultType="com.evaluate.demo.entity.Target">-->
+        <!--SELECT * FROM targets where targets_id = #{tid}-->
+    <!--</select>-->
+
+    <select id="selectTitle" resultType="com.evaluate.demo.entity.Target">
+          SELECT * FROM targets WHERE targets_id=#{tid}
+    </select>
+
+
+
+    <update id="updateTarget" >
+          UPDATE  targets	SET targets_name = #{tname},targets_weight = #{tweight} WHERE targets_id = #{tid}
+    </update>
+
+
+    <delete id="deleteTarget">
+        DELETE FROM targets WHERE targets_id = #{tid}
+    </delete>
+
+
+</mapper>

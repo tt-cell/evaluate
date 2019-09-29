@@ -335,7 +335,7 @@
         myEchartsTwo.setOption(myEchartsTwoOption);
 
         //第三个图表为字符云图
-        var myChartThree = echarts.init(document.getElementById('ChartsThree'));
+        var myChartsThree = echarts.init(document.getElementById('ChartsThree'));
         function createRandomItemStyle() {
                 return {
                     normal: {
@@ -476,13 +476,14 @@
                 data:'json',
                 success:function (res) {
                     console.log(res)
-                    myEchartsThreeOption.series.data = res.data + ','
-                    // res.data.forEach(function (data) {
-                    //     console.log(data)
-                    //     console.log( myEchartsThreeOption.series.data)
-                    //     myEchartsThreeOption.series.data = data + ','
-                    // })
-                    myChartThree.setOption(myEchartsThreeOption);
+                    console.log(myEchartsThreeOption.series.data)
+                    //myEchartsThreeOption.series.data = res.data
+                    res.data.forEach(function (data) {
+                        console.log(data)
+                        console.log( myEchartsThreeOption.series.data)
+                        myEchartsThreeOption.series.data = data + ','
+                    })
+                    myChartsThree.setOption(myEchartsThreeOption);
                 },
                 error:function (err) {
                     console.log(err.message)

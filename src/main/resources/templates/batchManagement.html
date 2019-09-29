@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<table class="layui-table" lay-data="{url:`/getBatch`, page:true, id:'idTest'}" lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'batch_id', width:200, sort: true, fixed: true, templet: '#batch_id'}">ID</th>
+        <th lay-data="{field:'batch_name', width:400}">批次</th>
+        <th lay-data="{field:'batch_status', width:178 }">状态</th>
+        <th lay-data="{fixed: 'right', width:178, align:'center', toolbar:'#barDemo'}">操作</th>
+    </tr>
+    </thead>
+</table>
+
+<script type="text/html" id="batch_id">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+
+
+<script type="text/html" id="barDemo">
+    <input type="checkbox" name="close" class="cityId" lay-skin="switch"
+           lay-filter="switchTest" data-id="{{d.batch_id}}" lay-text="ON|OFF" {{d.batch_status=="1"?"checked":""}}>
+</script>
+
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="jquery/jquery-3.4.1.min.js" charset="UTF-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var form = layui.form,
+            table = layui.table;
+
+        form.on('switch(switchTest)', function (data) {
+            var batch_id = $(this).attr('data-id')
+            var item = $('.cityId')
+            // console.log(item)
+            // console.log($(item[0]).prop("checked"))
+            // console.log($(item[1]).prop("checked"))
+            // console.log($(item[2]).prop("checked"))
+            // console.log($(item[3]).prop("checked"))
+            // console.log($(item[4]).prop("checked"))
+            // console.log(item[0])
+            // console.log(item[1])
+            // console.log(item[2])
+            // console.log(item[3])
+            // console.log(item[4])
+            // console.log(item[5])
+            // console.log(item[6])
+            // console.log(item[7])
+            // console.log(item[8])
+            // console.log(item[9])
+            if (this.checked == true) {
+                var res = $.ajax({url: `/updateBatch?batch_id=${batch_id}&batch_status=1`, async: false}).responseText
+                if (res > 0) {
+                    layer.msg("0000000")
+
+                    item.each(function (index,value) {
+                        if ($(this).prop("checked")) {
+                            $(this).prop("checked", false);
+                        } else {
+                            $(this).prop("checked", true);
+                        }
+                    })
+                    table.reload('idTest', {
+                        url: '/getBatch'
+                    });
+                } else {
+                    layer.msg("11111111")
+
+                    table.reload('idTest', {
+                        url: '/getBatch'
+                    });
+                }
+            } else {
+                var res = $.ajax({url: `/updateBatch?batch_id=${batch_id}&batch_status=0`, async: false}).responseText
+                if (res > 0) {
+                    layer.msg("...........")
+                    table.reload('idTest', {
+                        url: '/getBatch'
+                    });
+                } else {
+                    layer.msg("----------")
+                    table.reload('idTest', {
+                        url: '/getBatch'
+                    });
+                }
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>

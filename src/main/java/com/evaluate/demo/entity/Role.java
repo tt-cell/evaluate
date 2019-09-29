@@ -1,14 +1,14 @@
 package com.evaluate.demo.entity;
 
 public class Role {
-    private String rid;
+    private int rid;
     private String rname;
 
-    public String getRid() {
+    public int getRid() {
         return rid;
     }
 
-    public void setRid(String rid) {
+    public void setRid(int rid) {
         this.rid = rid;
     }
 

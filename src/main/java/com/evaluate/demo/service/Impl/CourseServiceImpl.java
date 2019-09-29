@@ -4,6 +4,7 @@ package com.evaluate.demo.service.Impl;
 import com.evaluate.demo.dao.CourseDao;
 import com.evaluate.demo.entity.Classs;
 import com.evaluate.demo.entity.ClasssCourses;
+import com.evaluate.demo.entity.Colleges;
 import com.evaluate.demo.entity.Course;
 import com.evaluate.demo.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> selectClasssCourse(int classs_id) {
         return courseDao.selectClasssCourse(classs_id);
+    }
+
+    @Override
+    public List<Colleges> selectAllTheColleges() {
+        return courseDao.selectAllTheColleges();
+    }
+
+    @Override
+    public List<Classs> selectCollegesClasss(int colleges_id) {
+        return courseDao.selectCollegesClasss(colleges_id);
     }
 }

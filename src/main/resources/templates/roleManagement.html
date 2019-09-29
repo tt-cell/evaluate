@@ -149,6 +149,7 @@
                     <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
                     <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
                     <button class="layui-btn" data-type="isAll">验证是否全选</button>
+                    <button class="layui-btn layui-btn-danger" data-type="give"><i class="layui-icon layui-icon-password"></i>用户分配角色</button>
                 </div>
 
                 <table class="layui-table" lay-data="{url:`/selectAllRole`, page:true, id:'idTest'}" lay-filter="demo">
@@ -248,30 +249,47 @@
                 layer.close();
                 // });
             }
+        });
 
-            var $ = layui.$, active = {
-                //监听行工具事件
-                getCheckData: function(){ //获取选中数据
-                    var checkStatus = table.checkStatus('idTest')
-                        ,data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                }
-                ,getCheckLength: function(){ //获取选中数目
-                    var checkStatus = table.checkStatus('idTest')
-                        ,data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
-                }
-                ,isAll: function(){ //验证是否全选
-                    var checkStatus = table.checkStatus('idTest');
-                    layer.msg(checkStatus.isAll ? '全选': '未全选')
-                },
+        var $ = layui.$, active = {
+            //监听行工具事件
+            getCheckData: function(){ //获取选中数据
+                var checkStatus = table.checkStatus('idTest')
+                    ,data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+            ,getCheckLength: function(){ //获取选中数目
+                var checkStatus = table.checkStatus('idTest')
+                    ,data = checkStatus.data;
+                layer.msg('选中了：'+ data.length + ' 个');
+            }
+            ,isAll: function(){ //验证是否全选
+                var checkStatus = table.checkStatus('idTest');
+                layer.msg(checkStatus.isAll ? '全选': '未全选')
+            },
+            give:function () {
+                layer.open({
+                    type: 2,
+                    title: "给用户授予角色",
+                    area: ['550px', '450px'],
+                    fix: false,
+                    maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    anim: 4,
+                    skin: 'layui-layer-rim',
+                    content: ['/insertTheUserRole', "yes"],
+                    end: function () {//关闭后调用的事件
+                        location = window.location;//刷新
+                    }
+                });
+            }
 
-            };
+        };
 
-            $('.demoTable .layui-btn').on('click', function () {
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
-            });
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
         });
     });
 </script>

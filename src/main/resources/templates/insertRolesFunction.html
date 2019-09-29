@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>添加功能</title>
+    <style>
+        .layui-layer-content { overflow: visible!important; }
+    </style>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -23,7 +26,7 @@
     </div>
     <label class="layui-form-label">所有权限</label>
     <div class="layui-input-inline">
-        <select name="fname" id="fname" lay-verify="required" lay-filter="functionFilter" >
+        <select name="fname" id="fname" lay-verify="required" lay-filter="functionFilter" class="layui-layer-content" >
             <option value="0" selected="" disabled>请选择权限</option>
             <!--<option value="1">大一上</option>-->
             <!--<option value="2">大一下</option>-->

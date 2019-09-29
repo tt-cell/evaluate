@@ -10,13 +10,30 @@
 <body>
 <form class="layui-form" action="">
     <div class="layui-form-item" style="margin: 20px 0 0 10px">
+        <label class="layui-form-label">查看学院</label>
+        <div class="layui-input-inline">
+            <select name="colleges_id" id="colleges_id" lay-filter="collegesIdFilter">
+                <option value="0" selected="" disabled>请选择学院</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin: 20px 0 0 10px">
         <label class="layui-form-label">添加班级</label>
         <div class="layui-input-inline">
             <select name="classs_id" id="classs_id" lay-filter="calsssIdFilter">
                 <option value="0" selected="" disabled>请选择班级</option>
+                <!--<option value="大一上">大一上</option>-->
+                <!--<option value="大一下">大一下</option>-->
+                <!--<option value="大二上">大二上</option>-->
+                <!--<option value="大二下">大二下</option>-->
+                <!--<option value="大三上">大三上</option>-->
+                <!--<option value="大三下">大三下</option>-->
+                <!--<option value="大四上">大四上</option>-->
+                <!--<option value="大四下">大四下</option>-->
             </select>
         </div>
-
+    </div>
+    <div class="layui-form-item" style="margin: 20px 0 0 10px">
         <label class="layui-form-label">添加课程</label>
         <div class="layui-input-inline">
             <select name="courses_id" id="courses_id" lay-filter="coursesIdFilter">
@@ -24,7 +41,6 @@
             </select>
         </div>
     </div>
-
     <div class="layui-form-item">
         <div style="margin:100px 0 0 250px" class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
@@ -36,19 +52,51 @@
 <script>
     layui.use('form', function () {
         var form = layui.form,layer = layui.layer,$ = layui.$
+
+        //查询所有学院
         $.ajax({
-            url: '/selectAllTheClasss',
+            url: '/selectAllTheColleges',
             dataType: 'json',
             type: 'get',
             success: function (rs) {
                 $.each(rs.data, function (index,item) {
-                    $('#classs_id').append('<option value="'+item.classs_id+'">'+item.classs_name+'</option>');// 下拉菜单里添加元素
+                    $('#colleges_id').append('<option value="'+item.colleges_id+'">'+item.colleges_name+'</option>');// 下拉菜单里添加元素
                 });
                 form.render();
             }
         })
 
+        var colleges_id
+        form.on('select(collegesIdFilter)',function (data) {
+            console.log(data.value)
+            colleges_id = data.value
+            $("#classs_id").empty();
+            $.ajax({
+                url: `/selectCollegesClasss`,
+                dataType: 'json',
+                type: 'get',
+                data:{colleges_id:colleges_id},
+                success: function (rs) {
+                    $.each(rs.data, function (index,item) {
+                        $('#classs_id').append('<option value="'+item.classs_id+'">'+item.classs_name+'</option>');// 下拉菜单里添加元素
+                    });
+                    form.render();
+                    // $("#classs_id").empty();
+                }
+            })
 
+        })
+        // $.ajax({
+        //     url: '/selectAllTheClasss',
+        //     dataType: 'json',
+        //     type: 'get',
+        //     success: function (rs) {
+        //         $.each(rs.data, function (index,item) {
+        //             $('#classs_id').append('<option value="'+item.classs_id+'">'+item.classs_name+'</option>');// 下拉菜单里添加元素
+        //         });
+        //         form.render();
+        //     }
+        // })
         //获取下拉菜单value的值
         var classs_id
         form.on('select(calsssIdFilter)', function(data){
@@ -64,6 +112,7 @@
                         $('#courses_id').append('<option value="'+item.courses_id+'">'+item.courses_name+'</option>');// 下拉菜单里添加元素
                     });
                     form.render();
+                    $("#courses_id").empty();
                 }
             })
         })

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.BatchDao">
+    <select id="selectBatch" resultType="com.evaluate.demo.entity.Batch">
+        SELECT * FROM batch
+    </select>
+
+    <select id="selectBatch_status" resultType="com.evaluate.demo.entity.Batch">
+        SELECT * FROM batch where batch_id=${bid}
+    </select>
+
+    <update id="updateBatch" >
+        update batch set batch_status=#{batch_status} where batch_id=#{batch_id}
+    </update>
+
+
+</mapper>

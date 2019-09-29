@@ -58,7 +58,7 @@
 
         //监听提交
         form.on('submit(demo1)', function (data) {
-            var res = $.ajax({url: `/insertColleges`, data: $('form').serialize(), async: false})
+            var res = $.ajax({url: `/insertFun`, data: $('form').serialize(), async: false})
             if (res.responseText > 0) {
                 layer.msg('成功', {icon: 6, time: 2000})
                 parent.layer.close(layer.index);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evaluate.demo.dao.StudentDao">
+    <select id="selectTeacher" resultType="HashMap">
+      SELECT  us.uid,us.uname,cs.courses_name,b.batch_name FROM users us
+            INNER JOIN users_batch ub ON us.uid = ub.uid INNER JOIN batch b ON ub.batch_id = b.batch_id
+            INNER JOIN users_teach_courses ut ON us.uid=ut.uid INNER JOIN courses cs ON ut.courses_id=cs.courses_id WHERE us.uid
+            IN(SELECT utc.uid FROM users u INNER JOIN users_classs uc ON u.uid=uc.uid
+            INNER JOIN classs_courses cc ON uc.classs_id=cc.classs_id
+            INNER JOIN users_teach_courses utc ON cc.courses_id=utc.courses_id WHERE u.uid=#{uid} AND b.batch_name=#{bname} )
+    </select>
+</mapper>

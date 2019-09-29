@@ -1,17 +1,19 @@
 package com.evaluate.demo.entity;
 
 public class Statistics {
-    private int teach_id;
     private int uid;
     private int evaluates_id;
     private String score;
+    private int courses_id;
+    private String note;
+    private String uname;
 
-    public int getTeach_id() {
-        return teach_id;
+    public String getUname() {
+        return uname;
     }
 
-    public void setTeach_id(int teach_id) {
-        this.teach_id = teach_id;
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
     public int getUid() {
@@ -36,5 +38,21 @@ public class Statistics {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public int getCourses_id() {
+        return courses_id;
+    }
+
+    public void setCourses_id(int courses_id) {
+        this.courses_id = courses_id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

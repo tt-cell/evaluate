@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>功能列表界面</title>
+    <style>
+        #ChartsOne{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 2px 2px 5px greenyellow;
+            position: absolute;
+            left: 35px;
+            top: 35px;
+        }
+
+        #ChartsTwo{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 2px 2px 5px gray;
+            position: absolute;
+            left: 35px;
+            top: 385px;
+        }
+        #ChartsThree{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 2px 2px 5px gold;
+            position: absolute;
+            top: 35px;
+            right: 35px;
+        }
+    </style>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!--layui-->
+    <script src="layui/layui.all.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <div class="page">
+        <!-- Main Navbar-->
+        <header class="header">
+            <nav class="navbar">
+                <!-- Search Box-->
+                <div class="search-box">
+                    <button class="dismiss"><i class="icon-close"></i></button>
+                    <form id="searchForm" action="#" role="search">
+                        <input type="search" placeholder="What are you looking for..." class="form-control">
+                    </form>
+                </div>
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <!-- Navbar Header-->
+                        <div class="navbar-header">
+                            <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                            <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                            <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                            <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                        </div>
+                        <!-- Navbar Menu -->
+                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                            <!-- Search-->
+                            <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                            <!-- Notifications-->
+                            <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
+                                <ul aria-labelledby="notifications" class="dropdown-menu">
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+                                            <div class="notification-time"><small>4 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                            <div class="notification-time"><small>4 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
+                                            <div class="notification-time"><small>4 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                                        <div class="notification">
+                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                            <div class="notification-time"><small>10 minutes ago</small></div>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                                </ul>
+                            </li>
+                            <!-- Messages                        -->
+                            <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
+                                <ul aria-labelledby="notifications" class="dropdown-menu">
+                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-body">
+                                            <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                        <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-body">
+                                            <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                        <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-body">
+                                            <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
+                                        </div></a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Read all messages   </strong></a></li>
+                                </ul>
+                            </li>
+                            <!-- Languages dropdown    -->
+                            <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                                <ul aria-labelledby="languages" class="dropdown-menu">
+                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2">German</a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2">French                                         </a></li>
+                                </ul>
+                            </li>
+                            <!-- Logout    -->
+                            <li class="nav-item"><a href="/login" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="page-content d-flex align-items-stretch">
+            <!-- Side Navbar -->
+            <nav class="side-navbar">
+                <!-- Sidebar Header-->
+                <div class="sidebar-header d-flex align-items-center">
+                    <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="title">
+                        <h1 class="h4">Mark Stephen</h1>
+                        <p>Web Designer</p>
+                    </div>
+                </div>
+                <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+                <!--<div id="div_tree"></div>-->
+                <ul id="MenuList" class="list-unstyled">
+                    <li class="active"><a href="/index"> <i class="icon-home"></i>Home </a></li>
+                    <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
+                    <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
+                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+                    <li><a href="/login"> <i class="icon-interface-windows"></i>Login page </a></li>
+                </ul>
+                <ul class="list-unstyled">
+
+
+                </ul><span class="heading">Extras</span>
+                <ul class="list-unstyled">
+                    <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
+                    <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
+                    <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
+                    <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+                </ul>
+            </nav>
+            <div class="content-inner">
+                <!--layui界面-->
+                <section class="myCharts">
+                    <!--第一个图形 柱状图-->
+                    <div id="ChartsOne"></div>
+                    <div id="ChartsTwo"></div>
+                    <div id="ChartsThree"></div>
+                    <div id="ChartsFour"></div>
+                </section>
+                <!-- Page Footer-->
+                <footer class="main-footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>Copyright &copy; 2019.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <p></p>
+                                <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</head>
+<body>
+<!-- JavaScript files-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="layui/layui.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+<script src="echarts/echarts.min.js"></script>
+<script src="echarts/echarts-liquidfill.min.js"></script>
+<script src="echarts/echarts-wordcloud.min.js"></script>
+<script src="js/charts-home.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/front.js"></script>
+<!-- Main File-->
+</body>
+<script>
+    window.onload = function () {
+        //创建echarts对象
+
+        //第一个图表为柱形图
+        var myEchartsOne = echarts.init(document.getElementById("ChartsOne"))
+        var myEchartsOneOption = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: [
+                    ['product', '学生评教', '同行评教', '领导评教'],
+                    ['张三', 43.3, 85.8, 93.7],
+                    ['李四', 83.1, 73.4, 55.1],
+                    ['王五', 86.4, 65.2, 82.5],
+                    ['赵柳', 56.4, 83.9, 48.1],
+                    ['唐七', 83.4, 69.9, 61],
+                    ['谭九', 52.4, 53.9, 39.1],
+                    ['陶十', 88.4, 75.9, 48.1],
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {},
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'}
+            ]
+
+        }
+        myEchartsOne.setOption(myEchartsOneOption);
+
+        //第二个图表为折线图
+        var myEchartsTwo = echarts.init(document.getElementById("ChartsTwo"))
+        var myEchartsTwoOption = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'邮件营销',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'联盟广告',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'视频广告',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'直接访问',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name:'搜索引擎',
+                    type:'line',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    areaStyle: {normal: {}},
+                    data:[820, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ]
+        };
+        myEchartsTwo.setOption(myEchartsTwoOption);
+
+        //第三个图表为字符云图
+        var myChartThree = echarts.init(document.getElementById('ChartsThree'));
+        function createRandomItemStyle() {
+                return {
+                    normal: {
+                        color: 'rgb(' + [
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160)
+                        ].join(',') + ')'
+                    }
+                };
+            }
+        myEchartsThreeOption = {
+                tooltip: {
+                    show: true
+                },
+                series: [{
+                    name: '评教教师',
+                    type: 'wordCloud',
+                    size: ['80%', '80%'],
+                    textRotation : [0, 45, 90, -45],
+                    textPadding: 0,
+                    autoSize: {
+                        enable: true,
+                        minSize: 16
+                    },
+                    data: [
+                        {
+                            name: "Sam S Club",
+                            value: 10000,
+                            textStyle: {
+                                normal: {
+                                    color: 'black'
+                                }
+                            }
+                        },
+                        // {
+                        //     name: "Macys",
+                        //     value: 6181,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Amy Schumer",
+                        //     value: 4386,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Jurassic World",
+                        //     value: 4055,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Charter Communications",
+                        //     value: 2467,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Chick Fil A",
+                        //     value: 2244,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Planet Fitness",
+                        //     value: 1898,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Pitch Perfect",
+                        //     value: 1484,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Express",
+                        //     value: 1112,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Home",
+                        //     value: 965,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Johnny Depp",
+                        //     value: 847,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Lena Dunham",
+                        //     value: 582,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Lewis Hamilton",
+                        //     value: 555,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "KXAN",
+                        //     value: 550,
+                        //     itemStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Mary Ellen Mark",
+                        //     value: 462,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Farrah Abraham",
+                        //     value: 366,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Rita Ora",
+                        //     value: 360,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Serena Williams",
+                        //     value: 282,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "NCAA baseball tournament",
+                        //     value: 273,
+                        //     textStyle: createRandomItemStyle()
+                        // },
+                        // {
+                        //     name: "Point Break",
+                        //     value: 265,
+                        //     textStyle: createRandomItemStyle()
+                        // }
+                    ]
+                }]
+            };
+        setTimeout(function () {
+            $.ajax({
+                url:'/getWordCloudData',
+                type:'get',
+                data:'json',
+                success:function (res) {
+                    console.log(res)
+                    myEchartsThreeOption.series.data = res.data + ','
+                    // res.data.forEach(function (data) {
+                    //     console.log(data)
+                    //     console.log( myEchartsThreeOption.series.data)
+                    //     myEchartsThreeOption.series.data = data + ','
+                    // })
+                    myChartThree.setOption(myEchartsThreeOption);
+                },
+                error:function (err) {
+                    console.log(err.message)
+                }
+            })
+        },1000)
+        // 为echarts对象加载数据
+
+        //第四个图为水滴图
+
+    }
+
+
+
+
+</script>
+</html>

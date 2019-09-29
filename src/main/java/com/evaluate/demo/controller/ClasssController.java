@@ -1,6 +1,5 @@
 package com.evaluate.demo.controller;
 
-import com.evaluate.demo.entity.ClassParam;
 import com.evaluate.demo.entity.Classs;
 import com.evaluate.demo.entity.User;
 import com.evaluate.demo.service.ClasssService;
@@ -111,12 +110,14 @@ public class ClasssController {
     public Map addOneClasssUser(@RequestParam("list")String list,@RequestParam("classs_id")int classs_id){
         List<User> users = classsService.selectUsersByClasss(classs_id);
         JSONArray ary = JSONArray.fromObject(list);
+        List<Integer> uidList = new ArrayList<>();
         List<Integer> list1 = JSONArray.toList(ary,new ArrayList<>(), new JsonConfig());
            for (int i = 0;i<list1.size();i++){
               for(int j = 0;j<users.size();i++){
-                  if(list1.get(i)==Integer.valueOf(users.get(j).getUid())){
-                      list1.remove(i);
+                  if(list1.get(i)!=Integer.valueOf(users.get(j).getUid())){
+                      uidList.add(list1.get(i));
                       break;
+
                   }
               }
            }
@@ -131,7 +132,8 @@ public class ClasssController {
 //            list1.add(Integer.parseInt(item.getUid()));
 //        });
         Map<String,Object> map = new HashMap<>();
-        int result = classsService.insertUserByClasss(classs_id,list1);
+
+        int result = classsService.insertUserByClasss(classs_id,uidList);
         if (result>0){
             map.put("flag","success");
         }

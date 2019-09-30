@@ -34,6 +34,18 @@ public class OptionController {
         return msg;
     }
 
+    @RequestMapping("selectAllOption")
+    @ResponseBody
+    public Msg selectTarget(Msg msg, int tid){
+        List<Option> data = optionService.selectAllOption(tid);
+        msg.setCode(0);
+        msg.setCount(5);
+        msg.setMsg("成功");
+        msg.setData(data);
+        msg.setStatus(0);
+        return msg;
+    }
+
     @RequestMapping("/updateOption")
     @ResponseBody
     public int updateOption(int oid,String oname){

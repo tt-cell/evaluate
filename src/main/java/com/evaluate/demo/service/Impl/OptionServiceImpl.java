@@ -22,5 +22,10 @@ public class OptionServiceImpl implements OptionService {
         return optionDao.updateOption(oid,oname);
     }
 
+    @Override
+    public List<Option> selectAllOption(int tid) {
+        return optionDao.selectAllOption(tid);
+    }
+
 
 }

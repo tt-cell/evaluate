@@ -9,4 +9,5 @@ public interface OptionService {
     List<Option> selectOption(int tid);
 
     int updateOption(int oid, String oname);
+    List<Option> selectAllOption(int tid);
 }

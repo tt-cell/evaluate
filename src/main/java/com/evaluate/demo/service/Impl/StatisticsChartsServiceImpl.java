@@ -16,6 +16,11 @@ public class StatisticsChartsServiceImpl implements StatisticsChartsService {
 
 
     @Override
+    public List<Statistics> selectTangleData() {
+        return statisticsChartsDao.selectTangleData();
+    }
+
+    @Override
     public List<Statistics> selectWordCloudData() {
         return statisticsChartsDao.selectWordCloudData();
     }

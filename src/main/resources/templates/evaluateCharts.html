@@ -10,17 +10,16 @@
             width: 500px;
             height: 310px;
             background-color: white;
-            box-shadow: 2px 2px 5px greenyellow;
+            box-shadow: 2px 2px 2px skyblue;
             position: absolute;
             left: 35px;
             top: 35px;
         }
-
         #ChartsTwo{
             width: 500px;
             height: 310px;
             background-color: white;
-            box-shadow: 2px 2px 5px gray;
+            box-shadow: 2px 2px 2px skyblue;
             position: absolute;
             left: 35px;
             top: 385px;
@@ -29,9 +28,18 @@
             width: 500px;
             height: 310px;
             background-color: white;
-            box-shadow: 2px 2px 5px gold;
+            box-shadow: 2px 2px 2px skyblue;
             position: absolute;
             top: 35px;
+            right: 35px;
+        }
+        #ChartsFour{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 2px 2px 2px skyblue;
+            position: absolute;
+            top: 385px;
             right: 35px;
         }
     </style>
@@ -179,8 +187,11 @@
                 <section class="myCharts">
                     <!--第一个图形 柱状图-->
                     <div id="ChartsOne"></div>
+                    <!--第一个图形 折线图-->
                     <div id="ChartsTwo"></div>
+                    <!--第一个图形 字符云-->
                     <div id="ChartsThree"></div>
+                    <!--第一个图形 水球图-->
                     <div id="ChartsFour"></div>
                 </section>
                 <!-- Page Footer-->
@@ -229,14 +240,7 @@
             tooltip: {},
             dataset: {
                 source: [
-                    ['product', '学生评教', '同行评教', '领导评教'],
-                    ['张三', 43.3, 85.8, 93.7],
-                    ['李四', 83.1, 73.4, 55.1],
-                    ['王五', 86.4, 65.2, 82.5],
-                    ['赵柳', 56.4, 83.9, 48.1],
-                    ['唐七', 83.4, 69.9, 61],
-                    ['谭九', 52.4, 53.9, 39.1],
-                    ['陶十', 88.4, 75.9, 48.1],
+                    ['评教类别', '学生评教','自我评教', '同行评教', '领导评教'],
                 ]
             },
             xAxis: {type: 'category'},
@@ -244,81 +248,117 @@
             series: [
                 {type: 'bar'},
                 {type: 'bar'},
+                {type: 'bar'},
                 {type: 'bar'}
             ]
 
         }
-        myEchartsOne.setOption(myEchartsOneOption);
-
+        setTimeout(function () {
+            $.ajax({
+                url: '/getTangleData',
+                type: 'get',
+                data: 'json',
+                success: function (res) {
+                    res.data.forEach(function (data) {
+                        data.forEach(function(value){
+                            myEchartsOneOption.dataset.source.push(value.split(","));
+                        })
+                     })
+                    myEchartsOne.setOption(myEchartsOneOption);
+                },
+                error: function (err) {
+                    alert("小兄弟，没有获取带后台数据呀！")
+                    console.log(err.message)
+                }
+            })
+        },1000)
         //第二个图表为折线图
         var myEchartsTwo = echarts.init(document.getElementById("ChartsTwo"))
-        var myEchartsTwoOption = {
-            tooltip : {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    label: {
-                        backgroundColor: '#6a7985'
-                    }
+        setTimeout(function () {
+            $.ajax({
+                url:'/getLineData',
+                type:'get',
+                data:'json',
+                success:function (data) {
+                    console.log(data)
+                    var myEchartsTwoOption = {
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+                        legend: {
+                            data:['学生评教','自我评教','同行评教','领导评教']
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : data.data[0]
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'学生评教',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:data.data[1]
+                            },
+                            {
+                                name:'自我评教',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:data.data[2]
+                            },
+                            {
+                                name:'同行评教',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:data.data[3]
+                            },
+                            {
+                                name:'领导评教',
+                                type:'line',
+                                stack: '总量',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                areaStyle: {normal: {}},
+                                data:data.data[4]
+                            }
+                        ]
+                    };
+                    myEchartsTwo.setOption(myEchartsTwoOption);
                 }
-            },
-            legend: {
-                data:['邮件营销','联盟广告','搜索引擎']
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis : [
-                {
-                    type : 'category',
-                    boundaryGap : false,
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
-                }
-            ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
-            series : [
-                {
-                    name:'邮件营销',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {},
-                    data:[120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name:'联盟广告',
-                    type:'line',
-                    stack: '总量',
-                    areaStyle: {},
-                    data:[220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'搜索引擎',
-                    type:'line',
-                    stack: '总量',
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'top'
-                        }
-                    },
-                    areaStyle: {normal: {}},
-                    data:[820, 932, 901, 934, 1290, 1330, 1320]
-                }
-            ]
-        };
-        myEchartsTwo.setOption(myEchartsTwoOption);
+            })
+
+        },1000)
 
         //第三个图表为字符云图
         var myChartsThree = echarts.init(document.getElementById('ChartsThree'));
@@ -334,13 +374,17 @@
                 };
             }
         myEchartsThreeOption = {
+            title:{
+                text:'谁最大？',
+                color:'skyblue',
+            },
                 tooltip: {
                     show: true
                 },
                 series: [{
-                    name: '评教教师',
+                    name: '被评教师分数',
                     type: 'wordCloud',
-                    size: ['80%', '80%'],
+                    size: ['70%', '70%'],
                     textRotation : [0, 45, 90, -45],
                     textPadding: 0,
                     autoSize: {
@@ -356,7 +400,6 @@
                 type:'get',
                 data:'json',
                 success:function (res) {
-                    console.log(res)
                     res.data.forEach(function (data) {
                         myEchartsThreeOption.series[0].data.push(data);
                         //myEchartsThreeOption.series[0].data.push({textStyle:createRandomItemStyle()});
@@ -371,7 +414,23 @@
             })
         },1000)
 
-        //第四个图为水滴图
+        //第四个图为水球图
+        var  myChcartsFour = echarts.init(document.getElementById('ChartsFour'))
+        var myEchartsFourOption = {
+            title:{
+                text:"占比"
+            },
+            series: [{
+                type: 'liquidFill',
+                data: [0.9, 0.8, 0.7, 0.6],
+                backgroundStyle: {
+                    borderWidth: 3,
+                    borderColor: 'red',
+                    color: 'red'
+                }
+            }]
+        };
+        myChcartsFour.setOption(myEchartsFourOption);
 
     }
 

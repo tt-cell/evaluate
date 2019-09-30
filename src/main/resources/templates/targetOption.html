@@ -13,7 +13,8 @@
 <body style="line-height: 60px">
 
 <div>
-    <form class="layui-form" action="">
+    <form id="oform" class="layui-form" action="">
+
         <div class="demoTarget">
             指标名称：
             <div class="layui-inline">
@@ -23,21 +24,7 @@
             <div class="layui-inline">
                 <input class="layui-input" name="target_weight" id="target_weight" autocomplete="off">
             </div>
-            <br>
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
         </div>
-    </form>
-
-    <form class="layui-form" action="">
-        <div class="layui-btn-group demoTable">
-            <button class="layui-btn" data-type="addFatherTarget">增加父级指标</button>
-            <button class="layui-btn" data-type="addNextTarget">增加下级指标</button>
-            <button class="layui-btn" data-type="addTitleTarget">增加题目指标</button>
-            <button class="layui-btn" data-type="deleteTarget" onclick="deleteTarget()">删除指标</button>
-        </div>
-    </form>
-
-    <form id="oform" class="layui-form" action="">
         <div class="demoOption">
             选项A：
             <div class="layui-inline">
@@ -59,12 +46,11 @@
                 <input class="layui-input" name="optionD" id="optionD" autocomplete="off">
             </div>
             </br>
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo2">提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo2">保存</button>
+            <button class="layui-btn" data-type="deleteTarget" onclick="deleteTarget()">删除</button>
         </div>
     </form>
 </div>
-
 
 <script src="layui/layui.js" charset="utf-8"></script>
 <script src="jquery/jquery-3.4.1.min.js" charset="UTF-8"></script>
@@ -101,25 +87,23 @@
         var form = layui.form;
 
         form.on('submit(demo1)', function () {
+
+        })
+
+        form.on('submit(demo2)', function () {
+
             //取值
             var tname = $("#target_name").val()
             var tweight = $("#target_weight").val()
             //修改
-            var result = $.ajax({
-                url: `/updateTarget?tid=${tid}&tname=${tname}&tweight=${tweight}`,
-                async: false
-            }).responseText
-            if (result > 0) {
-                alert("成功")
-            } else {
-                alert("失败")
-            }
-        })
+            var result = $.ajax({url: `/updateTarget?tid=${tid}&tname=${tname}&tweight=${tweight}`,async: false}).responseText
 
-        form.on('submit(demo2)', function () {
-            var data = ['满意','一般','不满意','非常不满意']
-            for (var i = 0;i<4;i++) {
-                $.ajax({url:`/updateOption?oid=${i}&oname=${data[i]}`,async:false})
+            var options = [$("#optionA").val(),$("#optionB").val(),$("#optionC").val(),$("#optionD").val()]
+            var res = $.ajax({url:`/selectAllOption?tid=${tid}`,async:false}).responseText
+            var data = JSON.parse($.trim(res))
+            console.log(JSON.parse($.trim(res)))
+            for (var i = 0;i<data.data.length;i++) {
+                $.ajax({url:`/updateOption?oid=${i+1}&oname=${options[i]}`,async:false})
             }
         })
     })

@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>学生评教指标</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/jquery/jquery-3.4.1.min.js"></script>
+    <script src="/layui/layui.js" charset="utf-8"></script>
+    <style>
+        .layui-input-block{
+            min-height: 38px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item" id="sj">
+    </div>
+</form>
+
+<script>
+    layui.use('form', function () {
+        var form = layui.form
+            ,layer = layui.layer
+            ,$ = layui.$
+
+        $.ajax({
+            url:'/selectStudentTargets',
+            data:{evaluates_id:1},
+            type:'get',
+            success:function (res) {
+                $.each(res.data,function (index) {
+                    console.log(res.data)
+                    $('#sj').append(` <div class="layui-input-block" >
+                  <label class="layui-form-label" style="width: 45%;text-align: left">${res.data[index].targets_name}</label>
+                       </div>`);
+                    $.each(res.data[index].options_name,function (indexTwo) {
+                        console.log(res.data[index].options_name[indexTwo])
+                        $('#sj').append(`<div class="layui-input-block">
+                  <input type="radio" name="${res.data[index].targets_id}" value="${res.data[index].options_name[indexTwo]}" title="${res.data[index].options_name[indexTwo]}">
+        </div>`);
+                    })
+                })
+                form.render();
+            },
+            error:function (err) {
+                console.log(err.message)
+            }
+        })
+        form.on('submit(demo1)', function (data) {
+        })
+    })
+</script>
+</body>
+</html>

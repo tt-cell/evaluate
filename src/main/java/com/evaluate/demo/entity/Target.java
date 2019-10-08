@@ -3,8 +3,18 @@ package com.evaluate.demo.entity;
 public class Target {
     private int targets_id;
     private float targets_weight;
+
+    public String getOptions_name() {
+        return options_name;
+    }
+
+    public void setOptions_name(String options_name) {
+        this.options_name = options_name;
+    }
+
     private int father_targets_id;
     private String targets_name;
+    private String options_name;
     private String url;
 
     public float getTargets_weight() {

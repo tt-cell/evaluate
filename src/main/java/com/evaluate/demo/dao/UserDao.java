@@ -37,6 +37,8 @@ public interface UserDao {
     int selectOneColleges_id(String Colleges_name);
 
     List<Colleges> selectCollegeId(String colleges_name);
+
+
 }
 
 

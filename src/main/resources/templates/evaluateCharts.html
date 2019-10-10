@@ -10,7 +10,7 @@
             width: 500px;
             height: 310px;
             background-color: white;
-            box-shadow: 2px 2px 2px skyblue;
+            box-shadow: 0 0 5px gray;
             position: absolute;
             left: 35px;
             top: 35px;
@@ -19,7 +19,7 @@
             width: 500px;
             height: 310px;
             background-color: white;
-            box-shadow: 2px 2px 2px skyblue;
+            box-shadow: 0 0 2px gray;
             position: absolute;
             left: 35px;
             top: 385px;
@@ -28,7 +28,7 @@
             width: 500px;
             height: 310px;
             background-color: white;
-            box-shadow: 2px 2px 2px skyblue;
+            box-shadow: 0 0 5px gray;
             position: absolute;
             top: 35px;
             right: 35px;
@@ -37,7 +37,7 @@
             width: 500px;
             height: 310px;
             background-color: white;
-            box-shadow: 2px 2px 2px skyblue;
+            box-shadow: 0 0 5px gray;
             position: absolute;
             top: 385px;
             right: 35px;
@@ -184,6 +184,8 @@
             </nav>
             <div class="content-inner">
                 <!--layui界面-->
+
+
                 <section class="myCharts">
                     <!--第一个图形 柱状图-->
                     <div id="ChartsOne"></div>
@@ -272,6 +274,7 @@
                 }
             })
         },1000)
+
         //第二个图表为折线图
         var myEchartsTwo = echarts.init(document.getElementById("ChartsTwo"))
         setTimeout(function () {
@@ -433,9 +436,5 @@
         myChcartsFour.setOption(myEchartsFourOption);
 
     }
-
-
-
-
 </script>
 </html>

@@ -1,5 +1,5 @@
 <html>
-<head>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
     <title>学生评教指标</title>
     <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
     <script type="text/javascript" src="/jquery/jquery-3.4.1.min.js"></script>
@@ -7,45 +7,76 @@
     <style>
         .layui-input-block{
             min-height: 38px;
+            margin-left: 0px;
+            padding-left: 180px;
         }
     </style>
 </head>
 <body>
 <form class="layui-form" action="">
-    <div class="layui-form-item" id="sj">
+    <div class="layui-form-item" id="sj"></div>
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="margin-left: 180px">
+            <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
     </div>
 </form>
 
-<script>
+<script src="js/menu.js"></script>
+<script th:inline="javascript">
+    var evaluates_id = [[${evaluates_id}]];
+    console.log(evaluates_id)
+
     layui.use('form', function () {
         var form = layui.form
-            ,layer = layui.layer
-            ,$ = layui.$
+            , layer = layui.layer
+            , $ = layui.$
 
+        //获取指标以及指标选项
         $.ajax({
-            url:'/selectStudentTargets',
-            data:{evaluates_id:1},
-            type:'get',
-            success:function (res) {
-                $.each(res.data,function (index) {
+            url: '/selectEvaluateTargets',
+            data: {evaluates_id: evaluates_id},
+            type: 'get',
+            success: function (res) {
+                $.each(res.data, function (index) {
                     console.log(res.data)
-                    $('#sj').append(` <div class="layui-input-block" >
+                    $('#sj').append(` <div class="layui-input-block" style="background-color: white;margin-top: 5px">
                   <label class="layui-form-label" style="width: 45%;text-align: left">${res.data[index].targets_name}</label>
                        </div>`);
-                    $.each(res.data[index].options_name,function (indexTwo) {
+                    $.each(res.data[index].options_name, function (indexTwo) {
                         console.log(res.data[index].options_name[indexTwo])
-                        $('#sj').append(`<div class="layui-input-block">
+                        $('#sj').append(`<div class="layui-input-block" style="background-color: white">
                   <input type="radio" name="${res.data[index].targets_id}" value="${res.data[index].options_name[indexTwo]}" title="${res.data[index].options_name[indexTwo]}">
         </div>`);
                     })
                 })
                 form.render();
             },
-            error:function (err) {
+            error: function (err) {
                 console.log(err.message)
             }
         })
-        form.on('submit(demo1)', function (data) {
+
+        //获取EvaluateResult具体值
+
+
+        //计算单个指标类型的分数
+        form.on('submit(formDemo)', function (data) {
+            console.log(data)
+            var res = $.ajax({
+                url: '/insertEvaluateResult',
+                type: 'post',
+                data: {
+                    batch_id: batch_id, userName: userName, teacherName: teacherName,
+                    courses_id: courses_id, evaluates_id: evaluates_id, totalsocre: totalsocre
+                }
+            })
+            if (res.responseText > 0) {
+                layer.msg('评教成功', {icon: 6, time: 2000})
+            } else {
+                layer.msg('评教失败！', {icon: 2, time: 2000})
+            }
         })
     })
 </script>

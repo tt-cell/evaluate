@@ -46,7 +46,7 @@
             <select name="list" id="stage" lay-verify="required" lay-filter="xmFilterTwo" >
                 <option value="1">学生</option>
                 <option value="2">教师</option>
-                <option value="3">管理员</option>
+                <option value="3">领导</option>
             </select>
         </div>
     </div>
@@ -85,6 +85,7 @@
         })
         var sex
         form.on('radio', function(data){
+            console.log(data.value)
             sex = data.value
         });
         //获取下拉菜单value的值

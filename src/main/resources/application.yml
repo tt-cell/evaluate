@@ -29,6 +29,18 @@ spring:
   resources:
     static-locations: classpath:/static/
 
-#3.mybatis配置
+#3.热部署配置:
+  devtools:
+    restart:
+      enabled: true
+      #设置重启的目录，默认全部
+      #spring.devtools.restart.additional-paths = src/main/java
+      #classpath目录下的static文件夹内容修改不重启
+      exclude: src/main/resources/static
+
+
+#4.mybatis配置
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+
+

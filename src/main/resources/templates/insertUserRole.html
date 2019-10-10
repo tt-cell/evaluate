@@ -18,26 +18,6 @@
             <div class="layui-input-block">
                 <select name="uid" id="uid" lay-verify="required" lay-search="" lay-filter="userFilter">
                     <option value="">直接选择或搜索选择</option>
-                    <!--<option value="1">layer</option>-->
-                    <!--<option value="2">form</option>-->
-                    <!--<option value="3">layim</option>-->
-                    <!--<option value="4">element</option>-->
-                    <!--<option value="5">laytpl</option>-->
-                    <!--<option value="6">upload</option>-->
-                    <!--<option value="7">laydate</option>-->
-                    <!--<option value="8">laypage</option>-->
-                    <!--<option value="9">flow</option>-->
-                    <!--<option value="10">util</option>-->
-                    <!--<option value="11">code</option>-->
-                    <!--<option value="12">tree</option>-->
-                    <!--<option value="13">layedit</option>-->
-                    <!--<option value="14">nav</option>-->
-                    <!--<option value="15">tab</option>-->
-                    <!--<option value="16">table</option>-->
-                    <!--<option value="17">select</option>-->
-                    <!--<option value="18">checkbox</option>-->
-                    <!--<option value="19">switch</option>-->
-                    <!--<option value="20">radio</option>-->
                 </select>
             </div>
         </div>
@@ -79,13 +59,13 @@
 
         var uid
         form.on("select(userFilter)",function (data) {
-            console.log(uid)
             uid = data.value
+            console.log(uid)
         })
         var rid
         form.on("radio",function (data) {
-            console.log(rid)
             rid = data.value
+            console.log(rid)
         })
 
         //监听提交

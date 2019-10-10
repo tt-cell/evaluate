@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +20,12 @@ public class StudentTargetsController {
     @Autowired
     private StudentTargetService studentTargetService;
 
-    @RequestMapping("/selectStudentTargets")
+    @RequestMapping("/selectEvaluateTargets")
     @ResponseBody
-    public Msg getStudentTargets(Msg msg, int evaluates_id){
+    public Msg getStudentTargets(Msg msg, Integer evaluates_id){
         List<Target> targetList = studentTargetService.selectStudentTargets(evaluates_id);
         //List<Option> optionList = studentTargetService.selectStudentOptions();
+        System.out.println(evaluates_id);
         if(targetList.size()<=0){
             msg.setCode(1);
             msg.setMsg("获取数据失败");
@@ -43,6 +45,7 @@ public class StudentTargetsController {
         msg.setCode(0);
         msg.setMsg("获取数据成功");
         msg.setData(listOne);
+        msg.setStatus(evaluates_id);
         return msg;
 
     }

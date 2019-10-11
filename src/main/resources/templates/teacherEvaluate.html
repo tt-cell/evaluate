@@ -121,7 +121,7 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
+                        <h1 class="h4">dsdsd</h1>
                         <p>Web Designer</p>
                     </div>
                 </div>
@@ -157,13 +157,14 @@
                         </div>
                     </div>
                 </form>
-                <table class="layui-table" lay-data="{url:'/getTeachers?bid=0', page:false, id:'idTest'}" lay-filter="demo">
+                <table class="layui-table" lay-data="{url:'/getSelfTeachers?bid=0', page:false, id:'idTest'}" lay-filter="demo">
                     <thead>
                     <tr>
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
                         <th lay-data="{field:'uid', width:200, sort: true, fixed: true, templet: '#uid'}">序列</th>
-                        <th lay-data="{field:'uname', width:400}">教师</th>
-                        <th lay-data="{field:'courses_name', width:400}">课程名</th>
+                        <th lay-data="{field:'uname', width:200}">本人</th>
+                        <th lay-data="{field:'courses_name', width:300}">授课名称</th>
+                        <th lay-data="{field:'batch_name', width:400}">所在批次</th>
                         <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
                     </tr>
                     </thead>
@@ -173,7 +174,7 @@
                 </script>
 
                 <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs" lay-event="evaluate">评教</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="edit">评教</a>
                     <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
                 </script>
 
@@ -211,13 +212,10 @@
 
 <!-- Main File-->
 <script th:inline="javascript">
-
     layui.use(['table','form'], function () {
         var table = layui.table,
             form = layui.form;
         var evaluates_id = [[${evaluates_id}]]
-        var userName = [[${user.uname}]]
-
         //渲染学年
         $.ajax({
             type: 'post',
@@ -240,7 +238,7 @@
         form.on('select(group)', function (data) {
             console.log(data.value)
             table.reload('idTest', {
-                url: '/getTeachers'
+                url: '/getSelfTeachers'
                 ,where: {
                     bid: data.value
                 } //设定异步数据接口的额外参数
@@ -272,7 +270,7 @@
                     skin: 'layui-layer-lan',
                     anim: 3,
                     content: [`/evaluateTargets?evaluates_id=${evaluates_id}`, 'yes'],
-                    area: ['650px', '600px'],
+                    area: ['800px', '600px'],
                     end: function () {//关闭后调用的事件
                         location = window.location;//刷新
                     }

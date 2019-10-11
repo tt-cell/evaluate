@@ -39,7 +39,7 @@ public class StudentEvaluateController {
     }
 
 
-    @RequestMapping("/getTeacher")
+    @RequestMapping("/getStudentsTeacher")
     @ResponseBody
     public Msg getTeacher(Msg msg, HttpSession session, int bid) {
         if(bid == 0){

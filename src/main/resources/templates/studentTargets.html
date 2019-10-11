@@ -22,6 +22,7 @@
         </div>
     </div>
 </form>
+<span style="display: none;" id="id"></span>
 
 <script src="js/menu.js"></script>
 <script th:inline="javascript">
@@ -40,7 +41,6 @@
             type: 'get',
             success: function (res) {
                 $.each(res.data, function (index) {
-                    console.log(res.data)
                     $('#sj').append(` <div class="layui-input-block" style="background-color: white;margin-top: 5px">
                   <label class="layui-form-label" style="width: 45%;text-align: left">${res.data[index].targets_name}</label>
                        </div>`);
@@ -59,6 +59,9 @@
         })
 
         //获取EvaluateResult具体值
+        var userName = $('#id').text()
+        console.log(userName)
+        var teacherName =
 
 
         //计算单个指标类型的分数

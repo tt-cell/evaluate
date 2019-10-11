@@ -32,21 +32,22 @@ public class TeacherEvaluateController {
         return "teacherEvaluate";
     }
     //跳转到评价指标界面
-//    @RequestMapping(value = "/teacherTargets")
+//    @RequestMapping(value = "/evaluateTargets")
 //    public ModelAndView studentEvaluate (Integer evaluates_id) {
 //        ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.addObject("evaluates_id",evaluates_id);
 //        modelAndView.setViewName("studentTargets");
 //        return modelAndView;
 //    }
-    @RequestMapping("/getTeachers")
+
+    @RequestMapping("/getSelfTeachers")
     @ResponseBody
     public Msg getTeacher(Msg msg, HttpSession session, int bid) {
         if(bid == 0){
             msg.setStatus(0);
             msg.setCode(0);
             msg.setCount(0);
-            msg.setMsg("获取数据失败！");
+            msg.setMsg("获取数据失败！!");
             msg.setData(" ");
             return msg;
         }
@@ -60,13 +61,13 @@ public class TeacherEvaluateController {
                 msg.setStatus(0);
                 msg.setCode(0);
                 msg.setCount(0);
-                msg.setMsg("");
-                msg.setData("");
+                msg.setMsg(" ");
+                msg.setData(" ");
                 return msg;
             }
             msg.setCode(0);
             msg.setCount(10);
-            msg.setMsg("..");
+            msg.setMsg("....");
             msg.setData(data);
             msg.setStatus(0);
             return msg;
@@ -74,7 +75,7 @@ public class TeacherEvaluateController {
             msg.setStatus(0);
             msg.setCode(0);
             msg.setCount(0);
-            msg.setMsg("数据失败");
+            msg.setMsg("数据失败!");
             msg.setData("");
             return msg;
         }

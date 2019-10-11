@@ -162,7 +162,7 @@
                         </div>
                     </div>
                 </form>
-                <table class="layui-table" lay-data="{url:'/getTeacher?bid=0', page:false, id:'idTest'}" lay-filter="demo">
+                <table class="layui-table" lay-data="{url:'/getStudentsTeacher?bid=0', page:true, id:'idTest'}" lay-filter="demo">
                     <thead>
                     <tr>
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -243,9 +243,10 @@
         })
         //加载教师
         form.on('select(group)', function (data) {
+            batch_id = data.value
             console.log(data.value)
             table.reload('idTest', {
-                url: '/getTeacher'
+                url: '/getStudentsTeacher'
                 ,where: {
                     bid: data.value
                 } //设定异步数据接口的额外参数
@@ -280,6 +281,12 @@
                     area: ['800px', '600px'],
                     end: function () {//关闭后调用的事件
                         location = window.location;//刷新
+                    },
+                    success: function (layero, index) {
+                        var body = layer.getChildFrame('body',index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var inputList = body.find('span');
+                        $(inputList).text($('.h4').html(),);
                     }
                 })
                 layer.close();

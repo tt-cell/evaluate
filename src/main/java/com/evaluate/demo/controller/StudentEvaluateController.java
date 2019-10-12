@@ -46,7 +46,7 @@ public class StudentEvaluateController {
             msg.setStatus(0);
             msg.setCode(0);
             msg.setCount(0);
-            msg.setMsg("获取数据失败！");
+            msg.setMsg("获取数据失");
             msg.setData("");
             return msg;
         }
@@ -60,13 +60,13 @@ public class StudentEvaluateController {
                 msg.setStatus(0);
                 msg.setCode(0);
                 msg.setCount(0);
-                msg.setMsg("获取数据失败");
+                msg.setMsg("取数据失败");
                 msg.setData("");
                 return msg;
             }
             msg.setCode(0);
             msg.setCount(10);
-            msg.setMsg("...");
+            msg.setMsg("....");
             msg.setData(data);
             msg.setStatus(0);
             return msg;
@@ -74,7 +74,7 @@ public class StudentEvaluateController {
             msg.setStatus(0);
             msg.setCode(0);
             msg.setCount(0);
-            msg.setMsg(" ");
+            msg.setMsg("000");
             msg.setData("");
             return msg;
         }

@@ -172,7 +172,7 @@
                 </script>
 
                 <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs" lay-event="evaluate">评教</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="edit">评教</a>
                     <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
                 </script>
                 <!-- Page Footer-->
@@ -213,6 +213,7 @@
         var table = layui.table,
             form = layui.form;
         var evaluates_id = [[${evaluates_id}]]
+        var bid
 
         //渲染学年
         $.ajax({
@@ -234,6 +235,7 @@
         })
         //加载教师
         form.on('select(group)', function (data) {
+            bid = data.value
             console.log(data.value)
             table.reload('idTest', {
                 url: '/getPeerTeachers'
@@ -271,6 +273,12 @@
                     area: ['800px', '600px'],
                     end: function () {//关闭后调用的事件
                         location = window.location;//刷新
+                    },
+                    success: function (layero, index) {
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        var inputList = body.find('span');
+                        $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name);
                     }
                 })
                 layer.close();

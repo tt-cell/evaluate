@@ -27,7 +27,7 @@ public class TeacherEvaluateController {
 
     @RequestMapping("/teacherEvaluate")
     public String Role(Model model) {
-        Integer evaluates_id = 4;
+        Integer evaluates_id = 2;
         model.addAttribute("evaluates_id", evaluates_id);
         return "teacherEvaluate";
     }
@@ -42,13 +42,13 @@ public class TeacherEvaluateController {
 
     @RequestMapping("/getSelfTeachers")
     @ResponseBody
-    public Msg getTeacher(Msg msg, HttpSession session, int bid) {
+    public Msg getSelfTeacher(Msg msg, HttpSession session, int bid) {
         if(bid == 0){
             msg.setStatus(0);
             msg.setCode(0);
             msg.setCount(0);
-            msg.setMsg("获取数据失败！!");
-            msg.setData(" ");
+            msg.setMsg("获取数据失败！");
+            msg.setData("");
             return msg;
         }
         List<Batch> batch = batchService.selectBatch_status(bid);
@@ -61,13 +61,13 @@ public class TeacherEvaluateController {
                 msg.setStatus(0);
                 msg.setCode(0);
                 msg.setCount(0);
-                msg.setMsg(" ");
-                msg.setData(" ");
+                msg.setMsg("获取数据失败");
+                msg.setData("");
                 return msg;
             }
             msg.setCode(0);
             msg.setCount(10);
-            msg.setMsg("....");
+            msg.setMsg("...");
             msg.setData(data);
             msg.setStatus(0);
             return msg;
@@ -75,11 +75,10 @@ public class TeacherEvaluateController {
             msg.setStatus(0);
             msg.setCode(0);
             msg.setCount(0);
-            msg.setMsg("数据失败!");
+            msg.setMsg(" ");
             msg.setData("");
             return msg;
         }
-
     }
 
 }

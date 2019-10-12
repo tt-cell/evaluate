@@ -8,41 +8,33 @@
 <link rel="stylesheet" href="layui/css/layui.css">
 <script src="jquery/jquery-3.4.1.min.js"></script>
 <body>
-<form class="layui-form" action="">
+<form class="layui-form" action="" style="margin-left: 150px">
     <div class="layui-form-item" style="margin: 20px 0 0 10px">
         <label class="layui-form-label">查看学院</label>
         <div class="layui-input-inline">
-            <select name="colleges_id" id="colleges_id" lay-filter="collegesIdFilter">
-                <option value="0" selected="" disabled>请选择学院</option>
+            <select name="colleges_id" id="colleges_id" lay-verify="required" lay-search="" lay-filter="collegesIdFilter">
+                <option value="0">直接选择或搜索选择学院</option>
             </select>
         </div>
     </div>
     <div class="layui-form-item" style="margin: 20px 0 0 10px">
-        <label class="layui-form-label">添加班级</label>
+        <label class="layui-form-label">查看班级</label>
         <div class="layui-input-inline">
-            <select name="classs_id" id="classs_id" lay-filter="calsssIdFilter">
-                <option value="0" selected="" disabled>请选择班级</option>
-                <!--<option value="大一上">大一上</option>-->
-                <!--<option value="大一下">大一下</option>-->
-                <!--<option value="大二上">大二上</option>-->
-                <!--<option value="大二下">大二下</option>-->
-                <!--<option value="大三上">大三上</option>-->
-                <!--<option value="大三下">大三下</option>-->
-                <!--<option value="大四上">大四上</option>-->
-                <!--<option value="大四下">大四下</option>-->
+            <select name="classs_id" id="classs_id" lay-verify="required" lay-search="" lay-filter="calsssIdFilter">
+                <option value="0">直接选择或搜索选择班级</option>
             </select>
         </div>
     </div>
     <div class="layui-form-item" style="margin: 20px 0 0 10px">
-        <label class="layui-form-label">添加课程</label>
+        <label class="layui-form-label">授予课程</label>
         <div class="layui-input-inline">
-            <select name="courses_id" id="courses_id" lay-filter="coursesIdFilter">
-                <option value="0" selected="" disabled>请选择课程</option>
+            <select name="courses_id" id="courses_id" lay-verify="required" lay-search="" lay-filter="coursesIdFilter">
+                <option value="0">直接选择或搜索选择课程</option>
             </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <div style="margin:100px 0 0 250px" class="layui-input-block">
+        <div style="margin:80px 0 0 150px" class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>

@@ -5,7 +5,7 @@ public class EvaluateResult {
     private int batch_id;
     private String userName;
     private String teacherName;
-    private int courses_id;
+    private String courses_name;
     private int evaluates_id;
     private float totalscore;
 
@@ -41,12 +41,12 @@ public class EvaluateResult {
         this.teacherName = teacherName;
     }
 
-    public int getCourses_id() {
-        return courses_id;
+    public String getCourses_name() {
+        return courses_name;
     }
 
-    public void setCourses_id(int courses_id) {
-        this.courses_id = courses_id;
+    public void setCourses_name(String courses_name) {
+        this.courses_name = courses_name;
     }
 
     public int getEvaluates_id() {

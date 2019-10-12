@@ -1,19 +1,19 @@
 <html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-    <title>学生评教指标</title>
-    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
-    <script type="text/javascript" src="/jquery/jquery-3.4.1.min.js"></script>
-    <script src="/layui/layui.js" charset="utf-8"></script>
-    <style>
-        .layui-input-block{
-            min-height: 38px;
-            margin-left: 0px;
-            padding-left: 180px;
-        }
-    </style>
+<title>学生评教指标</title>
+<link rel="stylesheet" href="/layui/css/layui.css" media="all">
+<script type="text/javascript" src="/jquery/jquery-3.4.1.min.js"></script>
+<script src="/layui/layui.js" charset="utf-8"></script>
+<style>
+    .layui-input-block {
+        min-height: 38px;
+        margin-left: 0px;
+        padding-left: 180px;
+    }
+</style>
 </head>
 <body>
-<form class="layui-form" action="">
+<form class="layui-form" action="" target="the_iframe">
     <div class="layui-form-item" id="sj"></div>
     <div class="layui-form-item">
         <div class="layui-input-block" style="margin-left: 180px">
@@ -22,17 +22,22 @@
         </div>
     </div>
 </form>
+<iframe id="is_iframe" name="the_iframe" style="display:none;"></iframe>
 <span style="display: none;" id="id"></span>
+<input type="text" id="total">
 
 <script src="js/menu.js"></script>
 <script th:inline="javascript">
     var evaluates_id = [[${evaluates_id}]];
     console.log(evaluates_id)
-
+    if (evaluates_id === null) {
+        evaluates_id = 0;
+    }
     layui.use('form', function () {
         var form = layui.form
             , layer = layui.layer
             , $ = layui.$
+        var list, batch_id, userName, teacherName, courses_name, score;
 
         //获取指标以及指标选项
         $.ajax({
@@ -45,9 +50,9 @@
                   <label class="layui-form-label" style="width: 45%;text-align: left">${res.data[index].targets_name}</label>
                        </div>`);
                     $.each(res.data[index].options_name, function (indexTwo) {
-                        console.log(res.data[index].options_name[indexTwo])
+                        // console.log(res.data[index].options_name[indexTwo])
                         $('#sj').append(`<div class="layui-input-block" style="background-color: white">
-                  <input type="radio" name="${res.data[index].targets_id}" value="${res.data[index].options_name[indexTwo]}" title="${res.data[index].options_name[indexTwo]}">
+                  <input type="radio" class="options" name="${res.data[index].targets_id}" value="${res.data[index].options_name[indexTwo]}" title="${res.data[index].options_name[indexTwo]}">
         </div>`);
                     })
                 })
@@ -59,27 +64,57 @@
         })
 
         //获取EvaluateResult具体值
-        var userName = $('#id').text()
-        console.log(userName)
-        var teacherName =
 
 
         //计算单个指标类型的分数
         form.on('submit(formDemo)', function (data) {
             console.log(data)
-            var res = $.ajax({
-                url: '/insertEvaluateResult',
-                type: 'post',
-                data: {
-                    batch_id: batch_id, userName: userName, teacherName: teacherName,
-                    courses_id: courses_id, evaluates_id: evaluates_id, totalsocre: totalsocre
+
+            console.log($('form').serialize());
+            var arr = [].slice.call($('.layui-form-radioed').prev('input'))
+            console.log(arr)
+            // console.log($("[name=]:checked").attr('name'))
+
+
+            let y = []
+            arr.forEach(function (value, index) {
+                // console.log($(value).attr('name'))
+                // console.log($(value).val())
+                let x = {}
+                x['index'] = $(value).attr('name')
+                x['value'] = $(value).val()
+                y.push(x)
+            })
+
+            console.log(JSON.stringify(y))
+
+            $.ajax({
+                url: '/testValue',
+                type: 'post', data: {list: JSON.stringify(y)},
+                success: function (data) {
+                    $("#total").val(data)
+                    list = $('#id').text().split(",")
+                    batch_id = list[0]
+                    userName = list[1]
+                    teacherName = list[2]
+                    courses_name = list[3]
+                    console.log("batch_id:" + batch_id + "userName:" + userName + "teacherName:" + teacherName + "courses_name:" + courses_name)
+
+                    var res = $.ajax({
+                        url: '/insertEvaluateResult',
+                        type: 'post',
+                        data: {
+                            batch_id: batch_id, userName: userName, teacherName: teacherName,
+                            courses_name: courses_name, evaluates_id: evaluates_id, totalscore: data
+                        }
+                    })
+                    if (res.responseText > 0) {
+                        layer.msg('评教成功', {icon: 6, time: 2000})
+                    } else {
+                        layer.msg('评教失败！', {icon: 2, time: 2000})
+                    }
                 }
             })
-            if (res.responseText > 0) {
-                layer.msg('评教成功', {icon: 6, time: 2000})
-            } else {
-                layer.msg('评教失败！', {icon: 2, time: 2000})
-            }
         })
     })
 </script>

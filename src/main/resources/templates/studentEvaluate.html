@@ -27,7 +27,7 @@
     <script src="layui/layui.all.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css">
     <style>
-        body .layer_bg .layui-layer-content{
+        body .layer_bg .layui-layer-content {
             background-color: #eaf3fd;
         }
     </style>
@@ -50,70 +50,120 @@
                         <!-- Navbar Header-->
                         <div class="navbar-header">
                             <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
-                            <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
-                            <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
-                            <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                            <div class="brand-text d-none d-lg-inline-block">
+                                <span>Bootstrap </span><strong>Dashboard</strong></div>
+                            <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>
+                        </a>
+                            <!-- Toggle Button--><a id="toggle-btn" href="#"
+                                                    class="menu-btn active"><span></span><span></span><span></span></a>
                         </div>
                         <!-- Navbar Menu -->
                         <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                             <!-- Search-->
-                            <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                            <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i
+                                    class="icon-search"></i></a></li>
                             <!-- Notifications-->
-                            <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
+                            <li class="nav-item dropdown"><a id="notifications" rel="nofollow" data-target="#" href="#"
+                                                             data-toggle="dropdown" aria-haspopup="true"
+                                                             aria-expanded="false" class="nav-link"><i
+                                    class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
                                 <ul aria-labelledby="notifications" class="dropdown-menu">
                                     <li><a rel="nofollow" href="#" class="dropdown-item">
                                         <div class="notification">
-                                            <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
-                                            <div class="notification-time"><small>4 minutes ago</small></div>
-                                        </div></a></li>
+                                            <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You
+                                                have 6 new messages
+                                            </div>
+                                            <div class="notification-time">
+                                                <small>4 minutes ago</small>
+                                            </div>
+                                        </div>
+                                    </a></li>
                                     <li><a rel="nofollow" href="#" class="dropdown-item">
                                         <div class="notification">
-                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
-                                            <div class="notification-time"><small>4 minutes ago</small></div>
-                                        </div></a></li>
+                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You
+                                                have 2 followers
+                                            </div>
+                                            <div class="notification-time">
+                                                <small>4 minutes ago</small>
+                                            </div>
+                                        </div>
+                                    </a></li>
                                     <li><a rel="nofollow" href="#" class="dropdown-item">
                                         <div class="notification">
-                                            <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
-                                            <div class="notification-time"><small>4 minutes ago</small></div>
-                                        </div></a></li>
+                                            <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server
+                                                Rebooted
+                                            </div>
+                                            <div class="notification-time">
+                                                <small>4 minutes ago</small>
+                                            </div>
+                                        </div>
+                                    </a></li>
                                     <li><a rel="nofollow" href="#" class="dropdown-item">
                                         <div class="notification">
-                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
-                                            <div class="notification-time"><small>10 minutes ago</small></div>
-                                        </div></a></li>
-                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                                            <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You
+                                                have 2 followers
+                                            </div>
+                                            <div class="notification-time">
+                                                <small>10 minutes ago</small>
+                                            </div>
+                                        </div>
+                                    </a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
+                                        <strong>view all notifications </strong></a></li>
                                 </ul>
                             </li>
                             <!-- Messages                        -->
-                            <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
+                            <li class="nav-item dropdown"><a id="messages" rel="nofollow" data-target="#" href="#"
+                                                             data-toggle="dropdown" aria-haspopup="true"
+                                                             aria-expanded="false" class="nav-link"><i
+                                    class="fa fa-envelope-o"></i><span
+                                    class="badge bg-orange badge-corner">10</span></a>
                                 <ul aria-labelledby="notifications" class="dropdown-menu">
                                     <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-profile"><img src="img/avatar-1.jpg" alt="..."
+                                                                      class="img-fluid rounded-circle"></div>
                                         <div class="msg-body">
                                             <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
-                                        </div></a></li>
+                                        </div>
+                                    </a></li>
                                     <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                        <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-profile"><img src="img/avatar-2.jpg" alt="..."
+                                                                      class="img-fluid rounded-circle"></div>
                                         <div class="msg-body">
                                             <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
-                                        </div></a></li>
+                                        </div>
+                                    </a></li>
                                     <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                        <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                        <div class="msg-profile"><img src="img/avatar-3.jpg" alt="..."
+                                                                      class="img-fluid rounded-circle"></div>
                                         <div class="msg-body">
                                             <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
-                                        </div></a></li>
-                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Read all messages   </strong></a></li>
+                                        </div>
+                                    </a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
+                                        <strong>Read all messages </strong></a></li>
                                 </ul>
                             </li>
                             <!-- Languages dropdown    -->
-                            <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                            <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#"
+                                                             data-toggle="dropdown" aria-haspopup="true"
+                                                             aria-expanded="false"
+                                                             class="nav-link language dropdown-toggle"><img
+                                    src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
                                 <ul aria-labelledby="languages" class="dropdown-menu">
-                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2">German</a></li>
-                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2">French                                         </a></li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png"
+                                                                                               alt="English"
+                                                                                               class="mr-2">German</a>
+                                    </li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png"
+                                                                                               alt="English"
+                                                                                               class="mr-2">French </a>
+                                    </li>
                                 </ul>
                             </li>
                             <!-- Logout    -->
-                            <li class="nav-item"><a href="/login" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                            <li class="nav-item"><a href="/login" class="nav-link logout"> <span
+                                    class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -141,12 +191,13 @@
                 </ul>
                 <ul class="list-unstyled">
 
-                </ul><span class="heading">Extras</span>
+                </ul>
+                <span class="heading">Extras</span>
                 <ul class="list-unstyled">
-                    <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
-                    <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
-                    <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
-                    <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+                    <li><a href="#"> <i class="icon-flask"></i>Demo </a></li>
+                    <li><a href="#"> <i class="icon-screen"></i>Demo </a></li>
+                    <li><a href="#"> <i class="icon-mail"></i>Demo </a></li>
+                    <li><a href="#"> <i class="icon-picture"></i>Demo </a></li>
                 </ul>
             </nav>
             <div class="content-inner">
@@ -162,7 +213,8 @@
                         </div>
                     </div>
                 </form>
-                <table class="layui-table" lay-data="{url:'/getStudentsTeacher?bid=0', page:true, id:'idTest'}" lay-filter="demo">
+                <table class="layui-table" lay-data="{url:'/getStudentsTeacher?bid=0', page:true, id:'idTest'}"
+                       lay-filter="demo">
                     <thead>
                     <tr>
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -188,7 +240,9 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <p>Copyright &copy; 2019.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                                <p>Copyright &copy; 2019.Company name All rights reserved.More Templates <a
+                                        href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect
+                                    from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
                             </div>
                             <div class="col-sm-6 text-right">
                                 <p></p>
@@ -205,9 +259,9 @@
 <!-- JavaScript files-->
 <script src="layui/layui.js"></script>
 <script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/popper.js/umd/popper.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"></script>
 <script src="vendor/chart.js/Chart.min.js"></script>
 <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
 <script src="js/charts-home.js"></script>
@@ -218,10 +272,11 @@
 <!-- Main File-->
 <script th:inline="javascript">
 
-    layui.use(['table','form'], function () {
+    layui.use(['table', 'form'], function () {
         var table = layui.table,
             form = layui.form;
         var evaluates_id = [[${evaluates_id}]]
+        var bid;
 
         //渲染学年
         $.ajax({
@@ -243,11 +298,11 @@
         })
         //加载教师
         form.on('select(group)', function (data) {
-            batch_id = data.value
+            bid = data.value
             console.log(data.value)
             table.reload('idTest', {
                 url: '/getStudentsTeacher'
-                ,where: {
+                , where: {
                     bid: data.value
                 } //设定异步数据接口的额外参数
                 //,height: 300
@@ -273,8 +328,8 @@
             } else if (obj.event === 'edit') {
                 layer.open({
                     type: 2,
-                    title:'学生评教指标信息',
-                    backgroundColor:'gray',
+                    title: '学生评教指标信息',
+                    backgroundColor: 'gray',
                     skin: 'layer_bg',
                     anim: 3,
                     content: [`/evaluateTargets?evaluates_id=${evaluates_id}`, 'yes'],
@@ -283,10 +338,10 @@
                         location = window.location;//刷新
                     },
                     success: function (layero, index) {
-                        var body = layer.getChildFrame('body',index);
+                        var body = layer.getChildFrame('body', index);
                         var iframeWin = window[layero.find('iframe')[0]['name']];
                         var inputList = body.find('span');
-                        $(inputList).text($('.h4').html(),);
+                        $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name);
                     }
                 })
                 layer.close();

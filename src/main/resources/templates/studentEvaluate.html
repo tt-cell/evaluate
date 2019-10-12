@@ -218,21 +218,21 @@
                     <thead>
                     <tr>
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-                        <th lay-data="{field:'uid', width:200, sort: true, fixed: true, templet: '#uid'}">序列</th>
+                        <th lay-data="{field:'uid', width:200, sort: true, fixed: true, templet: '#id'}">序列</th>
                         <th lay-data="{field:'uname', width:200}">教师</th>
                         <th lay-data="{field:'courses_name', width:300}">授课名称</th>
                         <th lay-data="{field:'batch_name', width:400}">所在批次</th>
-                        <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
+                        <th lay-data="{fixed: 'right', width:230, align:'center', toolbar: '#barDemo'}">操作</th>
                     </tr>
                     </thead>
                 </table>
-                <script type="text/html" id="uid">
+                <script type="text/html" id="id">
                     {{d.LAY_TABLE_INDEX+1}}
                 </script>
 
                 <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs" lay-event="edit">评教</a>
-                    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+                    <a style="color: white" class="layui-btn layui-btn-xs" lay-event="edit">开始评教</a>
+                    <a style="color: white" class="layui-btn layui-btn-normal layui-btn-xs disabled" lay-event="detail">查看评教分数</a>
                 </script>
 
                 <!-- Page Footer-->
@@ -271,7 +271,6 @@
 
 <!-- Main File-->
 <script th:inline="javascript">
-
     layui.use(['table', 'form'], function () {
         var table = layui.table,
             form = layui.form;
@@ -335,7 +334,11 @@
                     content: [`/evaluateTargets?evaluates_id=${evaluates_id}`, 'yes'],
                     area: ['800px', '600px'],
                     end: function () {//关闭后调用的事件
-                        location = window.location;//刷新
+                        // $('#uid').text("查看")
+                        // $('#changeStatus').text('查看')
+                        // $("[name='uid']").text('查看11')
+                        //obj.tr[2].replacer(`<a class="layui-btn-warm layui-btn-xs" lay-event="edit">查看</a>`)
+                        // obj.tr[2].replace(`<a class="layui-btn-warm layui-btn-xs" lay-event="edit">查看</a>`)
                     },
                     success: function (layero, index) {
                         var body = layer.getChildFrame('body', index);

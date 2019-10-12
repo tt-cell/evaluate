@@ -121,7 +121,7 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">dsdsd</h1>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
                         <p>Web Designer</p>
                     </div>
                 </div>
@@ -273,9 +273,9 @@
                     anim: 3,
                     content: [`/evaluateTargets?evaluates_id=${evaluates_id}`, 'yes'],
                     area: ['800px', '600px'],
-                    end: function () {//关闭后调用的事件
-                        location = window.location;//刷新
-                    },
+                    // end: function () {//关闭后调用的事件
+                    //     location = window.location;//刷新
+                    // },
                     success: function (layero, index) {
                         var body = layer.getChildFrame('body', index);
                         var iframeWin = window[layero.find('iframe')[0]['name']];

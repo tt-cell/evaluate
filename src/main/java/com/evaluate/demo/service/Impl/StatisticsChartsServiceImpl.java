@@ -24,4 +24,14 @@ public class StatisticsChartsServiceImpl implements StatisticsChartsService {
     public List<Statistics> selectWordCloudData() {
         return statisticsChartsDao.selectWordCloudData();
     }
+
+    @Override
+    public List<Statistics> selectLineData() {
+        return statisticsChartsDao.selectLineData();
+    }
+
+    @Override
+    public List<Statistics> selectliquidFillData() {
+        return statisticsChartsDao.selectliquidFillData();
+    }
 }

@@ -4,17 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evaluate.demo.dao.StatisticsChartsDao">
     <!--1.获取柱状图数据-->
-    <!--2.获取折线图数据-->
     <select id="selectTangleData" resultType="com.evaluate.demo.entity.Statistics">
-         SELECT * FROM users u INNER JOIN statistics s ON u.uid = s.uid
-        INNER JOIN evaluates e ON s.evaluates_id = e.evaluates_id
-        ORDER BY s.score limit 0,7
+        SELECT * FROM statistics ORDER BY score DESC limit 0,3
     </select>
     
-    <!--3.获得字符云数据-->
+    <!--2.获得字符云数据-->
     <select id="selectWordCloudData" resultType="com.evaluate.demo.entity.Statistics">
-        SELECT * FROM users u INNER JOIN statistics s ON u.uid = s.uid
-        INNER JOIN evaluates e ON s.evaluates_id = e.evaluates_id
-        ORDER BY s.score
+        SELECT * FROM statistics
+        ORDER BY score
+    </select>
+
+    <!--3.获取折线图数据-->
+    <select id="selectLineData" resultType="com.evaluate.demo.entity.Statistics">
+        SELECT * FROM statistics ORDER BY score limit 0,3
+    </select>
+
+    <!--4.获取水球图数据-->
+    <select id="selectliquidFillData" resultType="com.evaluate.demo.entity.Statistics">
+        SELECT * FROM statistics ORDER BY score desc limit 0,3
     </select>
 </mapper>

@@ -8,6 +8,33 @@ public class EvaluateResult {
     private String courses_name;
     private int evaluates_id;
     private float totalscore;
+    private int uid;
+    private int courses_id;
+    private int tid;
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getCourses_id() {
+        return courses_id;
+    }
+
+    public void setCourses_id(int courses_id) {
+        this.courses_id = courses_id;
+    }
+
+    public int getTid() {
+        return tid;
+    }
+
+    public void setTid(int tid) {
+        this.tid = tid;
+    }
 
     public int getResultId() {
         return ResultId;

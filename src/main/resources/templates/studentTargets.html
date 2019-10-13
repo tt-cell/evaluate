@@ -10,10 +10,19 @@
         margin-left: 0px;
         padding-left: 80px;
     }
+    #evaluatesDetail>label{
+        margin: 20px 20px 20px 30px;
+    }
 </style>
 </head>
 <body>
 <form class="layui-form" action="" target="the_iframe">
+    <div class="" id="evaluatesDetail" style="background-color: white;margin:5px 0 5px 0;padding:20px 0px 20px 0px;">
+        <label><i class="layui-icon layui-icon-notice" style="color: orangered"></i>评教类型:<label id="evaluatesType"></label></label>
+        <label><i class="layui-icon layui-icon-username" style="color: darksalmon"></i>评教人:<label id="evaluatesPerson"></label></label>
+        <label><i class="layui-icon layui-icon-username" style="color: palegoldenrod"></i>被评人:<label id="evaluatedPerson"></label></label>
+        <label><i class="layui-icon layui-icon-survey" style="color: greenyellow"></i>所在批次:<label id="batch"></label></label>
+    </div>
     <div class="layui-form-item" id="sj">
     </div>
     <div id="evaluateScores">
@@ -27,7 +36,7 @@
         <div class="layui-input-block" style="margin-left: 180px">
             <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            <!--<button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemoTwo">关闭窗口</button>-->
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemoTwo">关闭窗口</button>
         </div>
     </div>
 </form>
@@ -36,7 +45,6 @@
 
 <script src="js/menu.js"></script>
 <script th:inline="javascript">
-
     function closeParent() {
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
@@ -52,8 +60,57 @@
             , rate = layui.rate
             , layer = layui.layer
             , $ = layui.$
-        var list, batch_id, userName, teacherName, courses_name, score;
+        var list, userName, teacherName, courses_name, uid, tid, courses_id;
+        //指标头详情
+        //判断指标类型
+        if(evaluates_id===1)
+            $('#evaluatesType').text("学生评教")
+        else if(evaluates_id===2)
+            $('#evaluatesType').text("自我评教")
+        else if(evaluates_id===3)
+            $('#evaluatesType').text("同行评教")
+        else if(evaluates_id===4)
+            $('#evaluatesType').text("领导评教")
+        //评教人
+        $('#evaluatesPerson').text($('#id').text().split(",")[1])
 
+        //被评教人
+        $('#evaluatedPerson').text($('#id').text().split(",")[2])
+
+        //批次
+        var batch_id = parseInt($('#id').text().split(",")[0])
+        switch (batch_id) {
+            case 1:
+                $('#batch').text("2016-2017第一学期");
+                break;
+            case 2:
+                $('#batch').text('2016-2017第二学期');
+                break;
+            case 3:
+                $('#batch').text('2017-2018第一学期');
+                break;
+            case 4:
+                $('#batch').text('2017-2018第二学期');
+                break;
+            case 5:
+                $('#batch').text('2018-2019第一学期');
+                break;
+            case 6:
+                $('#batch').text('2018-2019第二学期');
+                break;
+            case 7:
+                $('#batch').text('2019-2020第一学期');
+                break;
+            case 8:
+                $('#batch').text('2019-2020第二学期');
+                break;
+            case 9:
+                $('#batch').text('2020-2021第一学期');
+                break;
+            case 10:
+                $('#batch').text('2020-2021第二学期');
+                break;
+        }
         //获取指标以及指标选项
         $.ajax({
             url: '/selectEvaluateTargets',
@@ -78,9 +135,6 @@
             }
         })
 
-        //获取EvaluateResult具体值
-
-
         //计算单个指标类型的分数
         form.on('submit(formDemo)', function (data) {
             console.log(data)
@@ -89,7 +143,6 @@
             var arr = [].slice.call($('.layui-form-radioed').prev('input'))
             console.log(arr)
             // console.log($("[name=]:checked").attr('name'))
-
 
             let y = []
             arr.forEach(function (value, index) {
@@ -118,31 +171,40 @@
                         }
                     })
                     //$("#total").val(data)
+                    //计算evaluatesresult的值
                     list = $('#id').text().split(",")
                     batch_id = list[0]
                     userName = list[1]
                     teacherName = list[2]
                     courses_name = list[3]
-                    console.log("batch_id:" + batch_id + "userName:" + userName + "teacherName:" + teacherName + "courses_name:" + courses_name)
+                    uid = list[4]
+                    tid = list[5]
+                    courses_id = list[6]
+                    console.log("batch_id:" + batch_id + "userName:" + userName +
+                        "teacherName:" + teacherName + "courses_name:"
+                        + courses_name + "uid:" +uid +"tid:" +tid +"courses_id" + courses_id )
 
-                    var res = $.ajax({
+                    $.ajax({
                         url: '/insertEvaluateResult',
                         type: 'post',
                         data: {
                             batch_id: batch_id, userName: userName, teacherName: teacherName,
                             courses_name: courses_name, evaluates_id: evaluates_id, totalscore: data
+                            ,uid:uid,courses_id:courses_id,tid:tid
+                        },
+                        success:function () {
+                            $('#btn').addClass("layui-btn-disabled")
                         }
                     })
-                    if (res.responseText > 0) {
-                        layer.msg('评教成功', {icon: 6, time: 2000})
-                    } else {
-                        layer.msg('评教失败！', {icon: 2, time: 2000})
-                    }
+                    // if (res.responseText > 0) {
+                    //     layer.msg('评教成功', {icon: 6, time: 2000})
+                    // } else {
+                    //     layer.msg('评教失败！', {icon: 2, time: 2000})
+                    // }
                 }
             })
         })
-
-        form.on('submit(formDemoTwo)',function (data) {
+        form.on('submit(formDemoTwo)',function () {
             closeParent();
         })
     })

@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>课程管理界面</title>
+    <title>功能列表界面</title>
+    <style>
+        #ChartsOne{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 0 0 5px gray;
+            position: absolute;
+            left: 35px;
+            top: 35px;
+            border-radius: 10px;
+        }
+        #ChartsTwo{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 0 0 2px gray;
+            position: absolute;
+            left: 35px;
+            top: 385px;
+            border-radius: 10px;
+        }
+        #ChartsThree{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 0 0 5px gray;
+            position: absolute;
+            top: 35px;
+            right: 35px;
+            border-radius: 10px;
+        }
+        #ChartsFour{
+            width: 500px;
+            height: 310px;
+            background-color: white;
+            box-shadow: 0 0 5px gray;
+            position: absolute;
+            top: 385px;
+            right: 35px;
+            border-radius: 10px;
+        }
+    </style>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
@@ -24,6 +65,7 @@
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.ico">
     <!--layui-->
+    <script src="layui/layui.all.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -44,7 +86,7 @@
                         <!-- Navbar Header-->
                         <div class="navbar-header">
                             <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
-                            <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                            <div class="brand-text d-none d-lg-inline-block"><span>欢迎来到 </span><strong>在线评教系统</strong></div>
                             <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
                             <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
                         </div>
@@ -127,13 +169,11 @@
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
                 <!--<div id="div_tree"></div>-->
                 <ul id="MenuList" class="list-unstyled">
-                    <li class="active"><a href="/index"> <i class="icon-home"></i>Home </a></li>
-                    <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-                    <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-                    <li><a href="/login"> <i class="icon-interface-windows"></i>Login page </a></li>
+                    <li class="active"><a href="/index"> <i class="icon-home"></i>首页</a></li>
+                    <li><a href="/login"> <i class="icon-interface-windows"></i>登录</a></li>
                 </ul>
                 <ul class="list-unstyled">
+
 
                 </ul><span class="heading">Extras</span>
                 <ul class="list-unstyled">
@@ -145,19 +185,18 @@
             </nav>
             <div class="content-inner">
                 <!--layui界面-->
-                <!--laytable-->
-                <div class="demoTable" style="margin:10px 0 0 10px">
-                    <div class="layui-inline">
-                        <input class="layui-input" name="select_" id="select_" autocomplete="off" placeholder="请输入用户名或课程名">
-                    </div>
-                    <button class="layui-btn layui-btn-normal" data-type="search" id="select_btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
-                </div>
-                <table class="layui-hide layui-table" id="mySTA" lay-filter="mySTA"></table>
 
 
-                <!--<script type="text/html" id="mybar">-->
-                    <!--<a style="color: white" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="show"><i class="layui-icon"></i>查看</a>-->
-                <!--</script>-->
+                <section class="myCharts">
+                    <!--第一个图形 柱状图-->
+                    <div id="ChartsOne"></div>
+                    <!--第一个图形 折线图-->
+                    <div id="ChartsTwo"></div>
+                    <!--第一个图形 字符云-->
+                    <div id="ChartsThree"></div>
+                    <!--第一个图形 水球图-->
+                    <div id="ChartsFour"></div>
+                </section>
                 <!-- Page Footer-->
                 <footer class="main-footer">
                     <div class="container-fluid">
@@ -178,57 +217,239 @@
 </head>
 <body>
 <!-- JavaScript files-->
-<script src="layui/layui.js"></script>
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="layui/layui.js"></script>
 <script src="vendor/popper.js/umd/popper.min.js"> </script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
 <script src="vendor/chart.js/Chart.min.js"></script>
 <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
-<script src="js/menu.js"></script>
+<script src="echarts/echarts.min.js"></script>
+<script src="echarts/echarts-liquidfill.min.js"></script>
+<script src="echarts/echarts-wordcloud.min.js"></script>
 <script src="js/charts-home.js"></script>
+<script src="js/menu.js"></script>
 <script src="js/front.js"></script>
-
 <!-- Main File-->
-<script type="text/javascript" th:inline="none">
-    layui.use('table', function () {
-        var table = layui.table;
-        var $ = layui.$;
-
-            table.render({
-            elem: '#mySTA'
-            , url: '/getAllStatistics'
-            , title: '统计数据表'
-            , cols:
-                [
-                    [
-                        {field: 'uname', title: '用户名称', width: 150}
-                        , {field: 'courses_name', title: '课程名称', width: 240}
-                        , {field: 'evaluates_name', title: '评教名称', width: 240}
-                        , {field: 'score', title: '分数', width: 240,sort: true}
-                        , {field: 'note', title: '备注', width: 220}
-                    ]
-                ]
-            , page: true
-            , id:'mySTA'
-        });
-        $('#select_btn').on('click', function(){
-
-            var select_val = $('#select_').val();
-            console.log(select_val)
-            table.reload('mySTA',{
-                url:'/getStatisticsLike',
-                where:{
-                    select_val:select_val
-                },page:{
-                    curr:1
-                }
-            },'data')
-
-        });
-
-    });
-
-</script>
 </body>
+<script>
+    window.onload = function () {
+        //创建echarts对象
+
+        //第一个图表为柱形图
+        var myEchartsOne = echarts.init(document.getElementById("ChartsOne"))
+        var myEchartsOneOption = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: [
+                    ['评教类别', '学生评教','自我评教', '同行评教'],
+                ]
+            },
+            xAxis: {type: 'category'},
+            yAxis: {},
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'}
+            ]
+
+        }
+        setTimeout(function () {
+            $.ajax({
+                url: '/getTangleData',
+                type: 'get',
+                data: 'json',
+                success: function (res) {
+                    res.data.forEach(function (data) {
+                        data.forEach(function(value){
+                            myEchartsOneOption.dataset.source.push(value.split(","));
+                        })
+                     })
+                    myEchartsOne.setOption(myEchartsOneOption);
+                },
+                error: function (err) {
+                    alert("小兄弟，没有获取带后台数据呀！")
+                    console.log(err.message)
+                }
+            })
+        },1000)
+
+        //第二个图表为折线图
+        var myEchartsTwo = echarts.init(document.getElementById("ChartsTwo"))
+        setTimeout(function () {
+            $.ajax({
+                url:'/getLineData',
+                type:'get',
+                data:'json',
+                success:function (data) {
+                    console.log(data)
+                    var myEchartsTwoOption = {
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+                        legend: {
+                            data:['学生评教','自我评教','同行评教']
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : data.data[0]
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'学生评教',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:data.data[1]
+                            },
+                            {
+                                name:'自我评教',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:data.data[2]
+                            },
+                            {
+                                name:'同行评教',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:data.data[3]
+                            },
+                            // {
+                            //     name:'领导评教',
+                            //     type:'line',
+                            //     stack: '总量',
+                            //     label: {
+                            //         normal: {
+                            //             show: true,
+                            //             position: 'top'
+                            //         }
+                            //     },
+                            //     areaStyle: {normal: {}},
+                            //     data:data.data[4]
+                            // }
+                        ]
+                    };
+                    myEchartsTwo.setOption(myEchartsTwoOption);
+                }
+            })
+
+        },1000)
+
+        //第三个图表为字符云图
+        var myChartsThree = echarts.init(document.getElementById('ChartsThree'));
+        function createRandomItemStyle() {
+                return {
+                    normal: {
+                        color: 'rgb(' + [
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160)
+                        ].join(',') + ')'
+                    }
+                };
+            }
+        myEchartsThreeOption = {
+            title:{
+                color:'skyblue',
+            },
+                tooltip: {
+                    show: true
+                },
+                series: [{
+                    name: '被评教师分数',
+                    type: 'wordCloud',
+                    size: ['70%', '70%'],
+                    textRotation : [0, 45, 90, -45],
+                    textPadding: 0,
+                    autoSize: {
+                        enable: true,
+                        minSize: 16
+                    },
+                    data: []
+                }]
+            };
+        setTimeout(function () {
+            $.ajax({
+                url:'/getWordCloudData',
+                type:'get',
+                data:'json',
+                success:function (res) {
+                    res.data.forEach(function (data) {
+                        myEchartsThreeOption.series[0].data.push(data);
+                        //myEchartsThreeOption.series[0].data.push({textStyle:createRandomItemStyle()});
+                        // .push({textStyle:createRandomItemStyle()})
+                    })
+                    myChartsThree.setOption(myEchartsThreeOption);
+                },
+                error:function (err) {
+                    alert("小兄弟，没有获取带后台数据呀！")
+                    console.log(err.message)
+                }
+            })
+        },1000)
+
+        //第四个图为水球图
+        var  myChcartsFour = echarts.init(document.getElementById('ChartsFour'))
+        var myEchartsFourOption = {
+            title:{
+            },
+            series: [{
+                type: 'liquidFill',
+                data: [],
+                backgroundStyle: {
+                    borderWidth: 3,
+                    borderColor: 'red',
+                    color: 'red'
+                }
+            }]
+        };
+        setTimeout(function () {
+            $.ajax({
+                url:'/getliquidFillData',
+                type:'get',
+                data:'json',
+                success:function (res) {
+                    res.data.forEach(function (data) {
+                        console.log(data)
+                        myEchartsFourOption.series[0].data.push(data);
+                    })
+                    myChcartsFour.setOption(myEchartsFourOption);
+                },
+                error:function (err) {
+                    alert("小兄弟，没有获取带后台数据呀！")
+                    console.log(err.message)
+                }
+            })
+        },1000)
+
+    }
+</script>
 </html>

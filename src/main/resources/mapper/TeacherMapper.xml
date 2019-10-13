@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evaluate.demo.dao.TeacherDao">
     <select id="selectTeachers" resultType="HashMap">
-          SELECT distinct us.uid,us.uname,cs.courses_name,b.batch_name  FROM users us
+          SELECT distinct us.uid,us.uname,cs.courses_id,cs.courses_name,b.batch_name,b.batch_id FROM users us
           INNER JOIN users_teach_courses ut ON us.uid=ut.uid
           INNER JOIN users_batch ub ON us.uid = ub.uid INNER JOIN batch b ON ub.batch_id = b.batch_id
           INNER JOIN courses cs ON ut.courses_id=cs.courses_id WHERE us.uid = #{uid} AND b.batch_name = #{bname}

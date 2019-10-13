@@ -1,6 +1,7 @@
 package com.evaluate.demo.controller;
 
 import com.evaluate.demo.entity.Batch;
+import com.evaluate.demo.entity.EvaluateResult;
 import com.evaluate.demo.entity.Msg;
 import com.evaluate.demo.entity.User;
 import com.evaluate.demo.service.BatchService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,5 +80,26 @@ public class StudentEvaluateController {
             msg.setData("");
             return msg;
         }
+    }
+
+
+    @RequestMapping("/selectIfEvaluateresult")
+    @ResponseBody
+    public Map selectIfEvaluateresult(int uid,int courses_id,int tid,int batch_id,int evaluates_id){
+        EvaluateResult er = new EvaluateResult();
+        er.setEvaluates_id(evaluates_id);
+        er.setBatch_id(batch_id);
+        er.setTid(tid);
+        er.setCourses_id(courses_id);
+        er.setUid(uid);
+        List<EvaluateResult> evaluateResultList = studentService.selectIfEvaluateresult(er);
+        Map result = new HashMap();
+        if(evaluateResultList.size()>0){
+            result.put("data",1);
+        }else{
+            result.put("data",0);
+        }
+        return result;
+
     }
 }

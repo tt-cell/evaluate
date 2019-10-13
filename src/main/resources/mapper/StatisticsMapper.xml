@@ -4,18 +4,45 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evaluate.demo.dao.StatisticsDao">
 
-    <select id="selectAllStatistics" resultType="hashMap">
-        select uname,courses_name,evaluates_name,score,note from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id LIMIT #{before},#{after}
-    </select>
-    <select id="selectAllStatisticsCount" resultType="int">
-        select count(*) from statistics;
-    </select>
-    <select id="selectStatisticsLike" resultType="hashMap">
-      select uname,courses_name,evaluates_name,score,note from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id and concat(uname,courses_name) like '%${select_val}%'LIMIT #{before},#{after}
-    </select>
-    <select id="selectStatisticsCountLike" resultType="int">
-       select count(*) from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id and concat(uname,courses_name) like '%${select_val}%'
-    </select>
+    <!--<select id="selectAllStatistics" resultType="hashMap">-->
+        <!--select uname,courses_name,evaluates_name,score,note from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id LIMIT #{before},#{after}-->
+    <!--</select>-->
+    <!--<select id="selectAllStatisticsCount" resultType="int">-->
+        <!--select count(*) from statistics;-->
+    <!--</select>-->
+    <!--<select id="selectStatisticsLike" resultType="hashMap">-->
+      <!--select uname,courses_name,evaluates_name,score,note from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id and concat(uname,courses_name) like '%${select_val}%'LIMIT #{before},#{after}-->
+    <!--</select>-->
+    <!--<select id="selectStatisticsCountLike" resultType="int">-->
+       <!--select count(*) from users u,courses c ,evaluates e ,statistics s  where u.uid=s.uid and c.courses_id=s.courses_id and e.evaluates_id=s.evaluates_id and concat(uname,courses_name) like '%${select_val}%'-->
+    <!--</select>-->
 
-
+    <!--查询所有老师-->
+    <select id="selectAllStatistics" parameterType="com.evaluate.demo.entity.EvaluateResult" resultType="com.evaluate.demo.entity.EvaluateResult">
+        SELECT er.`teacherName`,er.`batch_id`,er.`tid` FROM evaluateresult er
+        WHERE er.`batch_id`=#{batch_id} GROUP BY er.`teacherName`
+    </select>
+    <!--查询学生评教平均分-->
+    <select id="selectStudentScore" parameterType="com.evaluate.demo.entity.EvaluateResult" resultType="com.evaluate.demo.entity.Avg">
+        SELECT SUM(er.`totalscore`)/COUNT(*) AS pjf  FROM evaluateresult er
+        WHERE er.`batch_id`=#{batch_id} AND er.`evaluates_id`=1 AND er.`teacherName`=#{teacherName}
+    </select>
+    <!--查询自评平均分-->
+    <select id="selectSelfScore" parameterType="com.evaluate.demo.entity.EvaluateResult" resultType="com.evaluate.demo.entity.Avg">
+        SELECT SUM(er.`totalscore`)/COUNT(*) AS pjf  FROM evaluateresult er
+        WHERE er.`batch_id`=#{batch_id} AND er.`evaluates_id`=2 AND er.`teacherName`=#{teacherName}
+    </select>
+    <!--查询同行平均分-->
+    <select id="selectPeerScore" parameterType="com.evaluate.demo.entity.EvaluateResult"  resultType="com.evaluate.demo.entity.Avg">
+        SELECT SUM(er.`totalscore`)/COUNT(*) AS pjf  FROM evaluateresult er
+        WHERE er.`batch_id`=#{batch_id} AND er.`evaluates_id`=3 AND er.`teacherName`=#{teacherName}
+    </select>
+    <!--&lt;!&ndash;查询领导平均分&ndash;&gt;-->
+    <!--<select id="selectLeaderScore" parameterType="com.evaluate.demo.entity.EvaluateResult"  resultType="com.evaluate.demo.entity.Avg">-->
+        <!--SELECT SUM(er.`totalscore`)/COUNT(*) AS pjf  FROM evaluateresult er-->
+        <!--WHERE er.`batch_id`=#{batch_id} AND er.`evaluates_id`=4 AND er.`teacherName`=#{teacherName}-->
+    <!--</select>-->
+    <insert id="insertStatistics" parameterType="com.evaluate.demo.entity.Statistics">
+       INSERT INTO statistics(batch_id,uid,teacherName,student_sum,self_sum,peer_sum,score) VALUES (#{batch_id},#{uid},#{teacherName},#{student_sum},#{self_sum},#{peer_sum},#{score})
+    </insert>
 </mapper>

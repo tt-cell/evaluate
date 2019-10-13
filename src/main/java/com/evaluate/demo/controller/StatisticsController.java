@@ -1,6 +1,9 @@
 package com.evaluate.demo.controller;
 
+import com.evaluate.demo.entity.Avg;
 import com.evaluate.demo.entity.Classs;
+import com.evaluate.demo.entity.EvaluateResult;
+import com.evaluate.demo.entity.Statistics;
 import com.evaluate.demo.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,41 +19,42 @@ public class StatisticsController {
     @Autowired
     private StatisticsService statisticsService;
 
-    /*返回统计管理页面*/
-    @RequestMapping("/getStatisticsManagement")
+    @RequestMapping(value = "/getAllTheTeachersScore")
     @ResponseBody
-    public ModelAndView getStatisticesManagememt(){
-        ModelAndView modelAndView = new ModelAndView("statisticsManagement");
-        return modelAndView;
-    }
-
-    //返回一个统计记录的数据
-    @RequestMapping("/getAllStatistics")
-    @ResponseBody
-    public Map getStatistics (int page,int limit){
-        int before = limit * (page - 1);
-        int after = limit;
+    public Map getAllTheTeachers(int batch_id){
         Map<String,Object> map = new HashMap<>();
-        List list = statisticsService.selectAllStatistics(before,after);
-        map.put("code",0);
-        map.put("data",list);
-        map.put("msg","");
-        map.put("count", statisticsService.selectAllStatisticsCount());
+        List<EvaluateResult> evaluateResultList = statisticsService.selectAllStatistics(batch_id);
+        Statistics statistics = new Statistics();
+        float sum = 0;//总分
+        for (int i=0;i<evaluateResultList.size();i++) {
+            String teacher = evaluateResultList.get(i).getTeacherName();//获取被评分人姓名
+            int batchid = evaluateResultList.get(i).getBatch_id();//获取批次ID
+            int tid = evaluateResultList.get(i).getTid();//获取被评分人ID
+            List<Avg> studentRs = statisticsService.selectStudentScore(batch_id,teacher);//获取被评分人的学生平均分
+            List<Avg> selfRs = statisticsService.selectSelfScore(batch_id,teacher);//获取被评分人的自评平均分
+            List<Avg> peerRs = statisticsService.selectPeerScore(batch_id,teacher);//获取被评分人的同行平均分
+//            List<Avg> leaderRs = statisticsService.selectLeaderScore(batch_id,teacher);
+            float studentScore = studentRs.get(0).getPjf();//得到学生的平均分
+            float selfScore = selfRs.get(0).getPjf();//得到自评的平均分
+            float peerScore = peerRs.get(0).getPjf();//得到同行平均分
+            sum = selfScore+studentScore+peerScore;//得到四个类型的总分
+            statistics.setBatch_id(batchid);
+            statistics.setUid(tid);
+            statistics.setTeacherName(teacher);
+            statistics.setStudent_sum(studentScore);
+            statistics.setSelf_sum(selfScore);
+            statistics.setPeer_sum(peerScore);
+            statistics.setScore(sum);
+            int result = statisticsService.insertStatistics(statistics);
+            if (result>0){
+                map.put("data",1);
+            }else {
+                map.put("data",0);
+            }
+//            float leaderScore = leaderRs.get(0).getPjf();
+        }
+
         return map;
     }
-    //返回一个模糊查询的统计记录的数据
-    @RequestMapping("/getStatisticsLike")
-    @ResponseBody
-    public Map getStatisticsLike (String select_val,int page,int limit){
-        int before = limit * (page - 1);
-        int after = limit;
-        Map<String,Object> map = new HashMap<>();
-        List list1 = statisticsService.selectStatisticsLike(select_val,before,after);
-        map.put("data",list1);
-        map.put("code",0);
-        map.put("msg","");
-        map.put("count",statisticsService.selectStatisticsCountLike(select_val));
-        return map;
 
-    }
 }

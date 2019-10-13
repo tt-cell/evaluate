@@ -45,7 +45,7 @@
                         <!-- Navbar Header-->
                         <div class="navbar-header">
                             <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
-                            <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                            <div class="brand-text d-none d-lg-inline-block"><span>欢迎来到 </span><strong>在线评教系统</strong></div>
                             <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
                             <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
                         </div>
@@ -122,17 +122,15 @@
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
                         <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                         <p>Web Designer</p>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
                 <!--<div id="div_tree"></div>-->
                 <ul id="MenuList" class="list-unstyled">
-                    <li class="active"><a href="/index"> <i class="icon-home"></i>Home </a></li>
-                    <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-                    <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-                    <li><a href="/login"> <i class="icon-interface-windows"></i>Login page </a></li>
+                    <li class="active"><a href="/index"> <i class="icon-home"></i>首页</a></li>
+                    <li><a href="/login"> <i class="icon-interface-windows"></i>登录</a></li>
                 </ul>
                 <ul class="list-unstyled">
 
@@ -163,8 +161,9 @@
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
                         <th lay-data="{field:'uid', width:200, sort: true, fixed: true, templet: '#uid'}">序列</th>
                         <th lay-data="{field:'uname', width:200}">本人</th>
-                        <th lay-data="{field:'courses_name', width:300}">授课名称</th>
-                        <th lay-data="{field:'batch_name', width:400}">所在批次</th>
+                        <th lay-data="{field:'courses_id', width:200}">课程编号</th>
+                        <th lay-data="{field:'courses_name', width:200}">授课名称</th>
+                        <th lay-data="{field:'batch_name', width:300}">所在批次</th>
                         <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
                     </tr>
                     </thead>
@@ -174,7 +173,7 @@
                 </script>
 
                 <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs" lay-event="edit">评教</a>
+                    <a style="color: white" class="layui-btn layui-btn-xs" lay-event="edit">评教</a>
                     <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
                 </script>
 
@@ -217,6 +216,7 @@
             form = layui.form;
         var evaluates_id = [[${evaluates_id}]]
         var bid;
+        var uid = $('#h5').html()
         //渲染学年
         $.ajax({
             type: 'post',
@@ -265,22 +265,40 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.open({
-                    type: 2,
-                    title:'自我评教指标信息',
-                    backgroundColor:'gray',
-                    skin: 'layui-layer-lan',
-                    anim: 3,
-                    content: [`/evaluateTargets?evaluates_id=${evaluates_id}`, 'yes'],
-                    area: ['800px', '600px'],
-                    // end: function () {//关闭后调用的事件
-                    //     location = window.location;//刷新
-                    // },
-                    success: function (layero, index) {
-                        var body = layer.getChildFrame('body', index);
-                        var iframeWin = window[layero.find('iframe')[0]['name']];
-                        var inputList = body.find('span');
-                        $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name);
+                console.log(data)
+                layui.$.ajax({
+                    url:'/selectIfEvaluateresult',
+                    type:'get',
+                    data:{
+                        evaluates_id:evaluates_id,
+                        uid:uid,
+                        courses_id:data.courses_id,
+                        tid:data.uid,
+                        batch_id:data.batch_id
+                    },
+                    success:function (res) {
+                        if(res.data===1){
+                            layer.msg("已经评教完毕",{icon:2})
+                        }else {
+                            layer.open({
+                                type: 2,
+                                title:'自我评教指标信息',
+                                backgroundColor:'gray',
+                                skin: 'layui-layer-lan',
+                                anim: 3,
+                                content: [`/evaluateTargets?evaluates_id=${evaluates_id}`, 'yes'],
+                                area: ['800px', '600px'],
+                                // end: function () {//关闭后调用的事件
+                                //     location = window.location;//刷新
+                                // },
+                                success: function (layero, index) {
+                                    var body = layer.getChildFrame('body', index);
+                                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                                    var inputList = body.find('span');
+                                    $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
+                                }
+                            })
+                        }
                     }
                 })
                 layer.close();

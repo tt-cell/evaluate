@@ -44,7 +44,7 @@
                         <!-- Navbar Header-->
                         <div class="navbar-header">
                             <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
-                            <div class="brand-text d-none d-lg-inline-block"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                            <div class="brand-text d-none d-lg-inline-block"><span>欢迎来到 </span><strong>在线评教系统</strong></div>
                             <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
                             <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
                         </div>
@@ -198,12 +198,51 @@
 <script type="text/html" id="barDemo">
     <input type="checkbox" name="close" class="cityId" lay-skin="switch"
            lay-filter="switchTest" data-id="{{d.batch_id}}" lay-text="ON|OFF" {{d.batch_status=="1"?"checked":""}}>
+
+    {{#
+    if(d.batch_status===0){
+    }}
+    <button lay-event="edit" type="button" class="layui-btn layui-btn-xs layui-btn-normal">统计分数</button>
+    {{#
+    }
+    }}
 </script>
 
 <script>
+
     layui.use(['form', 'table'], function () {
         var form = layui.form,
-            table = layui.table;
+            table = layui.table,
+            $ = layui.$
+
+        // $('#tj').click(function (ev) {
+        //     ev.preventDefault()
+        //     console.log("wdwddwd")
+        // })
+
+        table.on('tool(demo)', function(obj) {
+            var data = obj.data;
+            if(obj.event=='edit'){
+                console.log("批次ID："+data.batch_id)
+                $.ajax({
+                    url:"/getAllTheTeachersScore",
+                    type:"get",
+                    data:{
+                        batch_id:data.batch_id
+                    },
+                    success:function (res) {
+                        if(res.data==1){
+                            layer.msg("统计成功",{icon:1})
+                        }else{
+                            layer.msg("统计失败",{icon:2})
+                        }
+                    }
+
+
+                })
+            }
+        })
+
         form.on('switch(switchTest)', function (data) {
             var batch_id = $(this).attr('data-id')
             var item = $('.cityId')
@@ -224,9 +263,12 @@
             // console.log(item[8])
             // console.log(item[9])
             if (this.checked == true) {
+                console.log("22222222")
+
+
                 var res = $.ajax({url: `/updateBatch?batch_id=${batch_id}&batch_status=1`, async: false}).responseText
                 if (res > 0) {
-                    layer.msg("0000000")
+                    layer.msg("开启批次成功",{icon:1})
 
                     item.each(function (index,value) {
                         if ($(this).prop("checked")) {
@@ -248,7 +290,8 @@
             } else {
                 var res = $.ajax({url: `/updateBatch?batch_id=${batch_id}&batch_status=0`, async: false}).responseText
                 if (res > 0) {
-                    layer.msg("...........")
+                    layer.msg("关闭批次成功",{icon:1})
+
                     table.reload('idTest', {
                         url: '/getBatch'
                     });

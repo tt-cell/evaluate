@@ -59,7 +59,6 @@ public class StudentTargetsController {
     public float testValue(@RequestParam("list") String list) {
         JSONArray ary = JSONArray.fromObject(list);
         float sum = 0;
-        Map map = new HashMap();
         for (Object m : ary) {
             Map map1 = (Map) m;
             int aa = Integer.parseInt((String) map1.get("index"));

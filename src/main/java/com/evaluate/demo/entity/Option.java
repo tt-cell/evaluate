@@ -3,15 +3,7 @@ package com.evaluate.demo.entity;
 public class Option {
     private int options_id;
     private String options_name;
-    private int options_weight;
-
-    public int getOptions_weight() {
-        return options_weight;
-    }
-
-    public void setOptions_weight(int options_weight) {
-        this.options_weight = options_weight;
-    }
+    private float options_weight;
 
     public int getOptions_id() {
         return options_id;
@@ -29,9 +21,12 @@ public class Option {
         this.options_name = options_name;
     }
 
+    public float getOptions_weight() {
+        return options_weight;
+    }
 
-
-
-
+    public void setOptions_weight(float options_weight) {
+        this.options_weight = options_weight;
+    }
 }
 

@@ -57,20 +57,20 @@
             }
         })
 
-        var uid
-        form.on("select(userFilter)",function (data) {
-            uid = data.value
-            console.log(uid)
-        })
-        var rid
-        form.on("radio",function (data) {
-            rid = data.value
-            console.log(rid)
-        })
+        // var uid
+        // form.on("select(userFilter)",function (data) {
+        //     uid = data.value
+        //     console.log(uid)
+        // })
+        // var rid
+        // form.on("radio",function (data) {
+        //     rid = data.value
+        //     console.log(rid)
+        // })
 
         //监听提交
         form.on('submit(demo1)', function (data) {
-            var res = $.ajax({url: `/insertUserRole`, data: {uid:uid,rid:rid}, async: false})
+            var res = $.ajax({url: `/insertUserRole`, data: {uid:data.field.uid,rid:data.field.rid}, async: false})
             if (res.responseText > 0) {
                 layer.msg('成功', {icon: 6, time: 2000})
                 parent.layer.close(layer.index);

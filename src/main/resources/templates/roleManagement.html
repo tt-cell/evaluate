@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>
+<head lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -120,8 +120,8 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -226,10 +226,15 @@
                         location =  window.location //刷新
                     },
                     success: function (layero, index) {
-                        var body = layer.getChildFrame('body',index);
-                        var iframeWin = window[layero.find('iframe')[0]['name']];
-                        var inputList = body.find('span');
-                        $(inputList).text(data.uid);
+
+                        var iframe = window['layui-layer-iframe' + index];
+                        iframe.child(data.uid);
+
+
+                        // var body = layer.getChildFrame('body',index);
+                        // var iframeWin = window[layero.find('iframe')[0]['name']];
+                        // var inputList = body.find('span');
+                        // $(inputList).html(data.uid);
                     }
                     ,
                     // cancel: function () {

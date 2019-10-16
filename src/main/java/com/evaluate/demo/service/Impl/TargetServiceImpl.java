@@ -24,6 +24,21 @@ public class TargetServiceImpl implements TargetService {
     }
 
     @Override
+    public List<Target> selectEvaluate() {
+        return targetDao.selectEvaluate();
+    }
+
+    @Override
+    public List<Target> selectFaTarget() {
+        return targetDao.selectFaTarget();
+    }
+
+    @Override
+    public List<Target> selectChildrenTarget() {
+        return targetDao.selectChildrenTarget();
+    }
+
+    @Override
     public List<Map<String, Object>> getTreeList() {
         List<Target> list = targetDao.selectTarget();
         return buildTree(0,list);
@@ -65,6 +80,16 @@ public class TargetServiceImpl implements TargetService {
     @Override
     public int deleteTarget(Integer tid) {
         return targetDao.deleteTarget(tid);
+    }
+
+    @Override
+    public int insertTarget(Target target) {
+        return targetDao.insertTarget(target);
+    }
+
+    @Override
+    public int insertEvaluateTarget(int evaluates_id, int targets_id) {
+        return targetDao.insertEvaluateTarget(evaluates_id, targets_id);
     }
 
 

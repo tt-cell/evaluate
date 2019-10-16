@@ -33,17 +33,20 @@ public class StatisticsController {
             List<Avg> studentRs = statisticsService.selectStudentScore(batch_id,teacher);//获取被评分人的学生平均分
             List<Avg> selfRs = statisticsService.selectSelfScore(batch_id,teacher);//获取被评分人的自评平均分
             List<Avg> peerRs = statisticsService.selectPeerScore(batch_id,teacher);//获取被评分人的同行平均分
-//            List<Avg> leaderRs = statisticsService.selectLeaderScore(batch_id,teacher);
+            List<Avg> leaderRs = statisticsService.selectLeaderScore(batch_id,teacher);//获取被评分人的领导平均分
             float studentScore = studentRs.get(0).getPjf();//得到学生的平均分
             float selfScore = selfRs.get(0).getPjf();//得到自评的平均分
             float peerScore = peerRs.get(0).getPjf();//得到同行平均分
-            sum = selfScore+studentScore+peerScore;//得到四个类型的总分
+            float leaderScore = leaderRs.get(0).getPjf();
+            sum = selfScore+studentScore+peerScore+leaderScore;//得到四个类型的总分或
             statistics.setBatch_id(batchid);
             statistics.setUid(tid);
             statistics.setTeacherName(teacher);
             statistics.setStudent_sum(studentScore);
             statistics.setSelf_sum(selfScore);
             statistics.setPeer_sum(peerScore);
+            statistics.setLeader_sum(leaderScore);
+
             statistics.setScore(sum);
             int result = statisticsService.insertStatistics(statistics);
             if (result>0){
@@ -51,7 +54,7 @@ public class StatisticsController {
             }else {
                 map.put("data",0);
             }
-//            float leaderScore = leaderRs.get(0).getPjf();
+//
         }
 
         return map;

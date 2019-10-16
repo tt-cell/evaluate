@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -120,8 +121,8 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -174,6 +175,11 @@
                             选项D：
                             <div class="layui-inline">
                                 <input class="layui-input" name="optionD" id="optionD" autocomplete="off">
+                            </div>
+                            </br>
+                            选项E：
+                            <div class="layui-inline">
+                                <input class="layui-input" name="optionE" id="optionE" autocomplete="off">
                             </div>
                             </br>
                             <button style="margin: 20px 0 0 0 " type="submit" class="layui-btn" lay-submit="" lay-filter="demo2">保存</button>
@@ -242,6 +248,7 @@
     $("#optionB").val(option.data[1].options_name)
     $("#optionC").val(option.data[2].options_name)
     $("#optionD").val(option.data[3].options_name)
+    $("#optionE").val(option.data[4].options_name)
 
     layui.use('form', function () {
         var form = layui.form;
@@ -258,7 +265,7 @@
             //修改
             var result = $.ajax({url: `/updateTarget?tid=${tid}&tname=${tname}&tweight=${tweight}`,async: false}).responseText
 
-            var options = [$("#optionA").val(),$("#optionB").val(),$("#optionC").val(),$("#optionD").val()]
+            var options = [$("#optionA").val(),$("#optionB").val(),$("#optionC").val(),$("#optionD").val(),$("#optionE").val()]
             var res = $.ajax({url:`/selectAllOption?tid=${tid}`,async:false}).responseText
             var data = JSON.parse($.trim(res))
             console.log(JSON.parse($.trim(res)))

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>
+<head lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -120,18 +120,15 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
                 <!--<div id="div_tree"></div>-->
                 <ul id="MenuList" class="list-unstyled">
-                    <li class="active"><a href="/index"> <i class="icon-home"></i>Home </a></li>
-                    <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
-                    <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-                    <li><a href="/login"> <i class="icon-interface-windows"></i>Login page </a></li>
+                    <li class="active"><a href="/index"> <i class="icon-home"></i>首页</a></li>
+                    <li><a href="/login"> <i class="icon-interface-windows"></i>登录</a></li>
                 </ul>
                 <ul class="list-unstyled">
 
@@ -145,7 +142,14 @@
             </nav>
             <div class="content-inner">
                 <!--layui界面-->
-                <table class="layui-table" lay-data="{url:`/getBatch`, page:true, id:'idTest'}" lay-filter="demo">
+                <div  class="layui-btn-group demoTable" style="margin: 10px 0 0 10px">
+                    <button class="layui-btn layui-btn-normal" data-type="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加批次</button>
+                </div>
+                <div  class="layui-btn-group demoTable2" style="margin: 10px 0 0 10px">
+                    <button class="layui-btn layui-btn-danger" data-type="addOp"><i class="layui-icon layui-icon-password"></i>用户分配批次</button>
+                </div>
+
+                <table id="demo" class="layui-table" lay-data="{url:`/getAllTheBatch`, page:true, id:'idTest'}" lay-filter="demo">
                     <thead>
                     <tr>
                         <th lay-data="{field:'batch_id', width:200, sort: true, fixed: true, templet: '#batch_id'}">ID</th>
@@ -198,14 +202,15 @@
 <script type="text/html" id="barDemo">
     <input type="checkbox" name="close" class="cityId" lay-skin="switch"
            lay-filter="switchTest" data-id="{{d.batch_id}}" lay-text="ON|OFF" {{d.batch_status=="1"?"checked":""}}>
-
     {{#
     if(d.batch_status===0){
     }}
-    <button lay-event="edit" type="button" class="layui-btn layui-btn-xs layui-btn-normal">统计分数</button>
+    <button lay-event="statistics" type="button" class="layui-btn layui-btn-xs layui-btn-normal">统计分数</button>
     {{#
     }
     }}
+    <a style="color: white" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a style="color: white" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 <script>
@@ -220,9 +225,63 @@
         //     console.log("wdwddwd")
         // })
 
+        var $ = layui.$, active = {
+            add: function () {
+                layer.open({
+                    type: 2,
+                    title: "添加批次",
+                    area: ['550px', '450px'],
+                    fix: false,
+                    //maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    anim: 5,
+                    skin: 'layui-layer-rim',
+                    content: ['/insertBa', "yes"],
+                    end: function () {//关闭后调用的事件
+                        // location = window.location;//刷新
+                    }
+                });
+            },
+
+            addOp:function( ){
+                // var data = obj.data;
+                layer.open({
+                    type: 2,
+                    title: "选项授予指标",
+                    area: ['550px', '450px'],
+                    fix: false,
+                    //maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    anim: 5,
+                    skin: 'layui-layer-rim',
+                    content: [`/insertUsBa`, "yes"],
+                    end: function () {//关闭后调用的事件
+                        location = window.location;//刷新
+                    },
+
+
+
+                });
+            }
+
+        };
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        $('.demoTable2 .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
         table.on('tool(demo)', function(obj) {
             var data = obj.data;
-            if(obj.event=='edit'){
+            if(obj.event=='statistics'){
                 console.log("批次ID："+data.batch_id)
                 $.ajax({
                     url:"/getAllTheTeachersScore",
@@ -240,6 +299,37 @@
 
 
                 })
+            }else if (obj.event === 'edit') {
+                layer.prompt({
+                    formType: 2
+                    , value: data.batch_name
+                }, function (value, index) {
+                    obj.update({
+                        batch_name: value
+                    });
+                    var res = $.ajax({url: `/updateName?batch_id=${data.batch_id}&batch_name=${value}`, async: false})
+                    if (res.responseText > 0) {
+                        layer.msg('成功', {icon: 1, time: 1000})
+                        // location = window.location;//刷新
+                    } else {
+                        layer.msg('失败', {icon: 2, time: 1000})
+                        // location = window.location;//刷新
+                    }
+                    layer.close(index);
+                });
+            }
+            else if (obj.event === "del") {
+                layer.confirm('真的删除这个批次嘛？', function (index) {
+                    var res = $.ajax({url: `/deleteBatch?batch_id=${data.batch_id}`, async: false})
+                    if (res.responseText > 0) {
+                        layer.msg('成功', {icon: 6, time: 1000})
+                        location = window.location;//刷新
+                    } else {
+                        layer.msg('失败', {icon: 2, time: 1000})
+                        location = window.location;//刷新
+                    }
+                    layer.close(index);
+                });
             }
         })
 
@@ -278,13 +368,13 @@
                         }
                     })
                     table.reload('idTest', {
-                        url: '/getBatch'
+                        url: '/getAllTheBatch'
                     });
                 } else {
                     layer.msg("11111111")
 
                     table.reload('idTest', {
-                        url: '/getBatch'
+                        url: '/getAllTheBatch'
                     });
                 }
             } else {
@@ -293,12 +383,12 @@
                     layer.msg("关闭批次成功",{icon:1})
 
                     table.reload('idTest', {
-                        url: '/getBatch'
+                        url: '/getAllTheBatch'
                     });
                 } else {
                     layer.msg("----------")
                     table.reload('idTest', {
-                        url: '/getBatch'
+                        url: '/getAllTheBatch'
                     });
                 }
             }

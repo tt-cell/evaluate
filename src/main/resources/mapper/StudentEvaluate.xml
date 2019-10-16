@@ -5,14 +5,14 @@
 <mapper namespace="com.evaluate.demo.dao.StudentTargetsDao">
     <select id="selectStudentTargets" parameterType="int" resultType="com.evaluate.demo.entity.Target">
        SELECT t.targets_name,t.targets_id,
-GROUP_CONCAT(o.options_name) AS options_name
-FROM targets_options tos,targets t,OPTIONS o,evaluates_targets et
-WHERE et.evaluates_id=#{evaluates_id}
-AND INSTR(tos.targets_id,t.targets_id)>0
-AND t.targets_id=tos.targets_id
-AND tos.options_id=o.options_id
-AND et.targets_id=t.targets_id
-GROUP BY tos.targets_id
+        GROUP_CONCAT(o.options_name ORDER BY o.options_id ASC) AS options_name
+        FROM targets_options tos,targets t,OPTIONS o,evaluates_targets et
+        WHERE et.evaluates_id=#{evaluates_id}
+        AND INSTR(tos.targets_id,t.targets_id)>0
+        AND t.targets_id=tos.targets_id
+        AND tos.options_id=o.options_id
+        AND et.targets_id=t.targets_id
+        GROUP BY tos.targets_id
     </select>
 
     <select id="selectStudentOptions" resultType="com.evaluate.demo.entity.Option">

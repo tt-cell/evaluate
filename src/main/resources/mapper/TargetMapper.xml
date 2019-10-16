@@ -7,6 +7,18 @@
         SELECT * FROM targets
     </select>
 
+    <select id="selectEvaluate" resultType="com.evaluate.demo.entity.Evaluates">
+        SELECT * FROM evaluates
+    </select>
+
+    <select id="selectFaTarget" resultType="com.evaluate.demo.entity.Target">
+        SELECT * FROM targets where father_targets_id in (1)
+    </select>
+
+    <select id="selectChildrenTarget" resultType="com.evaluate.demo.entity.Target">
+        SELECT * FROM targets where father_targets_id not in (0,1)
+    </select>
+
     <!--<select id="getTreeLists" resultType="com.evaluate.demo.entity.Target">-->
         <!--SELECT * FROM targets where targets_id = #{tid}-->
     <!--</select>-->
@@ -14,8 +26,6 @@
     <select id="selectTitle" resultType="com.evaluate.demo.entity.Target">
           SELECT * FROM targets WHERE targets_id=#{tid}
     </select>
-
-
 
     <update id="updateTarget" >
           UPDATE  targets	SET targets_name = #{tname},targets_weight = #{tweight} WHERE targets_id = #{tid}
@@ -25,6 +35,16 @@
     <delete id="deleteTarget">
         DELETE FROM targets WHERE targets_id = #{tid}
     </delete>
+
+
+    <insert id="insertTarget">
+        INSERT INTO targets(targets_name,father_targets_id,url,targets_weight) VALUES (#{targets_name},#{father_targets_id},#{url},#{targets_weight})
+    </insert>
+
+    <!--//插入试卷和指标-->
+    <insert id="insertEvaluateTarget">
+        INSERT INTO evaluates_targets(evaluates_id,targets_id) VALUES (#{evaluates_id},#{targets_id})
+    </insert>
 
 
 </mapper>

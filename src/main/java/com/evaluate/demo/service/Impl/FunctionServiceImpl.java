@@ -66,6 +66,11 @@ public class FunctionServiceImpl implements FunctionService {
         return functionDao.selectAllTheFunction();
     }
 
+    @Override
+    public List<Function> selectAllTheFatherFunction() {
+        return functionDao.selectAllTheFatherFunction();
+    }
+
     public List<Map<String, Object>> buildTree(Integer pid, List<Function> list){
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         // 1.边界条件

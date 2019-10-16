@@ -10,7 +10,8 @@
         margin-left: 0px;
         padding-left: 80px;
     }
-    #evaluatesDetail>label{
+
+    #evaluatesDetail > label {
         margin: 20px 20px 20px 30px;
     }
 </style>
@@ -18,10 +19,14 @@
 <body>
 <form class="layui-form" action="" target="the_iframe">
     <div class="" id="evaluatesDetail" style="background-color: white;margin:5px 0 5px 0;padding:20px 0px 20px 0px;">
-        <label><i class="layui-icon layui-icon-notice" style="color: orangered"></i>评教类型:<label id="evaluatesType"></label></label>
-        <label><i class="layui-icon layui-icon-username" style="color: darksalmon"></i>评教人:<label id="evaluatesPerson"></label></label>
-        <label><i class="layui-icon layui-icon-username" style="color: palegoldenrod"></i>被评人:<label id="evaluatedPerson"></label></label>
-        <label><i class="layui-icon layui-icon-survey" style="color: greenyellow"></i>所在批次:<label id="batch"></label></label>
+        <label><i class="layui-icon layui-icon-notice" style="color: orangered"></i>评教类型:<label
+                id="evaluatesType"></label></label>
+        <label><i class="layui-icon layui-icon-username" style="color: darksalmon"></i>评教人:<label
+                id="evaluatesPerson"></label></label>
+        <label><i class="layui-icon layui-icon-username" style="color: palegoldenrod"></i>被评人:<label
+                id="evaluatedPerson"></label></label>
+        <label><i class="layui-icon layui-icon-survey" style="color: greenyellow"></i>所在批次:<label
+                id="batch"></label></label>
     </div>
     <div class="layui-form-item" id="sj">
     </div>
@@ -29,7 +34,9 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
             <legend>教师得分</legend>
         </fieldset>
-        <div style="margin-left: 30px"><div id="test6"></div></div>
+        <div style="margin-left: 30px">
+            <div id="test6"></div>
+        </div>
     </div>
     <!--<input type="text" id="total">-->
     <div class="layui-form-item">
@@ -41,44 +48,18 @@
     </div>
 </form>
 <iframe id="is_iframe" name="the_iframe" style="display:none;"></iframe>
-<span style="display: none;" id="id"></span>
+<input style="display: none;" id="values">
 
 <script src="js/menu.js"></script>
 <script th:inline="javascript">
-    function closeParent() {
-        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-        parent.layer.close(index); //再执行关闭
-    }
-
-    var evaluates_id = [[${evaluates_id}]];
-    console.log(evaluates_id)
-    if (evaluates_id === null) {
-        evaluates_id = 0;
-    }
-    layui.use(['form','rate'], function () {
-        var form = layui.form
-            , rate = layui.rate
-            , layer = layui.layer
-            , $ = layui.$
-        var list, userName, teacherName, courses_name, uid, tid, courses_id;
+    function child(fdata) {
         //指标头详情
-        //判断指标类型
-        if(evaluates_id===1)
-            $('#evaluatesType').text("学生评教")
-        else if(evaluates_id===2)
-            $('#evaluatesType').text("自我评教")
-        else if(evaluates_id===3)
-            $('#evaluatesType').text("同行评教")
-        else if(evaluates_id===4)
-            $('#evaluatesType').text("领导评教")
         //评教人
-        $('#evaluatesPerson').text($('#id').text().split(",")[1])
-
+        $('#evaluatesPerson').text(fdata.split(",")[1])
         //被评教人
-        $('#evaluatedPerson').text($('#id').text().split(",")[2])
-
+        $('#evaluatedPerson').text(fdata.split(",")[2])
         //批次
-        var batch_id = parseInt($('#id').text().split(",")[0])
+        var batch_id = parseInt(fdata.split(",")[0])
         switch (batch_id) {
             case 1:
                 $('#batch').text("2016-2017第一学期");
@@ -111,103 +92,126 @@
                 $('#batch').text('2020-2021第二学期');
                 break;
         }
-        //获取指标以及指标选项
-        $.ajax({
-            url: '/selectEvaluateTargets',
-            data: {evaluates_id: evaluates_id},
-            type: 'get',
-            success: function (res) {
-                $.each(res.data, function (index) {
-                    $('#sj').append(` <div class="layui-input-block" style="background-color: white;margin-top: 5px">
+        function closeParent() {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+
+        var evaluates_id = [[${evaluates_id}]];
+        console.log(evaluates_id)
+        if (evaluates_id === null) {
+            evaluates_id = 0;
+        }
+        //判断指标类型
+        if (evaluates_id === 1)
+            $('#evaluatesType').text("学生评教")
+        else if (evaluates_id === 2)
+            $('#evaluatesType').text("自我评教")
+        else if (evaluates_id === 3)
+            $('#evaluatesType').text("同行评教")
+        else if (evaluates_id === 4)
+            $('#evaluatesType').text("领导评教")
+
+        layui.use(['form', 'rate'], function () {
+            var form = layui.form
+                , rate = layui.rate
+                , layer = layui.layer
+                , $ = layui.$
+            var list, userName, teacherName, courses_name, uid, tid, courses_id;
+            //获取指标以及指标选项
+            $.ajax({
+                url: '/selectEvaluateTargets',
+                data: {evaluates_id: evaluates_id},
+                type: 'get',
+                success: function (res) {
+                    $.each(res.data, function (index) {
+                        $('#sj').append(` <div class="layui-input-block" style="background-color: white;margin-top: 5px">
                   <label class="layui-form-label" style="width: 90%;text-align: left">${res.data[index].targets_name}</label>
                        </div>`);
-                    $.each(res.data[index].options_name, function (indexTwo) {
-                        // console.log(res.data[index].options_name[indexTwo])
-                        $('#sj').append(`<div class="layui-input-block" style="background-color: white">
+                        $.each(res.data[index].options_name, function (indexTwo) {
+                            // console.log(res.data[index].options_name[indexTwo])
+                            $('#sj').append(`<div class="layui-input-block" style="background-color: white">
                   <input type="radio" class="options" name="${res.data[index].targets_id}" value="${res.data[index].options_name[indexTwo]}" title="${res.data[index].options_name[indexTwo]}">
         </div>`);
+                        })
                     })
-                })
-                form.render();
-            },
-            error: function (err) {
-                console.log(err.message)
-            }
-        })
-
-        //计算单个指标类型的分数
-        form.on('submit(formDemo)', function (data) {
-            console.log(data)
-
-            console.log($('form').serialize());
-            var arr = [].slice.call($('.layui-form-radioed').prev('input'))
-            console.log(arr)
-            // console.log($("[name=]:checked").attr('name'))
-
-            let y = []
-            arr.forEach(function (value, index) {
-                // console.log($(value).attr('name'))
-                // console.log($(value).val())
-                let x = {}
-                x['index'] = $(value).attr('name')
-                x['value'] = $(value).val()
-                y.push(x)
-            })
-
-            console.log(JSON.stringify(y))
-
-            $.ajax({
-                url: '/testValue',
-                type: 'post', data: {list: JSON.stringify(y)},
-                success: function (data) {
-                    //显示文字
-                    rate.render({
-                        elem: '#test6'
-                        ,value: data
-                        ,half: true
-                        ,text: true
-                        ,setText: function(value){
-                            this.span.text(value/1 + "分");
-                        }
-                    })
-                    //$("#total").val(data)
-                    //计算evaluatesresult的值
-                    list = $('#id').text().split(",")
-                    batch_id = list[0]
-                    userName = list[1]
-                    teacherName = list[2]
-                    courses_name = list[3]
-                    uid = list[4]
-                    tid = list[5]
-                    courses_id = list[6]
-                    console.log("batch_id:" + batch_id + "userName:" + userName +
-                        "teacherName:" + teacherName + "courses_name:"
-                        + courses_name + "uid:" +uid +"tid:" +tid +"courses_id" + courses_id )
-
-                    $.ajax({
-                        url: '/insertEvaluateResult',
-                        type: 'post',
-                        data: {
-                            batch_id: batch_id, userName: userName, teacherName: teacherName,
-                            courses_name: courses_name, evaluates_id: evaluates_id, totalscore: data
-                            ,uid:uid,courses_id:courses_id,tid:tid
-                        },
-                        success:function () {
-                            $('#btn').addClass("layui-btn-disabled")
-                        }
-                    })
-                    // if (res.responseText > 0) {
-                    //     layer.msg('评教成功', {icon: 6, time: 2000})
-                    // } else {
-                    //     layer.msg('评教失败！', {icon: 2, time: 2000})
-                    // }
+                    form.render();
+                },
+                error: function (err) {
+                    console.log(err.message)
                 }
             })
+
+            //计算单个指标类型的分数
+            form.on('submit(formDemo)', function (data) {
+                console.log(data)
+
+                console.log($('form').serialize());
+                var arr = [].slice.call($('.layui-form-radioed').prev('input'))
+                console.log(arr)
+                // console.log($("[name=]:checked").attr('name'))
+
+                let y = []
+                arr.forEach(function (value, index) {
+                    // console.log($(value).attr('name'))
+                    // console.log($(value).val())
+                    let x = {}
+                    x['index'] = $(value).attr('name')
+                    x['value'] = $(value).val()
+                    y.push(x)
+                })
+
+                console.log(JSON.stringify(y))
+
+                $.ajax({
+                    url: '/testValue',
+                    type: 'post', data: {list: JSON.stringify(y)},
+                    success: function (data) {
+                        //显示文字
+                        rate.render({
+                            elem: '#test6'
+                            , value: data
+                            , half: true
+                            , text: true
+                            , setText: function (value) {
+                                this.span.text(value / 1 + "分");
+                            }
+                        })
+                        //$("#total").val(data)
+                        //计算evaluatesresult的值
+                        list = fdata.split(",")
+                        batch_id = list[0]
+                        userName = list[1]
+                        teacherName = list[2]
+                        courses_name = list[3]
+                        uid = list[4]
+                        tid = list[5]
+                        courses_id = list[6]
+                        console.log("batch_id:" + batch_id + "userName:" + userName +
+                            "teacherName:" + teacherName + "courses_name:"
+                            + courses_name + "uid:" + uid + "tid:" + tid + "courses_id" + courses_id)
+
+                        $.ajax({
+                            url: '/insertEvaluateResult',
+                            type: 'post',
+                            data: {
+                                batch_id: batch_id, userName: userName, teacherName: teacherName,
+                                courses_name: courses_name, evaluates_id: evaluates_id, totalscore: data
+                                , uid: uid, courses_id: courses_id, tid: tid
+                            },
+                            success: function () {
+                                $('#btn').addClass("layui-btn-disabled")
+                            }
+                        })
+                    }
+                })
+            })
+            form.on('submit(formDemoTwo)', function () {
+                closeParent();
+            })
         })
-        form.on('submit(formDemoTwo)',function () {
-            closeParent();
-        })
-    })
+
+    }
 </script>
 </body>
 </html>

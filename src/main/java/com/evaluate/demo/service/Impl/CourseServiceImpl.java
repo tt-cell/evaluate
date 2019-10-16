@@ -77,8 +77,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> selectClasssCourse(int classs_id) {
-        return courseDao.selectClasssCourse(classs_id);
+    public List<Course> selectClasssCourse() {
+        return courseDao.selectClasssCourse();
     }
 
     @Override

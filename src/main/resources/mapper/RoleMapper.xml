@@ -8,13 +8,19 @@
     <result property="rname" column="rname"></result>
   </resultMap>
 
-  <select id="selectAllRole" parameterType="String" resultType="HashMap">
+  <select id="selectAllRole" resultType="HashMap">
     SELECT u.uid,u.uname,r.rname FROM roles r
         INNER JOIN users_roles ur ON r.rid=ur.rid
-        INNER JOIN users u ON ur.uid=u.uid
+        INNER JOIN users u ON ur.uid=u.uid LIMIT #{before},#{after}
   </select>
 
-    <update id="updateRole" parameterType="String">
+    <select id="count" resultType="int">
+         SELECT count(*) FROM roles r
+        INNER JOIN users_roles ur ON r.rid=ur.rid
+        INNER JOIN users u ON ur.uid=u.uid
+    </select>
+
+    <update id="updateRole" parameterType="com.evaluate.demo.entity.UserRole">
         UPDATE users_roles SET rid = #{rid} WHERE uid=#{uid}
     </update>
 

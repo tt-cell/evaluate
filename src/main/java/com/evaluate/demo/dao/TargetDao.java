@@ -10,14 +10,24 @@ import java.util.Map;
 
 @Repository
 public interface TargetDao {
+
     List<Target> selectTarget();
 
+    List<Target> selectEvaluate();
+
+    List<Target> selectFaTarget();
+
+    List<Target> selectChildrenTarget();
     List<Target> getTreeList();
     List<Target> selectTitle(int tid);
 
     int updateTarget(Integer tid, String tname, String tweight);
 
     int deleteTarget(Integer tid);
+    int insertTarget(Target target);
+
+    int insertEvaluateTarget(int evaluates_id,int targets_id);
+
 
 }
 

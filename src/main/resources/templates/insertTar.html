@@ -7,49 +7,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="layui/css/layui.css">
-    <script src="jquery/jquery-3.4.1.min.js"></script>
 </head>
 <body>
+<script src="jquery/jquery-3.4.1.min.js"></script>
 <form class="layui-form" action="" style="margin: 20px 0 0 100px">
     <div class="layui-form-item">
-        <label class="layui-form-label">功能名：</label>
+        <label class="layui-form-label">指标名：</label>
         <div class="layui-inline">
-            <input type="text" name="fname" autocomplete="off" placeholder="请输入功能名" class="layui-input">
+            <input type="text" name="targets_name" autocomplete="off" placeholder="请输入指标名" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">父级功能：</label>
-        <div class="layui-inline">
-            <select name="fid" id="fid" lay-verify="required" lay-filter="functionFilterTwo" >
-                <option value="0" selected="">请输入父级功能名</option>
+        <label class="layui-form-label">父级指标：</label>
+        <div class="layui-input-inline layui-form" lay-filter="getFaTarget">
+            <select class="seloption" lay-search="" lay-filter="getFaTarget" name="father_targets_id" id="faid">
             </select>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">跳转链接：</label>
         <div class="layui-inline">
-            <input type="text" name="url" autocomplete="off" placeholder="请输入跳转链接" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">排序：</label>
-        <div class="layui-inline">
-            <input type="text" name="sort" autocomplete="off" placeholder="请输入序号" value="0" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">状态：</label>
-        <div class="layui-inline">
-            <input type="text" name="status" autocomplete="off" placeholder="请输入状态" value="0" class="layui-input">
+            <input type="text" name="url" value="/targetsOption" autocomplete="off" placeholder="请输入跳转链接" class="layui-input">
         </div>
     </div>
 
+    <div class="layui-form-item">
+        <label class="layui-form-label">指标权重：</label>
+        <div class="layui-inline">
+            <input type="text" name="targets_weight" autocomplete="off" value = 0 placeholder="请输入指标权重" class="layui-input">
+        </div>
+    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
+
 </form>
 <script src="layui/layui.js"></script>
 <script>
@@ -57,23 +51,32 @@
     layui.use('form', function () {
         var form = layui.form
             , layer = layui.layer
+
         $.ajax({
-            url: '/selectAllTheFatherFunction',
+            url: '/selectFaTarget',
             dataType: 'json',
             type: 'get',
             success: function (rs) {
                 console.log(rs.data)
                 $.each(rs.data, function (index,item) {
-                    $('#fid').append('<option value="'+item.fid+'">'+item.fname+'</option>');// 下拉菜单里添加元素
+                    $('#faid').append('<option value="'+item.targets_id+'">'+item.targets_name+'</option>');// 下拉菜单里添加元素
                 });
                 form.render();
             }
         })
 
+        // var father_targets_id
+        // form.on("select(getFaTarget)",function (data) {
+        //     console.log(father_targets_id)
+        //     father_targets_id = data.value
+        // })
+        //
         //监听提交
         form.on('submit(demo1)', function (data) {
-            var res = $.ajax({url: `/insertFun`, data: $('form').serialize(), async: false})
-            if (res.responseText > 0) {
+            console.log($('form').serialize())
+            var res = $.ajax({url: `/insertTarget`, data: $('form').serialize(), async: false})
+            // var ress = $.ajax({url: `/insertOption`, data: $('form').serialize(), async: false})
+            if (res.responseText > 0 ) {
                 layer.msg('成功', {icon: 6, time: 2000})
                 parent.layer.close(layer.index);
             } else {

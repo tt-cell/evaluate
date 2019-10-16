@@ -30,8 +30,7 @@ public class UserController {
     @ResponseBody
     public Map getAllUsers(int page, int limit) {
         int before = limit * (page - 1);
-        int after = page * limit;
-        List<Map<String,Object>> users = userService.findAllPage(before, after);
+        List<Map<String,Object>> users = userService.findAllPage(before, limit);
         int count = userService.count();
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
@@ -40,26 +39,40 @@ public class UserController {
         map.put("data", users);
         return map;
     }
+    //查询所有的老师信息
+    @RequestMapping("/getAllTeachers")
+    @ResponseBody
+    public Map getAllTeachers() {
+        List<User> data = userService.selectAllTheTeacher();
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("data", data);
+        return map;
+    }
 
     //删除一个用户
     @RequestMapping("/deleteOneUser")
     public @ResponseBody
-    List deleteOneUser(int userId) {
+    int deleteOneUser(int userId) {
         int result = userService.deleteOneUser(userId);
-        List<User> users = userService.selectAllUser();
-        return users;
+        //List<User> users = userService.selectAllUser();
+        if(result>0)
+        return result;
+        else
+            return 1;
     }
 
     //更改一个用户
     @RequestMapping("/changeOneUser")
     @ResponseBody
-    public Map changeOneUser(String uname, int userId) {
-        int result = userService.updateOneUser(uname, userId);
-        Map<String, Object> map = new HashMap<>();
+    public int changeOneUser(String uname, int uid) {
+        int result = userService.updateOneUser(uname,uid);
+//        Map<String, Object> map = new HashMap<>();
         if (result >= 0) {
-            map.put("flag", "success");
-        }
-        return map;
+           return result;
+        }else
+        return 1;
     }
     @RequestMapping("/getAllColleges")
     @ResponseBody
@@ -84,15 +97,11 @@ public class UserController {
     @RequestMapping(value = "/AddOneUser")
     @ResponseBody
     public int AddOneUser(User user){
-//        int colleges_id = userService.selectOneColleges_id(colleges_name);
-//        int result = userService.insertOneUser(uname,password,sex,colleges_id);
-//        Map<String,Object> map = new HashMap<>();
-//        if(result>=0){
-//            map.put("flag","success");
-//        }
-//        return map;
         int result = userService.insertOneUser(user);
+        if(result>0)
         return result;
+        else
+            return 1;
     }
 
 

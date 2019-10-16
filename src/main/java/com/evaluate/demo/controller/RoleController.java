@@ -24,11 +24,14 @@ public class RoleController {
     //查询所有用户的角色
     @RequestMapping("/selectAllRole")
     @ResponseBody
-    public Msg selectAllRole(Msg msg){
-        List<Map<String, Object>> data = roleService.selectAllRole();
+    public Msg selectAllRole(Msg msg,int page,int limit){
+        int before =limit * (page - 1);
+        int after = limit;
+        List<Map<String, Object>> data = roleService.selectAllRole(before,after);
+        int count = roleService.count();
         msg.setCode(0);
         msg.setMsg("成功");
-        msg.setCount(3);
+        msg.setCount(count);
         msg.setData(data);
         return msg;
     }
@@ -41,28 +44,28 @@ public class RoleController {
     //修改角色
     @RequestMapping("/updateRole")
     @ResponseBody
-    public int updateRole(String rid,String uid){
+    public int updateRole(int rid,int uid){
         return roleService.updateRole(rid,uid);
     }
 
     //查询所有的用户
-//    @RequestMapping("/selectAllTheUsers")
-//    @ResponseBody
-//    public Map selectAllTheUsers(){
-//        List<User> userList = roleService.selectAllTheUsers();
-//        Map<String,Object> map = new LinkedHashMap<>();
-//        if(userList.size()>0){
-//            map.put("code",0);
-//            map.put("msg","");
-//            map.put("data",userList);
-//            return map;
-//        }else {
-//            map.put("code",1);
-//            map.put("msg","获取数据失败");
-//            map.put("data",userList);
-//            return map;
-//        }
-//    }
+    @RequestMapping("/selectAllTheUsers")
+    @ResponseBody
+    public Map selectAllTheUsers(){
+        List<User> userList = roleService.selectAllTheUsers();
+        Map<String,Object> map = new LinkedHashMap<>();
+        if(userList.size()>0){
+            map.put("code",0);
+            map.put("msg","");
+            map.put("data",userList);
+            return map;
+        }else {
+            map.put("code",1);
+            map.put("msg","获取数据失败");
+            map.put("data",userList);
+            return map;
+        }
+    }
 
     //查询所有用户角色
     @RequestMapping("/selectAllTheUsersRoles")
@@ -70,7 +73,6 @@ public class RoleController {
     public Map selectAllTheUsersRoles(){
         List<UserRole> userRoleList = roleService.selectAllTheUsersRoles();
         List<User> userList = roleService.selectAllTheUsers();
-        List<User> list = new ArrayList();
         for (int i = 0;i<userList.size();i++){
             for (int j = 0;j<userRoleList.size();j++){
                 if (Integer.parseInt(userList.get(i).getUid())==userRoleList.get(j).getUid()){

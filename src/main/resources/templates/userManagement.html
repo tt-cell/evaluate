@@ -120,8 +120,8 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -209,15 +209,16 @@
             var data = obj.data;
             console.log(data)
             if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
+                layer.confirm('真的删除行么',{icon: 3, title:'提示'},function(index){
+                    //obj.del();
                     $.ajax({
                         url: "/deleteOneUser?userId="+data.uid,
                         type:"post",
                         dataType:"json",
                         success: function (res) {
-                            alert("删除成功")
-                        }
+                            layer.msg('操作成功!', {icon: 6, time: 1000});
+                            location = window.location;//刷新
+                            }
                     })
                     layer.close(index);
                 });
@@ -228,19 +229,22 @@
                     ,value: data.uname
                 }, function(value, index){
                     console.log(value)
+                    // obj.update({
+                    //     courses_name: value
+                    // });
                     $.ajax({
-                        url: "/changeOneUser?userId="+data.uid+"&uname="+value,
+                        url: "/changeOneUser",
                         type:"post",
+                        data:{uname: value,uid:data.uid},
                         dataType:"json",
                         success: function (res) {
-                            if(res.flag==="success"){
-                                alert("修改成功")
-                            }
+                            layer.msg('操作成功!', {icon: 6, time: 1000});
+                            location = window.location;//刷新
                         }
                     })
-                    obj.update({
-                        uname: value
-                    });
+                    // obj.update({
+                    //     uname: value
+                    // });
                     layer.close(index);
                 });
             }

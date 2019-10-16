@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>课程管理界面</title>
+    <title>班级管理界面</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
@@ -122,6 +122,7 @@
                     <div class="title">
                         <h1 class="h4" th:text="${session.user.uname}"></h1>
                         <h1 id="h5" th:text="${session.user.uid}"></h1>
+                        <p>Web Designer</p>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -142,29 +143,37 @@
             </nav>
             <div class="content-inner">
                 <!--layui界面-->
-                <!--laytable-->
-                <div class="demoTable" style="margin:10px 0 0 10px">
-                    搜索课程名称：
-                    <div class="layui-inline">
-                        <input class="layui-input" name="courses_name" id="demoReload" autocomplete="off">
+                <form class="layui-form" name="myform" method="post" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">学年</label>
+                            <div class="layui-input-inline layui-form" lay-filter="group">
+                                <select class="seloption" lay-filter="group" name="groupid" id="groupid">
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <button class="layui-btn layui-btn-normal" data-type="search"><i class="layui-icon layui-icon-search"></i>搜索</button>
-                    <button class="layui-btn layui-btn-warm"  data-type="add"><i class="layui-icon layui-icon-add-1"></i>添加课程</button>
-                    <button class="layui-btn"  data-type="give"><i class="layui-icon layui-icon-edit"></i>班级授课</button>
-                </div>
-                <table class="layui-hide layui-table" id="t_course" lay-filter="t_course"></table>
-                <script type="text/html" id="myToolbar">
-                    <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-                    </div>
+                </form>
+                <table class="layui-table" lay-data="{url:'/getLeaderTeachers?bid=0', page:false, id:'idTest'}" lay-filter="demo">
+                    <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+                        <th lay-data="{field:'uid', width:200, sort: true, fixed: true, templet: '#uid'}">序列</th>
+                        <th lay-data="{field:'uname', width:100}">下属</th>
+                        <th lay-data="{field:'courses_id', width:200}">课程编号</th>
+                        <th lay-data="{field:'courses_name', width:400}">授课课程名</th>
+                        <th lay-data="{field:'batch_name', width:300}">所在批次</th>
+                        <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
+                    </tr>
+                    </thead>
+                </table>
+                <script type="text/html" id="uid">
+                    {{d.LAY_TABLE_INDEX+1}}
                 </script>
 
-                <script type="text/html" id="mybar">
-                    <a style="color: white" class="layui-btn layui-btn-normal layui-btn-xs" lay-event="show"><i class="layui-icon"></i>查看</a>
-                    <a style="color: white" class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon"></i>编辑</a>
-                    <a style="color: white" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon"></i>删除</a>
+                <script type="text/html" id="barDemo">
+                    <a style="color: white" class="layui-btn layui-btn-xs" lay-event="edit">评教</a>
+                    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
                 </script>
                 <!-- Page Footer-->
                 <footer class="main-footer">
@@ -198,180 +207,120 @@
 <script src="js/front.js"></script>
 
 <!-- Main File-->
-<script type="text/javascript" th:inline="none">
-    layui.use('table', function () {
-        var table = layui.table;
-        var $ = layui.$
-        table.render({
-            elem: '#t_course'
-            , url: '/courseManagement'
-            , toolbar: '#myToolbar' //开启头部工具栏，并为其绑定左侧模板
-            , title: '课程数据表'
-            , cols:
-                [
-                    [
-                    {type: 'radio', fixed: 'left'}
-                    , {field: 'courses_id', title: '课程id', width: 120}
-                    , {field: 'classs_code', title: '班级编码', width: 200, sort: true}
-                    , {field: 'classs_name', title: '班级名称', width: 200}
-                    , {field: 'courses_name', title: '课程名称', width: 200}
-                    , {field: 'school_year', title: '学年度', width: 120}
-                    , {fixed: 'right', title: '操作', toolbar: '#mybar', width: 230}
-                ]
-                ]
-            , page: true
-            , id:'t_course'
-        });
-        //头工具栏事件
-        table.on('toolbar(t_course)', function (obj) {
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch (obj.event) {
-                case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                    break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：' + data.length + ' 个');
-                    break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
-                    break;
+<script th:inline="javascript">
 
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
+    layui.use(['table','form'], function () {
+        var table = layui.table,
+            form = layui.form;
+        var evaluates_id = [[${evaluates_id}]]
+        var bid
+        var uid = $('#h5').html()
+
+        //渲染学年
+        $.ajax({
+            type: 'post',
+            url: '/getAllTheBatch',
+            dataType: 'json',
+            async: true,
+            success: function (datas) {
+                console.log(datas)
+                var option = '<option value="0">请选择学年</option>';
+                for (var i = 0; i < datas.data.length; i++) {
+                    //循环获取返回值，并组装成html代码
+                    option += "<option value='" + datas.data[i].batch_id + "'>" + datas.data[i].batch_name + "</option>";
+                }
+                $("#groupid").html("");
+                $("#groupid").append(option);
+                form.render('select', 'group');
             }
-            ;
+        })
+        //加载教师
+        form.on('select(group)', function (data) {
+            bid = data.value
+            console.log(data.value)
+            table.reload('idTest', {
+                url: '/getPeerTeachers'
+                ,where: {
+                    bid: data.value
+                } //设定异步数据接口的额外参数
+                //,height: 300
+            });
+            // $('.layui-table').attr("lay-data", "{url:'/getTeacher?bid=" + data.value + "', page:false, id:'idTest'}")
         });
-        //监听行工具事件
-        table.on('tool(t_course)', function (obj) {
-            console.log(obj.data);
-            var data = obj.data;
-            console.log(obj)
-            if (obj.event === 'del') {
-                layer.confirm('真的删除行么',{icon: 3, title:'提示'}, function (index) {
-                    //obj.del();
-                    //获取后端接口的数据(通过courses_id删除)
-                    $.ajax({
-                        url:"/deleteOneCourse?courses_id="+data.courses_id,
-                        type:"post",
-                        dataType: "json",
-                        success:function (res) {
-                            layer.msg('操作成功!', {icon: 6, time: 1000});
-                            location = window.location;//刷新
-                        },
-                        error:function (err) {
-                            console.log(err.message)
-                        }
 
-                    })
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demo)', function (obj) {
+            console.log(obj)
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                layer.msg('用户ID：' + data.uid + ' 的查看操作');
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.prompt({
-                    formType: 2
-                    , value: data.courses_name
-                }, function (value, index) {
-                    console.log(data.courses_name)
-                    console.log(data.courses_id)
-                    // obj.update({
-                    //     courses_name: value
-                    // });
-                    $.ajax({
-                        url:"/updateOneCourse",
-                        type:"post",
-                        dataType:"json",
-                        data:{courses_name: value,courses_id:data.courses_id},
-                        success:function (res) {
-                            console.log(res)
-                            layer.msg('操作成功!', {icon: 6, time: 1000});
-                            location = window.location;//刷新
-                            // window.location.href = "/getCourseManagement";
-                        },
-                        error:function (err) {
-                            console.log(err.message)
-                        }
-                    })
-
-                    layer.close(index);
-                });
-            }else if (obj.event === 'show'){
-
-            }
-        });
-        //方法的重载
-        var $ = layui.$, active = {
-            search: function(){
-                    var courses_name = $('#demoReload').val()
-                    //.log(courses_name)
-                    // console.log(event)
-                    // $.ajax({
-                    //     url:'/searchOneCourse?courses_name='+courses_name,
-                    //     type:'post',
-                    //     sync:false,
-                    //     dataType:'json',
-                    //     success:function (res) {
-                    //         console.log(res)
-                    //         layer.msg('操作成功!', {icon: 1, time: 2000})
-                    //         // location = window.location;
-                    //     },
-                    //     error:function (err) {
-                    //         console.log(err.message)
-                    //     }
-                    // })
-                //var demoReload = $('#demoReload');
-                //执行重载
-                table.reload('t_course', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
+                console.log(data)
+                layui.$.ajax({
+                    url:'/selectIfEvaluateresult',
+                    type:'get',
+                    data:{
+                        evaluates_id:evaluates_id,
+                        uid:uid,
+                        courses_id:data.courses_id,
+                        tid:data.uid,
+                        batch_id:data.batch_id
                     },
-                    url:"/searchOneCourse"
-                    ,where: {
-                        courses_name:courses_name
+                    success:function (res) {
+                        if(res.data===1){
+                            layer.msg("您已经评价过你的下属了！",{icon:2})
+                        }else {
+                            layer.open({
+                                type: 2,
+                                title:'下属评教指标信息',
+                                backgroundColor:'gray',
+                                skin: 'layer_bg',
+                                anim: 3,
+                                content: [`/evaluateTargets?evaluates_id=${evaluates_id}`, 'yes'],
+                                area: ['800px', '600px'],
+                                // end: function () {//关闭后调用的事件
+                                //     location = window.location;//刷新
+                                // },
+                                success: function (layero, index) {
+                                    // 获取子页面的iframe
+                                    var iframe = window['layui-layer-iframe' + index];
+                                    // 向子页面的全局函数child传参
+                                    iframe.child(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
+
+                                    // var body = layer.getChildFrame('body', index);
+                                    // var iframeWin = window[layero.find('iframe')[0]['name']];
+                                    // var inputList = body.find('span');
+                                    // $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
+                                }
+                            })
+                        }
+
                     }
-                }, 'data');
-            },
-            add: function () {
-                layer.open({
-                    type: 2,
-                    title: "添加课程",
-                    area: ['500px', '450px'],
-                    fix: false,
-                    //maxmin: true,
-                    shadeClose: true,
-                    shade: 0.2,
-                    anim: 1,
-                    skin: 'layui-layer-rim',
-                    content: ['/AddCourse', "yes"],
-                    end: function () {//关闭后调用的事件
-                        location = window.location;//刷新
-                    }
-                });
-            },
-            give:function () {
-                layer.open({
-                    type: 2,
-                    title: "班级授课",
-                    area: ['700px', '400px'],
-                    fix: false,
-                    //maxmin: true,
-                    shadeClose: true,
-                    shade: 0.2,
-                    anim: 1,
-                    skin: 'layui-layer-lan',
-                    content: ['/insertClasssCourse', "no"],
-                    end: function () {//关闭后调用的事件
-                        location = window.location;//刷新
-                    }
-                });
+                })
+                layer.close();
             }
-        };
-        $('.demoTable .layui-btn').on('click', function(obj){
-            console.log(obj)
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
+
+            var $ = layui.$, active = {
+                getCheckData: function () { //获取选中数据
+                    var checkStatus = table.checkStatus('idTest')
+                        , data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                }
+            };
+
+            $('.demoTable .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
         });
     });
 </script>

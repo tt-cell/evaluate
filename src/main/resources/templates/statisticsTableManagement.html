@@ -120,8 +120,8 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -145,7 +145,7 @@
                 <!--laytable-->
                 <div class="demoTable" style="margin:10px 0 0 10px">
                     <div class="layui-inline">
-                        <input class="layui-input" name="select_" id="select_" autocomplete="off" placeholder="请输入被评教人姓名或编号">
+                        <input class="layui-input" name="select_" id="select_" autocomplete="off" placeholder="请输入被评教人姓名或所在批次">
                     </div>
                     <button class="layui-btn layui-btn-normal" data-type="search" id="select_btn"><i class="layui-icon layui-icon-search"></i>搜索</button>
                 </div>
@@ -203,9 +203,10 @@
                         , {field: 'uid', title: '被评教人编号', width: 120}
                         , {field: 'teacherName', title: '被评教人姓名', width: 180}
                         , {field: 'student_sum', title: '学生评教分数', width: 180,sort:true}
-                        , {field: 'self_sum', title: '自评分数', width: 180,sort: true}
-                        , {field: 'peer_sum', title: '同行评教分数', width: 180,sort:true}
-                        , {field: 'score', title: '总分', width: 180,sort:true}
+                        , {field: 'self_sum', title: '自评分数', width: 150,sort: true}
+                        , {field: 'peer_sum', title: '同行评教分数', width: 150,sort:true}
+                        , {field: 'leader_sum', title: '领导评教分数', width: 150,sort:true}
+                        , {field: 'score', title: '总分', width: 150,sort:true}
                     ]
                 ]
             , page: true

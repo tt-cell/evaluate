@@ -10,7 +10,9 @@
     <div class="layui-form-item">
         <label class="layui-form-label">教师ID</label>
         <div class="layui-input-inline">
-            <input type="text" name="uid" required lay-verify="required" placeholder="请输入教师ID" autocomplete="off" class="layui-input">
+            <select name="uid" id="uid" lay-verify="required" lay-search="" lay-filter="usersFilterTwo" >
+                <option value="" selected="">请选择或者搜索教师名</option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item" style="width:200px">
@@ -52,6 +54,18 @@
     console.log()
     layui.use('form', function () {
         var form = layui.form,layer = layui.layer,$ = layui.$
+        $.ajax({
+            url: '/getAllTeachers',
+            dataType: 'json',
+            type: 'get',
+            success: function (rs) {
+                console.log(rs.data)
+                $.each(rs.data, function (index,item) {
+                    $('#uid').append('<option value="'+item.uid+'">'+item.uname+'</option>');// 下拉菜单里添加元素
+                });
+                form.render();
+            }
+        })
         $.ajax({
             url: '/selectAllCourses',
             dataType: 'json',

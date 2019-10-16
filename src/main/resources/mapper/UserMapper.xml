@@ -48,16 +48,8 @@
     select * from colleges where colleges_name = #{colleges_name}
   </select>
 
-
-  <!--<select id="selectOneColleges_id" resultType="int" parameterType="String">-->
-    <!--select Colleges_id from colleges where colleges_name=#{collegces_name}-->
-  <!--</select>-->
-
-  <!--<select id="selectAllClasss" resultType="com.evaluate.demo.entity.Classs">-->
-    <!--select * from Classs-->
-  <!--</select>-->
-
-  <!--<select id="selectUserByColleges_id" resultType="com.evaluate.demo.entity.User" parameterType="int">-->
-    <!--select * from users where colleges_id=#{olleges_id}-->
-  <!--</select>-->
+  <!--查询所有老师-->
+  <select id="selectAllTheTeacher" resultType="com.evaluate.demo.entity.User">
+         SELECT * FROM users where list in (2,3);
+    </select>
 </mapper>

@@ -27,4 +27,7 @@ public interface UserService {
 
 
     List<Colleges> selectCollegeId(String colleges_name);
+
+    //查询所有老师
+    List<User> selectAllTheTeacher();
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head>
+<head lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -162,8 +162,8 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -243,12 +243,13 @@
             tooltip: {},
             dataset: {
                 source: [
-                    ['评教类别', '学生评教','自我评教', '同行评教'],
+                    ['评教类别', '学生评教','自我评教', '同行评教','领导评教'],
                 ]
             },
             xAxis: {type: 'category'},
             yAxis: {},
             series: [
+                {type: 'bar'},
                 {type: 'bar'},
                 {type: 'bar'},
                 {type: 'bar'}
@@ -295,7 +296,7 @@
                             }
                         },
                         legend: {
-                            data:['学生评教','自我评教','同行评教']
+                            data:['学生评教','自我评教','同行评教','领导评教']
                         },
                         toolbox: {
                             feature: {
@@ -342,19 +343,19 @@
                                 areaStyle: {},
                                 data:data.data[3]
                             },
-                            // {
-                            //     name:'领导评教',
-                            //     type:'line',
-                            //     stack: '总量',
-                            //     label: {
-                            //         normal: {
-                            //             show: true,
-                            //             position: 'top'
-                            //         }
-                            //     },
-                            //     areaStyle: {normal: {}},
-                            //     data:data.data[4]
-                            // }
+                            {
+                                name:'领导评教',
+                                type:'line',
+                                stack: '总量',
+                                // label: {
+                                //     normal: {
+                                //         show: true,
+                                //         position: 'top'
+                                //     }
+                                // },
+                                areaStyle: {normal: {}},
+                                data:data.data[4]
+                            }
                         ]
                     };
                     myEchartsTwo.setOption(myEchartsTwoOption);

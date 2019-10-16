@@ -35,7 +35,7 @@ public class StatisticsChartsController {
         }
         for(int i = 0;i<statisticsList.size();i++){
             TangleData.add(statisticsList.get(i).getTeacherName()  + "," + statisticsList.get(i).getStudent_sum()
-                    + "," + statisticsList.get(i).getSelf_sum() + "," + statisticsList.get(i).getPeer_sum());
+                    + "," + statisticsList.get(i).getSelf_sum() + "," + statisticsList.get(i).getPeer_sum()+ "," + statisticsList.get(i).getLeader_sum());
         }
         LinkedList<Object> a =new LinkedList<>();
         a.add(TangleData);
@@ -89,7 +89,7 @@ public class StatisticsChartsController {
             LineDataName.add(statisticsList.get(i).getTeacherName());
         }
         for(int j = 0;j<statisticsList.size();j++){
-            StudentScoreData.add(statisticsList.get(j).getPeer_sum());
+            StudentScoreData.add(statisticsList.get(j).getStudent_sum());
         }
         for(int k = 0;k<statisticsList.size();k++){
             SelfScoreData.add(statisticsList.get(k).getSelf_sum());
@@ -97,15 +97,15 @@ public class StatisticsChartsController {
         for(int l = 0;l<statisticsList.size();l++){
             PeerScoreData.add(statisticsList.get(l).getPeer_sum());
         }
-//        for(int m = 0;m<statisticsList.size();m++){
-//            LeaderScoreData.add(Integer.parseInt(statisticsList.get(m).getLeader_score()));
-//        }
+        for(int m = 0;m<statisticsList.size();m++){
+            LeaderScoreData.add(statisticsList.get(m).getLeader_sum());
+        }
         LinkedList<Object> rs = new LinkedList<>();
         rs.add(LineDataName);
         rs.add(StudentScoreData);
         rs.add(SelfScoreData);
         rs.add(PeerScoreData);
-        //rs.add(LeaderScoreData);
+        rs.add(LeaderScoreData);
         msg.setMsg("获取成功");
         msg.setCode(0);
         msg.setData(rs);
@@ -125,7 +125,7 @@ public class StatisticsChartsController {
             return msg;
         }
         for(int i = 0;i<statisticsList.size();i++){
-            teacherScore.add(statisticsList.get(i).getScore()/300);
+            teacherScore.add(statisticsList.get(i).getScore()/400);
         }
         LinkedList<Object> rs = new LinkedList();
         rs.add(teacherScore);

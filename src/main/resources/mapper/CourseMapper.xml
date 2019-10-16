@@ -23,12 +23,10 @@
      INNER JOIN classs cls ON cc.classs_id = cls.classs_id
     </select>
 
-
     <!--删除一门课程-->
     <delete id="deleteOneCourse" parameterType="com.evaluate.demo.entity.Course">
       DELETE FROM courses WHERE courses_id = #{courses_id}
     </delete>
-
 
     <!--修改一门课程-->
     <update id="updateOneCourse" parameterType="com.evaluate.demo.entity.Course">
@@ -64,10 +62,9 @@
     <select id="selectAllClasss" resultType="com.evaluate.demo.entity.Classs">
         select * from classs
     </select>
-    <select id="selectClasssCourse" parameterType="int" resultType="com.evaluate.demo.entity.Course">
-        SELECT * FROM courses WHERE courses_id IN (
-        SELECT courses_id FROM classs_courses WHERE classs_id IN
-       (SELECT classs_id FROM classs WHERE classs_id = #{classs_id}))
+
+    <select id="selectClasssCourse" resultType="com.evaluate.demo.entity.Course">
+       select * from courses
     </select>
 
     <!--搜索学院，以及学院下面对应的班级-->

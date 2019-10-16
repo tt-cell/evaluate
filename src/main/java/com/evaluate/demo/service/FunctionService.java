@@ -36,5 +36,8 @@ public interface FunctionService {
     //查询所有功能
     List<Function> selectAllTheFunction();
 
+    //查询所有父级功能
+    List<Function> selectAllTheFatherFunction();
+
 
 }

@@ -32,7 +32,7 @@ public interface CourseService {
 
     //搜索班级，以及每个班级下面对应的课程
     List<Classs> selectAllClasss();
-    List<Course> selectClasssCourse(int classs_id);
+    List<Course> selectClasssCourse();
 
     //搜索学院，以及学院下面对应的班级
     List<Colleges> selectAllTheColleges();

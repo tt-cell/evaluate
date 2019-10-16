@@ -16,12 +16,17 @@ public class RoleServiceImpl implements RoleService {
     private RoleDao roleDao;
 
     @Override
-    public List<Map<String, Object>> selectAllRole() {
-        return roleDao.selectAllRole();
+    public List<Map<String, Object>> selectAllRole(int before,int after) {
+        return roleDao.selectAllRole(before,after);
     }
 
     @Override
-    public int updateRole(String rid,String uid) {
+    public int count() {
+        return roleDao.count();
+    }
+
+    @Override
+    public int updateRole(int rid,int uid) {
         return roleDao.updateRole(rid,uid);
     }
 

@@ -165,7 +165,7 @@ public class FunctionController {
     @ResponseBody
     public Msg selectAllTheFunction(Msg msg){
         List<Function> functionList = functionService.selectAllTheFunction();
-        List listData = new ArrayList();
+        List data = new ArrayList();
         if(functionList.size()<0){
             msg.setMsg("获取数据失败");
             msg.setData("");
@@ -176,12 +176,36 @@ public class FunctionController {
             Map<String,Object> map = new LinkedHashMap<>();
             map.put("fid",functionList.get(i).getFid());
             map.put("fname",functionList.get(i).getFname());
-            listData.add(map);
+            data.add(map);
         }
         msg.setCode(0);
         msg.setStatus(0);
         msg.setMsg("获取数据成功！");
-        msg.setData(listData);
+        msg.setData(data);
+        return msg;
+    }
+
+    @RequestMapping("/selectAllTheFatherFunction")
+    @ResponseBody
+    public Msg selectAllTheFatherFunction(Msg msg){
+        List<Function> functionList = functionService.selectAllTheFatherFunction();
+        List data = new ArrayList();
+        if(functionList.size()<0){
+            msg.setMsg("获取数据败");
+            msg.setData("");
+            msg.setCode(1);
+            return msg;
+        }
+        for(int i = 0;i<functionList.size();i++){
+            Map<String,Object> map = new LinkedHashMap<>();
+            map.put("fid",functionList.get(i).getFid());
+            map.put("fname",functionList.get(i).getFname());
+            data.add(map);
+        }
+        msg.setCode(0);
+        msg.setStatus(0);
+        msg.setMsg("获取数据功！");
+        msg.setData(data);
         return msg;
     }
 

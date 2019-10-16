@@ -280,7 +280,7 @@
         //渲染学年
         $.ajax({
             type: 'post',
-            url: '/getBatch',
+            url: '/getAllTheBatch',
             dataType: 'json',
             async: true,
             success: function (datas) {
@@ -328,19 +328,19 @@
                 console.log(data)
 
                 layui.$.ajax({
-                    url:"/selectIfEvaluateresult",
-                    type:"get",
-                    data:{
-                        evaluates_id:evaluates_id,
-                        uid:uid,
-                        courses_id:data.courses_id,
-                        tid:data.uid,
-                        batch_id:data.batch_id
+                    url: "/selectIfEvaluateresult",
+                    type: "get",
+                    data: {
+                        evaluates_id: evaluates_id,
+                        uid: uid,
+                        courses_id: data.courses_id,
+                        tid: data.uid,
+                        batch_id: data.batch_id
                     },
-                    success:function (res) {
-                        if(res.data==1){
-                            layer.msg("已经评教完毕",{icon:2})
-                        }else{
+                    success: function (res) {
+                        if (res.data == 1) {
+                            layer.msg("已经评教完毕", {icon: 2})
+                        } else {
                             layer.open({
                                 type: 2,
                                 title: '学生评教指标信息',
@@ -357,17 +357,19 @@
                                     // obj.tr[2].replace(`<a class="layui-btn-warm layui-btn-xs" lay-event="edit">查看</a>`)
                                 },
                                 success: function (layero, index) {
-                                    var body = layer.getChildFrame('body', index);
-                                    var iframeWin = window[layero.find('iframe')[0]['name']];
-                                    var inputList = body.find('span');
-                                    $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
+                                    // 获取子页面的iframe
+                                    var iframe = window['layui-layer-iframe' + index];
+                                    // 向子页面的全局函数child传参
+                                    iframe.child(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
+                                    // var body = layer.getChildFrame('body', index);
+                                    // var iframeWin = window[layero.find('iframe')[0]['name']];
+                                    // var inputList = body.find('span');
+                                    // $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," + data.uid + "," + data.courses_id);
                                 }
                             })
                         }
                     }
                 })
-
-
 
 
                 layer.close();

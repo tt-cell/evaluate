@@ -22,7 +22,7 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">单选框</label>
-        <div class="layui-input-block">
+        <div class="layui-input-block" lay-filter="sexFilter">
             <input type="radio" name="sex" value="男" title="男" checked="">
             <input type="radio" name="sex" value="女" title="女">
             <input type="radio" name="sex" value="其他" title="其他" disabled="">
@@ -32,21 +32,15 @@
         <label class="layui-form-label">所属学院</label>
         <div class="layui-input-inline" style="left: 110px;top: -40px">
             <select name="colleges_id" id="xm" lay-verify="required" lay-filter="xmFilterOne" >
-                <!--<option value="0" selected="">请选择学院</option>-->
-                <!--<option value="2">环境学院</option>-->
-                <!--<option value="3" selected>动漫学院</option>-->
-                <!--<option value="4">管理学院</option>-->
-                <!--<option value="5">电气学院</option>-->
-                <!--<option value="6">量化分析学院</option>-->
             </select>
         </div>
 
         <label class="layui-form-label">用户级别</label>
         <div class="layui-input-inline" style="left: 110px;top: -40px">
             <select name="list" id="stage" lay-verify="required" lay-filter="xmFilterTwo" >
-                <option value="1">学生</option>
-                <option value="2">教师</option>
-                <option value="3">领导</option>
+                <option value="1" name="list" selected="">学生</option>
+                <option value="2" name="list">教师</option>
+                <option value="3" name="list">领导</option>
             </select>
         </div>
     </div>
@@ -68,10 +62,6 @@
         var form = layui.form;
         var $ = layui.$
         //获取单选框的值
-        var radioValue = $("input[type='radio']:checked").val();
-        var list = $("#stage option:selected").val();
-        console.log(radioValue)
-        console.log(list)
         $.ajax({
             url: '/getAllColleges',
             dataType: 'json',
@@ -83,17 +73,6 @@
                 form.render();
             }
         })
-        var sex
-        form.on('radio', function(data){
-            console.log(data.value)
-            sex = data.value
-        });
-        //获取下拉菜单value的值
-        var colleges_id
-        form.on('select(xmFilterOne)', function(data){
-            console.log(data.value)
-            colleges_id = data.value
-        })
     //监听提交
         form.on('submit(formDemo)', function(data){
             console.log(data)
@@ -101,7 +80,8 @@
                 url: '/AddOneUser',
                 type: "post",
                 dataType: "json",
-                data:{uname:data.field.uname,password:data.field.password,sex:sex,colleges_id:colleges_id,list:list},
+                data:{uname:data.field.uname,password:data.field.password,sex:data.field.sex,
+                    colleges_id:data.field.colleges_id,list:data.field.list},
                 success:function(data){
                     console.log(data.flag)
                     layer.msg('提交成功');

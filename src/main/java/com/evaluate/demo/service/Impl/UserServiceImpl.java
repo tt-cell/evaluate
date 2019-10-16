@@ -85,4 +85,9 @@ public class UserServiceImpl implements UserService{
     public List<Colleges> selectCollegeId(String colleges_name) {
         return userDao.selectCollegeId(colleges_name);
     }
+
+    @Override
+    public List<User> selectAllTheTeacher() {
+        return userDao.selectAllTheTeacher();
+    }
 }

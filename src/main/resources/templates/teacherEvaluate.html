@@ -220,7 +220,7 @@
         //渲染学年
         $.ajax({
             type: 'post',
-            url: '/getBatch',
+            url: '/getAllTheBatch',
             dataType: 'json',
             async: true,
             success: function (datas) {
@@ -292,10 +292,15 @@
                                 //     location = window.location;//刷新
                                 // },
                                 success: function (layero, index) {
-                                    var body = layer.getChildFrame('body', index);
-                                    var iframeWin = window[layero.find('iframe')[0]['name']];
-                                    var inputList = body.find('span');
-                                    $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
+                                    // 获取子页面的iframe
+                                    var iframe = window['layui-layer-iframe' + index];
+                                    // 向子页面的全局函数child传参
+                                    iframe.child(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
+
+                                    // var body = layer.getChildFrame('body', index);
+                                    // var iframeWin = window[layero.find('iframe')[0]['name']];
+                                    // var inputList = body.find('span');
+                                    // $(inputList).text(bid + "," + $('.h4').html() + "," + data.uname + "," + data.courses_name + "," + $('#h5').html() + "," +data.uid + "," +data.courses_id);
                                 }
                             })
                         }

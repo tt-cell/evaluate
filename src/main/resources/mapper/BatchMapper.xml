@@ -3,17 +3,47 @@
   PUBLIC "-//mybatis2.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evaluate.demo.dao.BatchDao">
-    <select id="selectBatch" resultType="com.evaluate.demo.entity.Batch">
+    <!--查询所有批次-->
+    <select id="selectAllTheBatch" resultType="com.evaluate.demo.entity.Batch">
         SELECT * FROM batch
+    </select>
+    <!--分页查询批次-->
+    <select id="selectBatchByPage" resultType="com.evaluate.demo.entity.Batch">
+        SELECT * FROM batch LIMIT #{before},#{after}
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from batch
     </select>
 
     <select id="selectBatch_status" resultType="com.evaluate.demo.entity.Batch">
         SELECT * FROM batch where batch_id=${bid}
     </select>
 
+    <select id="selectAllTheUserBatch" resultType="com.evaluate.demo.entity.UserBatch">
+        SELECT * FROM users_batch
+    </select>
+
     <update id="updateBatch" >
         update batch set batch_status=#{batch_status} where batch_id=#{batch_id}
     </update>
+
+
+    <update id="updateName" >
+        update batch set batch_name=#{batch_name} where batch_id=#{batch_id}
+    </update>
+
+    <delete id="deleteBatch" parameterType="com.evaluate.demo.entity.Batch">
+        delete from batch where batch_id=#{batch_id}
+    </delete>
+
+    <insert id="insertBatch" parameterType="com.evaluate.demo.entity.Batch">
+        INSERT INTO batch (batch_name) VALUE (#{batch_name})
+    </insert>
+
+    <insert id="insertUserBatch">
+        INSERT INTO users_batch (uid,batch_id) VALUES (#{uid},#{batch_id})
+    </insert>
 
 
 </mapper>

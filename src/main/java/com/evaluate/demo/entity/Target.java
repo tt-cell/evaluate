@@ -3,19 +3,18 @@ package com.evaluate.demo.entity;
 public class Target {
     private int targets_id;
     private float targets_weight;
-
-    public String getOptions_name() {
-        return options_name;
-    }
-
-    public void setOptions_name(String options_name) {
-        this.options_name = options_name;
-    }
-
     private int father_targets_id;
     private String targets_name;
     private String options_name;
     private String url;
+
+    public int getTargets_id() {
+        return targets_id;
+    }
+
+    public void setTargets_id(int targets_id) {
+        this.targets_id = targets_id;
+    }
 
     public float getTargets_weight() {
         return targets_weight;
@@ -25,20 +24,12 @@ public class Target {
         this.targets_weight = targets_weight;
     }
 
-    public String getUrl() {
-        return url;
+    public int getFather_targets_id() {
+        return father_targets_id;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getTargets_id() {
-        return targets_id;
-    }
-
-    public void setTargets_id(int targets_id) {
-        this.targets_id = targets_id;
+    public void setFather_targets_id(int father_targets_id) {
+        this.father_targets_id = father_targets_id;
     }
 
     public String getTargets_name() {
@@ -49,12 +40,20 @@ public class Target {
         this.targets_name = targets_name;
     }
 
-    public int getFather_targets_id() {
-        return father_targets_id;
+    public String getOptions_name() {
+        return options_name;
     }
 
-    public void setFather_targets_id(int father_targets_id) {
-        this.father_targets_id = father_targets_id;
+    public void setOptions_name(String options_name) {
+        this.options_name = options_name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
 

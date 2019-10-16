@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -169,8 +170,8 @@
                 <div class="sidebar-header d-flex align-items-center">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4" th:text="${session.user.uname}"></h1>
+                        <h1 id="h5" th:text="${session.user.uid}"></h1>
                     </div>
                 </div>
                 <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -192,14 +193,25 @@
             </nav>
             <div class="content-inner">
                 <!--layui界面-->
-                <div style="position:absolute;left: 150px;top: 50px;">
-                    <h1 style="margin: 20px 0 0 20px">指标管理</h1>
-                    <div id="test1"></div>
+                <div style="position:absolute;left: 50px;top: 20px;">
+                    <h1 style="margin: 20px 0 20px 20px">指标管理</h1>
+                    <div class="layui-btn-group demoTable">
+                        <button class="layui-btn layui-btn-normal" data-type="add"><i class="layui-icon layui-icon-add-circle-fine"></i>添加指标 </button>
+                    </div>
+
+                    <div class="layui-btn-group demoTable2">
+                        <button class="layui-btn layui-btn-warm" data-type="addOp"><i class="layui-icon layui-icon-password"></i>指标分配选项</button>
+                    </div>
+
+                    <div class="layui-btn-group demoTable3">
+                        <button class="layui-btn layui-btn-danger" data-type="addEaTar"><i class="layui-icon layui-icon-rate"></i>指标类型分配指标</button>
+                    </div>
+                    <div id="test1" class="layui-elip" style="width: 355px;display: block"></div>
                 </div>
-                <div style="position:absolute;right: 150px;top: 50px;">
+                <div style="position:absolute;right: 50px;top: 20px;">
+                    <h1 style="margin: 20px 0 20px 20px">选项管理</h1>
                     <form id="oform" class="layui-form" action="">
-                        <h1></h1>
-                        <div class="demoTarget" style="padding: 20px 0 0 0">
+                        <div class="demoTarget" style="padding: 20px 0 0 9px">
                             指标：
                             <div class="layui-inline">
                                 <input class="layui-input" name="target_name" id="target_name" autocomplete="off">
@@ -211,23 +223,28 @@
                         </div>
                         <div class="demoOption" style="padding: 20px 0 0 0">
                             选项A：
-                            <div class="layui-inline">
+                            <div class="layui-inline" style="margin: 2px 0 0 0 ;">
                                 <input class="layui-input" name="optionA" id="optionA" autocomplete="off">
                             </div>
                             </br>
                             选项B：
-                            <div class="layui-inline">
+                            <div class="layui-inline" style="margin: 2px 0 0 0 ;">
                                 <input class="layui-input" name="optionB" id="optionB" autocomplete="off">
                             </div>
                             </br>
                             选项C：
-                            <div class="layui-inline">
+                            <div class="layui-inline" style="margin: 2px 0 0 0 ;">
                                 <input class="layui-input" name="optionC" id="optionC" autocomplete="off">
                             </div>
                             </br>
                             选项D：
-                            <div class="layui-inline">
+                            <div class="layui-inline" style="margin: 2px 0 0 0 ;" >
                                 <input class="layui-input" name="optionD" id="optionD" autocomplete="off">
+                            </div>
+                            </br>
+                            选项E：
+                            <div class="layui-inline" style="margin: 2px 0 0 0 ;" >
+                                <input class="layui-input" name="optionE" id="optionE" autocomplete="off">
                             </div>
                             </br>
                             <button style="margin: 20px 0 0 0 " type="submit" class="layui-btn" lay-submit="" lay-filter="demo2">保存</button>
@@ -276,6 +293,85 @@
     var tid
     layui.use('tree', function () {
         var tree = layui.tree;
+
+        var $ = layui.$, active = {
+            add: function () {
+                layer.open({
+                    type: 2,
+                    title: "添加指标",
+                    area: ['550px', '450px'],
+                    fix: false,
+                    //maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    anim: 5,
+                    skin: 'layui-layer-rim',
+                    content: ['/insertTar', "yes"],
+                    end: function () {//关闭后调用的事件
+                        location = window.location;//刷新
+                    }
+                });
+            },
+            addOp:function( ){
+                // var data = obj.data;
+                layer.open({
+                    type: 2,
+                    title: "选项授予指标",
+                    area: ['550px', '450px'],
+                    fix: false,
+                    //maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    anim: 5,
+                    skin: 'layui-layer-rim',
+                    content: [`/insertOp`, "yes"],
+                    end: function () {//关闭后调用的事件
+                        location = window.location;//刷新
+                    },
+
+
+
+                });
+            },
+
+            addEaTar:function( ){
+                // var data = obj.data;
+                layer.open({
+                    type: 2,
+                    title: "指标授予试卷",
+                    area: ['550px', '450px'],
+                    fix: false,
+                    //maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,
+                    anim: 5,
+                    skin: 'layui-layer-rim',
+                    content: [`/insertEaTar`, "yes"],
+                    end: function () {//关闭后调用的事件
+                        location = window.location;//刷新
+                    },
+
+
+
+                });
+            }
+
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        $('.demoTable2 .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        $('.demoTable3 .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
         //渲染
         $.ajax({
             url: '/getTargets',
@@ -306,6 +402,7 @@
                             $("#optionB").val(option.data[1].options_name)
                             $("#optionC").val(option.data[2].options_name)
                             $("#optionD").val(option.data[3].options_name)
+                            $("#optionE").val(option.data[4].options_name)
                         } else {
                             console.log("aaa")
                         }
@@ -318,11 +415,8 @@
 
     layui.use('form', function () {
         var form = layui.form;
-
         form.on('submit(demo1)', function () {
-
         })
-
         form.on('submit(demo2)', function () {
             //取值
             var tname = $("#target_name").val()
@@ -330,7 +424,7 @@
             //修改
             var result = $.ajax({url: `/updateTarget?tid=${tid}&tname=${tname}&tweight=${tweight}`,async: false}).responseText
 
-            var options = [$("#optionA").val(),$("#optionB").val(),$("#optionC").val(),$("#optionD").val()]
+            var options = [$("#optionA").val(),$("#optionB").val(),$("#optionC").val(),$("#optionD").val(),$("#optionE").val()]
             var res = $.ajax({url:`/selectAllOption?tid=${tid}`,async:false}).responseText
             var data = JSON.parse($.trim(res))
             console.log(JSON.parse($.trim(res)))

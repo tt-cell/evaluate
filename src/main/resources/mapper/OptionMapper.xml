@@ -7,6 +7,9 @@
       SELECT o.options_name FROM OPTIONS o INNER JOIN targets_options tos ON o.options_id=tos.options_id WHERE tos.targets_id=#{tid}
     </select>
 
+    <select id="selectAllTheOption" resultType="com.evaluate.demo.entity.Option">
+      select * from options
+    </select>
 
     <update id="updateOption" >
       UPDATE  OPTIONS SET options_name= #{oname} WHERE options_id = #{oid}
@@ -15,6 +18,11 @@
     <select id="selectAllOption" resultType="com.evaluate.demo.entity.Option">
       SELECT o.options_id FROM OPTIONS o INNER JOIN targets_options tos ON o.options_id = tos.options_id WHERE tos.targets_id=#{tid}
     </select>
+
+
+    <insert id="insertOption">
+          INSERT INTO targets_options(targets_id,options_id) VALUES(#{targets_id},#{options_id})
+    </insert>
 
 
 </mapper>

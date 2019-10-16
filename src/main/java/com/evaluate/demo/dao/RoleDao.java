@@ -10,9 +10,10 @@ import java.util.Map;
 
 @Repository
 public interface RoleDao {
-    List<Map<String, Object>> selectAllRole();
+    List<Map<String, Object>> selectAllRole(int before,int after);
+    int count();
 
-    int updateRole(String rid, String uid);
+    int updateRole(int rid, int uid);
 
     //查询所有用户
     List<User> selectAllTheUsers();

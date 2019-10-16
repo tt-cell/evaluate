@@ -92,4 +92,8 @@ WHERE uid = #{uid}
     <select id="selectAllTheFunction" resultType="com.evaluate.demo.entity.Function">
         select * from function
     </select>
+
+    <select id="selectAllTheFatherFunction" resultType="com.evaluate.demo.entity.Function">
+        select * from function where father_id  = 0
+    </select>
 </mapper>

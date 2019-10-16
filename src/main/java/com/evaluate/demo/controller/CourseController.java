@@ -132,8 +132,8 @@ public class CourseController {
 
     @RequestMapping("/selectClasssCourse")
     @ResponseBody
-    public Map selectClasssCourse(int classs_id){
-        List<Course> classsCoursesList = courseService.selectClasssCourse(classs_id);
+    public Map selectClasssCourse(){
+        List<Course> classsCoursesList = courseService.selectClasssCourse();
         Map<String,Object> map = new HashMap<>();
         map.put("code",0);
         map.put("msg","获取数据成功");

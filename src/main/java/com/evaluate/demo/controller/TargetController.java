@@ -33,6 +33,17 @@ public class TargetController {
         return "targetOption";
     }
 
+    @RequestMapping("/insertTar")
+    public String InsertTar(){
+        return "insertTar";
+    }
+
+    @RequestMapping("/insertEaTar")
+    public String InsertEaTar(){
+        return "insertEaTar";
+    }
+
+
     @RequestMapping(value = "/getTargets")
     @ResponseBody
     //获取树形菜单的后台接口
@@ -49,6 +60,43 @@ public class TargetController {
     @ResponseBody
     public Msg selectTarget(Msg msg){
         List<Target> data = targetService.selectTarget();
+        msg.setCode(0);
+        msg.setCount(5);
+        msg.setMsg("成功");
+        msg.setData(data);
+        msg.setStatus(0);
+        return msg;
+    }
+
+    @RequestMapping("/selectEvaluate")
+    @ResponseBody
+    public Msg selectEvaluate(Msg msg){
+        List<Target> data = targetService.selectEvaluate();
+        msg.setCode(0);
+        msg.setCount(5);
+        msg.setMsg("成功");
+        msg.setData(data);
+        msg.setStatus(0);
+        return msg;
+    }
+
+    @RequestMapping("/selectChildrenTarget")
+    @ResponseBody
+    public Msg selectChildrenTarget(Msg msg){
+        List<Target> data = targetService.selectChildrenTarget();
+        msg.setCode(0);
+        msg.setCount(5);
+        msg.setMsg("成功");
+        msg.setData(data);
+        msg.setStatus(0);
+        return msg;
+    }
+
+
+    @RequestMapping("/selectFaTarget")
+    @ResponseBody
+    public Msg selectFaTarget(Msg msg){
+        List<Target> data = targetService.selectFaTarget();
         msg.setCode(0);
         msg.setCount(5);
         msg.setMsg("成功");
@@ -81,6 +129,20 @@ public class TargetController {
     public int deleteTarget(Integer tid ){
         int res = targetService.deleteTarget(tid);
         return  res;
+    }
+
+    @RequestMapping("/insertTarget")
+    @ResponseBody
+    public int insertTarget(Target target ){
+        int res = targetService.insertTarget(target);
+        return  res;
+    }
+
+    //添加用户批次
+    @RequestMapping("/insertEvaluateTarget")
+    @ResponseBody
+    public int insertEvaluateTarget(int evaluates_id,int targets_id){
+        return targetService.insertEvaluateTarget(evaluates_id, targets_id);
     }
 
 }

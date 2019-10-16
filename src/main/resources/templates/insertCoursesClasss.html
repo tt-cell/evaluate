@@ -13,7 +13,7 @@
         <label class="layui-form-label">查看学院</label>
         <div class="layui-input-inline">
             <select name="colleges_id" id="colleges_id" lay-verify="required" lay-search="" lay-filter="collegesIdFilter">
-                <option value="0">直接选择或搜索选择学院</option>
+                <option value="">直接选择或搜索选择学院</option>
             </select>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <label class="layui-form-label">查看班级</label>
         <div class="layui-input-inline">
             <select name="classs_id" id="classs_id" lay-verify="required" lay-search="" lay-filter="calsssIdFilter">
-                <option value="0">直接选择或搜索选择班级</option>
+                <option value="">直接选择或搜索选择班级</option>
             </select>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <label class="layui-form-label">授予课程</label>
         <div class="layui-input-inline">
             <select name="courses_id" id="courses_id" lay-verify="required" lay-search="" lay-filter="coursesIdFilter">
-                <option value="0">直接选择或搜索选择课程</option>
+                <option value="">直接选择或搜索选择课程</option>
             </select>
         </div>
     </div>
@@ -104,7 +104,7 @@
                         $('#courses_id').append('<option value="'+item.courses_id+'">'+item.courses_name+'</option>');// 下拉菜单里添加元素
                     });
                     form.render();
-                    $("#courses_id").empty();
+                    // $("#courses_id").empty();
                 }
             })
         })

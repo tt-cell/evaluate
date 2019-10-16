@@ -1,6 +1,18 @@
 //菜单栏列表
 $(function () {
     let evaluates_id = 0;
+
+    //判断登录的人是不是领导
+    var list = $("#usersList").text()
+    console.log(list)
+    console.log($('li a:contains(领导评价)'))
+    if (list !== "3") {
+        $('body').on('click', 'li a:contains(领导评价)', function () {
+            $(this).removeAttr('href')
+            alert('对不起，你不是领导！')
+        })
+    }
+
     $.ajax({
         url: '/menu',
         type: 'GET',

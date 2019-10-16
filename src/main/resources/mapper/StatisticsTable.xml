@@ -11,10 +11,10 @@
     </select>
 
     <select id="selectStatisticsLike" resultType="com.evaluate.demo.entity.Statistics">
-    SELECT * FROM statistics WHERE CONCAT(uid,teacherName) LIKE '%${select_val}%'
+    SELECT * FROM statistics WHERE CONCAT(batch_id,teacherName) LIKE '%${select_val}%'
     </select>
     <select id="selectStatisticsCountLike" resultType="int">
-    SELECT count(*) FROM statistics WHERE CONCAT(uid,teacherName) like '%${select_val}%'
+    SELECT count(*) FROM statistics WHERE CONCAT(batch_id,teacherName) like '%${select_val}%'
     </select>
 
 

@@ -12,5 +12,5 @@ public interface OptionService {
     int updateOption(int oid, String oname);
     List<Option> selectAllOption(int tid);
 
-    int insertOption(TargetOption targetOption);
+    int insertOption(int targets_id,int options_id);
 }

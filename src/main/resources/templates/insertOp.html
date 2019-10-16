@@ -73,7 +73,16 @@
         //监听提交
         form.on('submit(demo1)', function (data) {
             console.log(data)
-            var res = $.ajax({url: `/insertOption`, data: {targets_id:data.field.tarid,options_id:data.field.opid}, async: false})
+            var arr = [].slice.call($('.layui-form-checked').prev('input'))
+            console.log(arr)
+            let y = []
+            arr.forEach(function (value, index) {
+                let x = {}
+                x['index'] = $(value).attr('name')
+                y.push(x)
+            })
+            console.log(y)
+            var res = $.ajax({url: `/insertOption`, data: {targets_id:data.field.tarid,options_id:JSON.stringify(y)}, async: false})
             if (res.responseText > 0) {
                 layer.msg('成功', {icon: 6, time: 2000})
                 parent.layer.close(layer.index);

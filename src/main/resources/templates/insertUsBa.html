@@ -16,6 +16,7 @@
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-inline layui-form" lay-filter="username">
             <select class="seloption" lay-search="" lay-filter="username" name="uid" id="uid">
+                <option value="请选择用户名"></option>
             </select>
         </div>
     </div>
@@ -24,6 +25,7 @@
         <label class="layui-form-label">批次名</label>
         <div class="layui-input-inline layui-form" lay-filter="batch">
             <select class="seloption" lay-search="" lay-filter="batch" name="bid" id="bid">
+                <option value="请选择批次名"></option>
             </select>
         </div>
     </div>
@@ -82,20 +84,20 @@
             }
         })
 
-        // var uid
-        // form.on("select(username)",function (data) {
-        //     console.log(uid)
-        //     uid = data.value
-        // })
-        // var batch_id
-        // form.on("select(batch)",function (data) {
-        //     console.log(batch_id)
-        //     batch_id = data.value
-        // })
+        var uid
+        form.on("select(username)",function (data) {
+            console.log(uid)
+            uid = data.value
+        })
+        var batch_id
+        form.on("select(batch)",function (data) {
+            console.log(batch_id)
+            batch_id = data.value
+        })
 
         //监听提交
         form.on('submit(demo1)', function (data) {
-            var res = $.ajax({url: `/insertUserBatch`, data: {uid:data.field.uid,batch_id:data.field.batch_id}, async: false})
+            var res = $.ajax({url: `/insertUserBatch`, data: {uid:uid,batch_id:batch_id}, async: false})
             if (res.responseText > 0) {
                 layer.msg('成功', {icon: 6, time: 2000})
                 //parent.layer.close(layer.index);
@@ -105,7 +107,6 @@
                 //parent.layer.close(layer.index);
             }
         })
-
 
     })
 </script>

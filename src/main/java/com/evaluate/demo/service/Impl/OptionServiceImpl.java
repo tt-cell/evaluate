@@ -1,4 +1,5 @@
 package com.evaluate.demo.service.Impl;
+
 import com.evaluate.demo.dao.OptionDao;
 import com.evaluate.demo.entity.Option;
 import com.evaluate.demo.entity.TargetOption;
@@ -25,7 +26,7 @@ public class OptionServiceImpl implements OptionService {
 
     @Override
     public int updateOption(int oid, String oname) {
-        return optionDao.updateOption(oid,oname);
+        return optionDao.updateOption(oid, oname);
     }
 
     @Override
@@ -34,8 +35,8 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
-    public int insertOption(TargetOption targetOption) {
-        return optionDao.insertOption(targetOption);
+    public int insertOption(int targets_id, int options_id) {
+        return optionDao.insertOption(targets_id, options_id);
     }
 
 

@@ -18,6 +18,7 @@ import java.util.Map;
 public class BatchController {
     @Autowired
     private BatchService batchService;
+    @Autowired
     private RoleService roleService;
 
     @RequestMapping("/batchManagement")
@@ -63,9 +64,7 @@ public class BatchController {
         List<User> userLists = roleService.selectAllTheUsers();
         for (int n = 0;n<userLists.size();n++){
             for (int p = 0;p<userBatchList.size();p++){
-                if (Integer.parseInt(userLists.get(n).getUid())!=userBatchList.get(p).getUid()){
-                    userLists.add(userLists.get(n));
-                }else {
+                if (Integer.parseInt(userLists.get(n).getUid())==userBatchList.get(p).getUid()){
                     userLists.remove(userLists.get(n));
                 }
             }
